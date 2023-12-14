@@ -1,9 +1,25 @@
 import { ApolloServer } from 'apollo-server';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
-import resolvers from './resolver.js';
 import typeDefs from './schemaGQL.js';
+import mongoose, { Model } from 'mongoose';
+import dotenv from 'dotenv';
 
-// 3mUbD3Re6BHEbpkw - mukulsingh27 - mongoDB Atlas password
+// Read the .env file
+dotenv.config();
+
+// Connect to MongoDB
+mongoose.connect( process.env.MONGO_DB_URL ).then( () => {
+	console.log('MongoDB connected');
+} ).catch( err => {
+	console.log( err );
+} )
+
+// Import Models
+import './models/User.js';
+import './models/Quote.js';
+
+// Import the resolvers
+import resolvers from './resolver.js';
 
 const server = new ApolloServer({
 	typeDefs,

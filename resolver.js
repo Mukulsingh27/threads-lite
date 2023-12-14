@@ -1,35 +1,25 @@
 import { users, quotes } from './fake.js';
-import MD5 from 'crypto-js/md5.js';
+import mongoose from 'mongoose';
+
+// User Modal
+const User = mongoose.model( 'User' );
 
 const resolvers = {
 	Query: {
 		users: () => users,
-		user: (_, { id }) => users.find( user => user.id === id ),
+		user: (_, { _id }) => users.find( user => user._id === _id ),
 		quotes: () => quotes,
 		quote: (_, { by} ) => quotes.filter( quote => quote.by === by )
 	},
 	User: {
-		quotes: ( parent ) => quotes.filter( quote => quote.by === parent.id )
+		quotes: ( parent ) => quotes.filter( quote => quote.by === parent._id )
 	},
 	Mutation: {
-		createUser: ( _, { newUser } ) => {
-			// Function to generate a new unique ID
-			const id = Math.max( ...users.map( user => user.id ) ) + 1;
+		createUser: async ( _, { newUser } ) => {
+			const user = await User.findOne( { email: newUser.email } );
 
-			// Function to create a hashed password using MD5
-			const hashPassword = password => MD5( password ).toString();
+			if( user ) throw new Error( 'User already exists' );
 
-			// hash the password
-			newUser.password = hashPassword( newUser.password );
-
-			// Push the new user to the users array
-			users.push({
-				id,
-				...newUser,
-			})
-
-			// Return the newly created user
-			return users.find( user => user.id === id );
 		}
 	}
 }
