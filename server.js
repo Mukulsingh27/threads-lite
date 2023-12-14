@@ -1,7 +1,7 @@
-import { ApolloServer } from 'apollo-server';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server';
 import typeDefs from './schemaGQL.js';
-import mongoose, { Model } from 'mongoose';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 

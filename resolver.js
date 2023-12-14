@@ -1,4 +1,3 @@
-import { users, quotes } from './fake.js';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
