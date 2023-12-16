@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./auth.scss";
 
 const Login = () => {
@@ -15,6 +16,7 @@ const Login = () => {
         e.preventDefault();
         console.log(loginData);
     };
+
     return (
         <div className="login-container">
             <section className="wrapper">
@@ -23,9 +25,9 @@ const Login = () => {
                     <p className="text text-normal">
                         New user?{" "}
                         <span>
-                            <a href="#" className="text text-links">
+                            <Link to="/signup" className="text text-links">
                                 Create an account
-                            </a>
+                            </Link>
                         </span>
                     </p>
                 </div>
