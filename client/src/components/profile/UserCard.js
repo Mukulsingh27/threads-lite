@@ -1,21 +1,32 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const UserCard = () => {
+const UserCard = ({ firstName, lastName, email }) => {
+    const navigation = useNavigate();
     return (
-        <div class="user-card">
-            <div class="profile-picture">
+        <div className="user-card">
+            <div className="profile-picture">
                 <img
-                    src="https://avatars.githubusercontent.com/u/54891099?v=4"
+                    src={`https://robohash.org/${firstName}?size=300x300`}
                     alt="Profile avatar"
                 />
             </div>
-            <h2 class="name">Mukul Singh</h2>
-            <h3 class="username">@mukulsingh27</h3>
-            {/* <p class="tagline">Keep going.</p> */}
-            <p class="description">Masih belajar CSS dan HTML.</p>
-            <a href="#" class="button">
+            <h2 className="name">
+                {firstName} {lastName}
+            </h2>
+            <h3 className="username">{email}</h3>
+            {/* <p className="tagline">Keep going.</p> */}
+            <p className="description">Masih belajar CSS dan HTML.</p>
+            <button
+                className="button"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                    localStorage.removeItem("token");
+                    navigation("/login");
+                }}
+            >
                 Log Out
-            </a>
+            </button>
         </div>
     );
 };

@@ -1,9 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { Link, useNavigate } from "react-router-dom";
+import { SIGN_IN_USER } from "../gql-operations/mutations";
 import "./auth.scss";
 
 const Login = () => {
+    const navigation = useNavigate();
     const [loginData, setLoginData] = useState({});
+
+    const [signInUser, { loading, error }] = useMutation(SIGN_IN_USER, {
+        onCompleted: (data) => {
+            localStorage.setItem("token", data?.user?.token);
+            navigation("/profile");
+        },
+        onError: (error) => {
+            console.log(error);
+        },
+    });
+
+    if (loading) return <p>Loading...</p>;
 
     const handleLoginDataChange = (e) => {
         setLoginData({
@@ -14,7 +29,13 @@ const Login = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(loginData);
+        signInUser({
+            variables: {
+                userSignIn: {
+                    ...loginData,
+                },
+            },
+        });
     };
 
     return (
@@ -31,6 +52,7 @@ const Login = () => {
                         </span>
                     </p>
                 </div>
+                <div className="error">{error && <p>{error.message}</p>}</div>
                 <form
                     name="signin"
                     className="form"

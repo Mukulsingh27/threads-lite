@@ -14,8 +14,12 @@ const resolvers = {
 	Query: {
 		users: async () => await User.find({}),
 		user: async (_, { _id }) => await User.findOne( { _id } ),
-		quotes: async () => await Quote.find({}).populate( 'by', '_id firstName lastName' ),
-		quote: async (_, { by } ) => await Quote.find( { by } )
+		quotes: async () => await Quote.find({}).sort( { createdAt: -1 } ).populate( 'by', '_id firstName lastName createdAt' ),
+		quote: async (_, { by } ) => await Quote.find( { by } ),
+		myProfile: async (_, __, { userID } ) => {
+			if( ! userID ) throw new Error( 'You are not authenticated' );
+			return await User.findOne( { _id: userID } );
+		}
 	},
 	User: {
 		quotes: async ( parent ) => await Quote.find( { by: parent._id } )
@@ -33,6 +37,7 @@ const resolvers = {
 			// Create new user
 			const newUSer = await new User( {
 				...newUser,
+				profileImage: `https://robohash.org/${newUser.firstName.toLowerCase()}?size=300x300`,
 				password: hashedPassword
 			} );
 
@@ -60,7 +65,8 @@ const resolvers = {
 
 			const newQuote = new Quote( {
 				name,
-				by: userID
+				by: userID,
+				createdAt: new Date().toISOString()
 			} );
 
 			await newQuote.save();

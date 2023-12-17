@@ -1,7 +1,7 @@
 import Home from "./Home";
-import Login from "./auth/Login";
-import SignUp from "./auth/SinghUp";
-import Profile from "./profile/Profile";
+import Login from "../components/auth/Login";
+import SignUp from "../components/auth/SignUp";
+import Profile from "./Profile";
 
 const routes = [
     {
@@ -19,11 +19,11 @@ const routes = [
         element: <SignUp />,
         exact: true,
     },
-	{
-		path: "/contact",
-		// element: <Profile />,
-		exact: true,
-	},
+    {
+        path: "/contact",
+        // element: <Profile />,
+        exact: true,
+    },
     {
         path: "/profile",
         element: <Profile />,

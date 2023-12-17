@@ -6,6 +6,7 @@ const typeDefs = gql`
 		user( _id: ID! ): User
 		quotes: [ QuoteWithUser ]
 		quote( by: ID! ): [ Quote ]
+		myProfile: User
 	}
 
 	type Mutation {
@@ -32,21 +33,24 @@ const typeDefs = gql`
 
 	type User {
 		_id: ID!
-		firstName: String
+		firstName: String!
 		lastName: String
 		email: String!
 		password: String
+		profileImage: String!
 		quotes: [ Quote ]
 	}
 
 	type Quote {
 		name: String!
 		by: ID!
+		createdAt: String!
 	}
 
 	type QuoteWithUser {
 		name: String!
 		by: UserDetails!
+		createdAt: String!
 	}
 
 	type UserDetails {

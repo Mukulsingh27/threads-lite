@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./auth.scss";
+import { useMutation } from "@apollo/client";
+import { SIGN_UP_USER } from "../gql-operations/mutations";
 
 const SignUp = () => {
     const [signUpData, setSignUpData] = useState({});
+
+	const [signUpUser, { loading, error, data }] = useMutation( SIGN_UP_USER, {
+		onCompleted: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
+
+	if(loading) return <p>Loading...</p>;
 
     const handleSignUpDataChange = (e) => {
         setSignUpData({
@@ -14,7 +27,13 @@ const SignUp = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(signUpData);
+		signUpUser({
+			variables: {
+				newUser: {
+					...signUpData,
+				},
+			},
+		});
     };
     return (
         <div className="login-container">
@@ -30,6 +49,12 @@ const SignUp = () => {
                         </span>
                     </p>
                 </div>
+				<div className="error">
+					{error && <p>{error.message}</p>}
+				</div>
+				<div className="success">
+					{data && data?.user && <p>{data.user?.firstName} {data.user?.lastName} has been successfully registered</p>}
+				</div>
                 <form
                     name="signin"
                     className="form"

@@ -1,9 +1,6 @@
 import React from "react";
-import Layout from "./components/Layout";
-import Login from "./components/auth/Login";
-import SignUp from "./components/auth/SinghUp";
-import Profile from "./components/profile/Profile";
-import routes from "./components/routes";
+import Layout from "./pages/Layout";
+import routes from "./pages/routes";
 import { useRoutes } from "react-router-dom";
 
 function App() {

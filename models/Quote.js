@@ -9,6 +9,11 @@ const quoteSchema = new mongoose.Schema( {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
+	createdAt: {
+		type: Date,
+		default: String,
+		required: true
+	}
 } )
 
 mongoose.model( 'Quote', quoteSchema );

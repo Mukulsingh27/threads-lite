@@ -106,8 +106,12 @@ $blue-500: #688afd;
 		img {
 			flex-shrink: 0;
 		}
+
+		p{
+			display: inline;
+		}
 	
-		a {
+		a, p {
 			color: $grey-500;
 			font-weight: 500;
 			text-decoration: none;
