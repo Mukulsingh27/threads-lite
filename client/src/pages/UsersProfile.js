@@ -3,16 +3,16 @@ import "../components/profile/profile.scss";
 import Timeline from "../components/profile/Timeline";
 import UserCard from "../components/profile/UserCard";
 import { useQuery } from "@apollo/client";
-import { GET_MY_PROFILE } from "../components/gql-operations/queries";
-import { useNavigate } from "react-router-dom";
+import { GET_USER_PROFILE } from "../components/gql-operations/queries";
+import { useParams } from "react-router-dom";
 
-const Profile = () => {
-    const navigate = useNavigate();
-    const { loading, error, data } = useQuery(GET_MY_PROFILE);
-
-    if (!localStorage.getItem("token")) {
-        navigate("/login");
-    }
+const UserProfile = () => {
+    const { id } = useParams();
+    const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+        variables: {
+            id,
+        },
+    });
 
     if (loading) return <p>Loading...</p>;
 
@@ -27,6 +27,8 @@ const Profile = () => {
                     firstName={data?.user?.firstName}
                     lastName={data?.user?.lastName}
                     email={data?.user?.email}
+                    avatar={data?.user?.profileImage}
+                    logOutButton={false}
                 />
             </div>
             <div className="right-side">
@@ -36,4 +38,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default UserProfile;

@@ -57,6 +57,7 @@ const typeDefs = gql`
 		_id: ID!
 		firstName: String!
 		lastName: String
+		profileImage: String!
 	}
 `;
 

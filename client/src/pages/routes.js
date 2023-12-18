@@ -1,7 +1,8 @@
 import Home from "./Home";
 import Login from "../components/auth/Login";
 import SignUp from "../components/auth/SignUp";
-import Profile from "./Profile";
+import MyProfile from "./MyProfile";
+import UserProfile from "./UsersProfile";
 
 const routes = [
     {
@@ -26,7 +27,12 @@ const routes = [
     },
     {
         path: "/profile",
-        element: <Profile />,
+        element: <MyProfile />,
+        exact: true,
+    },
+    {
+        path: "/profile/:id",
+        element: <UserProfile />,
         exact: true,
     },
 ];

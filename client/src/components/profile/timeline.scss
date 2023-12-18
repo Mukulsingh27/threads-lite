@@ -95,6 +95,10 @@ $blue-500: #688afd;
 			background-color: $blue-500;
 			color: #fff;
 		}
+
+		&.filled-icon-white {
+			background-color: #fff;
+		}
 	}
 	
 	.timeline-item-description {
@@ -106,12 +110,8 @@ $blue-500: #688afd;
 		img {
 			flex-shrink: 0;
 		}
-
-		p{
-			display: inline;
-		}
 	
-		a, p {
+		a {
 			color: $grey-500;
 			font-weight: 500;
 			text-decoration: none;

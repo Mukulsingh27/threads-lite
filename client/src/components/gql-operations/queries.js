@@ -8,6 +8,7 @@ export const GET_ALL_QUOTES = gql`
                 _id
                 firstName
                 lastName
+				profileImage
             }
             createdAt
         }
@@ -20,6 +21,23 @@ export const GET_MY_PROFILE = gql`
             firstName
             lastName
             email
+			profileImage
+            quotes {
+                name
+                createdAt
+            }
+        }
+    }
+`;
+
+export const GET_USER_PROFILE = gql`
+    query getUserById($id: ID!) {
+        user(_id: $id) {
+            _id
+            firstName
+            lastName
+            email
+            profileImage
             quotes {
                 name
                 createdAt

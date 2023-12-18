@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_QUOTE } from "../gql-operations/mutations";
 
-const NewThread = () => {
+const NewThread = ({ avatar }) => {
     const [newThread, setNewThread] = useState("");
 
     const [createQuote, { loading, error, data }] = useMutation(CREATE_QUOTE, {
@@ -30,12 +30,9 @@ const NewThread = () => {
         <>
             {data && <p>{data.quote}</p>}
             <li className="timeline-item">
-                <span className="timeline-item-icon avatar-icon">
+                <span className="timeline-item-icon filled-icon-white">
                     <i className="avatar">
-                        <img
-                            src="https://assets.codepen.io/285131/hat-man.png"
-                            alt=""
-                        />
+                        <img src={avatar} alt="" />
                     </i>
                 </span>
                 <div className="new-thread">

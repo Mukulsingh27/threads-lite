@@ -9,13 +9,18 @@ const Login = () => {
     const [loginData, setLoginData] = useState({});
 
     const [signInUser, { loading, error }] = useMutation(SIGN_IN_USER, {
-        onCompleted: (data) => {
-            localStorage.setItem("token", data?.user?.token);
-            navigation("/profile");
-        },
+		onCompleted: (data) => {
+			console.log(data);
+			localStorage.setItem("token", data?.user?.token);
+			// Check if there is no error before navigating
+			if (!error) {
+				navigation("/profile");
+			}
+		},
         onError: (error) => {
             console.log(error);
         },
+		refetchQueries: ["getMyProfile"],
     });
 
     if (loading) return <p>Loading...</p>;

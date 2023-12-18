@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_QUOTES } from "../components/gql-operations/queries";
 import { format } from "timeago.js";
-import Message from "../assets/svgs/Message";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     const { loading, error, data } = useQuery(GET_ALL_QUOTES);
@@ -25,16 +25,20 @@ const Home = () => {
             <ol className="timeline">
                 {data?.quotes?.map((quote, index) => (
                     <li className="timeline-item extra-space" key={index}>
-                        <span className="timeline-item-icon filled-icon">
-                            <Message />
+                        <span className="timeline-item-icon filled-icon-white">
+                            <i className="avatar">
+                                <img src={quote?.by?.profileImage} alt="" />
+                            </i>
                         </span>
                         <div className="timeline-item-wrapper">
                             <div className="timeline-item-description">
                                 <span>
-                                    <p>{`${quote?.by?.firstName} ${
+                                    <Link to={`/profile/${quote?.by?._id}`}>{`${
+                                        quote?.by?.firstName
+                                    } ${
                                         quote?.by?.lastName &&
                                         quote?.by?.lastName
-                                    }`}</p>{" "}
+                                    }`}</Link>{" "}
                                     threaded{" "}
                                     <time dateTime="20-01-2021">
                                         {format(quote?.createdAt)}
