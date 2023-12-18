@@ -6,17 +6,15 @@ $grey-500: #3d3d3d;
 $blue-500: #688afd;
 
 .timeline {
-    width: 85%;
     max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+	margin: 0 auto;
     display: flex;
     flex-direction: column;
     padding: 32px 0 32px 32px;
     border-left: 2px solid $grey-200;
-    font-size: 1.125rem;
+	font-family: inherit;
 
-	.timeline-item {
+	&__timeline-item {
 		display: flex;
 		gap: 24px;
 	
@@ -29,7 +27,7 @@ $blue-500: #688afd;
 		}
 	}
 	
-	.new-thread {
+	&__new-thread {
 		width: 100%;
 
 		.thread-form {
@@ -40,10 +38,10 @@ $blue-500: #688afd;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				width: 44px;
-				height: 44px;
+				width: 45px;
+				height: 45px;
 				border-radius: 50%;
-				margin-left: -32px;
+				margin-left: -40px;
 				flex-shrink: 0;
 				overflow: hidden;
 				box-shadow: 0 0 0 6px #eee;
@@ -55,10 +53,12 @@ $blue-500: #688afd;
 
 			input {
 				border: 1px solid $grey-200;
-				border-radius: 6px;
-				height: 48px;
+				border-radius: 8px;
+				height: 50px;
 				padding: 0 16px;
 				width: 100%;
+				font-family: inherit;
+				font-size: large;
 		
 				&::placeholder {
 					color: $grey-300;
@@ -67,21 +67,21 @@ $blue-500: #688afd;
 				&:focus {
 					border-color: $grey-300;
 					outline: 0;
-					// box-shadow: 0 0 0 4px $grey-100;
+					box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 				}
 			}
 		}
 	
 	}
 
-	.timeline-item-icon {
+	&__timeline-item-icon {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 40px;
-		height: 40px;
+		width: 45px;
+		height: 45px;
 		border-radius: 50%;
-		margin-left: -52px;
+		margin-left: -55px;
 		flex-shrink: 0;
 		overflow: hidden;
 		box-shadow: 0 0 0 6px #eee;
@@ -101,7 +101,7 @@ $blue-500: #688afd;
 		}
 	}
 	
-	.timeline-item-description {
+	&__timeline-item-description {
 		display: flex;
 		padding-top: 6px;
 		gap: 8px;
@@ -111,10 +111,11 @@ $blue-500: #688afd;
 			flex-shrink: 0;
 		}
 	
-		a {
+		a, p {
 			color: $grey-500;
 			font-weight: 500;
 			text-decoration: none;
+			display: inline;
 	
 			&:hover,
 			&:focus {
@@ -124,14 +125,14 @@ $blue-500: #688afd;
 		}
 	}
 
-	.thread {
+	&__thread {
 		margin-top: 12px;
 		background-color: #fff;
 		color: $grey-500;
 		border: 1px solid $grey-200;
-		// box-shadow: 0 4px 4px 0 $grey-100;
-		border-radius: 6px;
+		box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+		border-radius: 8px;
 		padding: 16px;
-		font-size: 1rem;
+		font-size: 18px
 	}	
 }

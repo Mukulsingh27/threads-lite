@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 const MyProfile = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-	
+
     if (!token) {
-		navigate("/login");
+        navigate("/login");
     }
 
-	const { loading, error, data } = useQuery(GET_MY_PROFILE);
+    const { loading, error, data } = useQuery(GET_MY_PROFILE);
 
     if (loading) return <p>Loading...</p>;
 
@@ -27,7 +27,7 @@ const MyProfile = () => {
         <div className="profile-section">
             {data?.user && (
                 <>
-                    <div className="left-side">
+                    <div className="profile-section__left-side">
                         <UserCard
                             firstName={data.user.firstName}
                             lastName={data.user.lastName}
@@ -36,7 +36,7 @@ const MyProfile = () => {
                             logOutButton={true}
                         />
                     </div>
-                    <div className="right-side">
+                    <div className="profile-section__right-side">
                         <Timeline thread={data.user} />
                     </div>
                 </>

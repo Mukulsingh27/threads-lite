@@ -3,6 +3,7 @@ import Login from "../components/auth/Login";
 import SignUp from "../components/auth/SignUp";
 import MyProfile from "./MyProfile";
 import UserProfile from "./UsersProfile";
+import NotFound from "./NotFound";
 
 const routes = [
     {
@@ -21,11 +22,6 @@ const routes = [
         exact: true,
     },
     {
-        path: "/contact",
-        // element: <Profile />,
-        exact: true,
-    },
-    {
         path: "/profile",
         element: <MyProfile />,
         exact: true,
@@ -35,6 +31,11 @@ const routes = [
         element: <UserProfile />,
         exact: true,
     },
+	// 404 page
+	{
+		path: "*",
+		element: <NotFound />,
+	},
 ];
 
 export default routes;

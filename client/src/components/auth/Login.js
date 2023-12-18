@@ -93,6 +93,7 @@ const Login = () => {
                             placeholder="Password"
                             onChange={handleLoginDataChange}
                             required
+							autoComplete="on"
                         />
                     </div>
                     <div className="input-control">

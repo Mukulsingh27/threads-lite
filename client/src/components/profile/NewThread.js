@@ -29,13 +29,13 @@ const NewThread = ({ avatar }) => {
     return (
         <>
             {data && <p>{data.quote}</p>}
-            <li className="timeline-item">
-                <span className="timeline-item-icon filled-icon-white">
+            <li className="timeline__timeline-item">
+                <span className="timeline__timeline-item-icon filled-icon-white">
                     <i className="avatar">
                         <img src={avatar} alt="" />
                     </i>
                 </span>
-                <div className="new-thread">
+                <div className="timeline__new-thread">
                     <form onSubmit={handleThreadSubmit} className="thread-form">
                         <input
                             onChange={(e) => setNewThread(e.target.value)}

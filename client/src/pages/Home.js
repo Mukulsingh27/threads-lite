@@ -24,14 +24,14 @@ const Home = () => {
         <div className="home">
             <ol className="timeline">
                 {data?.quotes?.map((quote, index) => (
-                    <li className="timeline-item extra-space" key={index}>
-                        <span className="timeline-item-icon filled-icon-white">
+                    <li className="timeline__timeline-item extra-space" key={index}>
+                        <span className="timeline__timeline-item-icon filled-icon-white">
                             <i className="avatar">
                                 <img src={quote?.by?.profileImage} alt="" />
                             </i>
                         </span>
-                        <div className="timeline-item-wrapper">
-                            <div className="timeline-item-description">
+                        <div className="timeline__timeline-item-wrapper">
+                            <div className="timeline__timeline-item-description">
                                 <span>
                                     <Link to={`/profile/${quote?.by?._id}`}>{`${
                                         quote?.by?.firstName
@@ -45,7 +45,7 @@ const Home = () => {
                                     </time>
                                 </span>
                             </div>
-                            <div className="thread">
+                            <div className="timeline__thread">
                                 <p>{quote?.name}</p>
                             </div>
                         </div>

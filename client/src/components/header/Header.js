@@ -28,7 +28,6 @@ const Header = () => {
                     ) : (
                         <>
                             <Link to="/login">Login</Link>
-                            <Link to="/contact">Contact</Link>
                             <button>
                                 <Link to="/login">Login</Link>
                             </button>

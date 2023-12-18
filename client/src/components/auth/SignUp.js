@@ -44,7 +44,7 @@ const SignUp = () => {
                         Already a user?{" "}
                         <span>
                             <Link to="/login" className="text text-links">
-                                Create an account
+                                Sign In
                             </Link>
                         </span>
                     </p>
@@ -127,6 +127,7 @@ const SignUp = () => {
                             placeholder="Password"
                             onChange={handleSignUpDataChange}
                             required
+							autoComplete="on"
                         />
                     </div>
                     <div className="input-control">

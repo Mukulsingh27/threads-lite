@@ -22,7 +22,7 @@ const UserProfile = () => {
     }
     return (
         <div className="profile-section">
-            <div className="left-side">
+            <div className="profile-section__left-side">
                 <UserCard
                     firstName={data?.user?.firstName}
                     lastName={data?.user?.lastName}
@@ -31,7 +31,7 @@ const UserProfile = () => {
                     logOutButton={false}
                 />
             </div>
-            <div className="right-side">
+            <div className="profile-section__right-side">
                 {data?.user && <Timeline thread={data.user} />}
             </div>
         </div>

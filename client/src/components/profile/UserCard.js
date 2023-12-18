@@ -6,7 +6,7 @@ const UserCard = ({ firstName, lastName, email, avatar, logOutButton }) => {
     const navigation = useNavigate();
     return (
         <div className="user-card">
-            <div className="profile-picture">
+            <div className="user-card__profile-picture">
                 <img
                     src={
                         avatar
@@ -16,15 +16,16 @@ const UserCard = ({ firstName, lastName, email, avatar, logOutButton }) => {
                     alt="Profile avatar"
                 />
             </div>
-            <h2 className="name">
+            <h2 className="user-card__name">
                 {firstName} {lastName}
             </h2>
-            <h3 className="username">{email}</h3>
-            {/* <p className="tagline">Keep going.</p> */}
-            <p className="description">Masih belajar CSS dan HTML.</p>
+            <h3 className="user-card__username">{email}</h3>
+            <p className="user-card__description">
+                Masih belajar CSS dan HTML.
+            </p>
             {token && logOutButton && (
                 <button
-                    className="button"
+                    className="user-card__logoff-button"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                         localStorage.removeItem("token");
