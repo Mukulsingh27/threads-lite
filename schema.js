@@ -13,6 +13,7 @@ const typeDefs = gql`
 		signUpUser( newUser: newUserInput! ): User
 		signInUser( userSignIn: userSignInInput! ): Token
 		createQuote( name: String! ): String
+		deleteQuote( _id: ID! ): String
 	}
 
 	type Token {
@@ -42,12 +43,14 @@ const typeDefs = gql`
 	}
 
 	type Quote {
+		_id: ID!
 		name: String!
 		by: ID!
 		createdAt: String!
 	}
 
 	type QuoteWithUser {
+		_id: ID!
 		name: String!
 		by: UserDetails!
 		createdAt: String!

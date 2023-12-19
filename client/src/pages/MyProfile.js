@@ -7,42 +7,45 @@ import { GET_MY_PROFILE } from "../components/gql-operations/queries";
 import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
-    const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+	const navigate = useNavigate();
+	const token = localStorage.getItem("token");
 
-    if (!token) {
-        navigate("/login");
-    }
+	if (!token) {
+		navigate("/login");
+	}
 
-    const { loading, error, data } = useQuery(GET_MY_PROFILE);
+	const { loading, error, data } = useQuery(GET_MY_PROFILE);
 
-    if (loading) return <p>Loading...</p>;
+	if (loading) return <p>Loading...</p>;
 
-    if (error) {
-        console.error("Error fetching profile data:", error);
-        window.location.reload();
-    }
+	if (error) {
+		console.error("Error fetching profile data:", error);
+		window.location.reload();
+	}
 
-    return (
-        <div className="profile-section">
-            {data?.user && (
-                <>
-                    <div className="profile-section__left-side">
-                        <UserCard
-                            firstName={data.user.firstName}
-                            lastName={data.user.lastName}
-                            email={data.user.email}
-                            avatar={data.user.profileImage}
-                            logOutButton={true}
-                        />
-                    </div>
-                    <div className="profile-section__right-side">
-                        <Timeline thread={data.user} />
-                    </div>
-                </>
-            )}
-        </div>
-    );
+	return (
+		<div className="profile-section">
+			{data?.user && (
+				<>
+					<div className="profile-section__left-side">
+						<UserCard
+							firstName={data.user.firstName}
+							lastName={data.user.lastName}
+							email={data.user.email}
+							avatar={data.user.profileImage}
+							needLogOutButton={true}
+						/>
+					</div>
+					<div className="profile-section__right-side">
+						<Timeline
+							thread={data.user}
+							hideUnnecessaryElements={false}
+						/>
+					</div>
+				</>
+			)}
+		</div>
+	);
 };
 
 export default MyProfile;

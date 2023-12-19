@@ -7,35 +7,41 @@ import { GET_USER_PROFILE } from "../components/gql-operations/queries";
 import { useParams } from "react-router-dom";
 
 const UserProfile = () => {
-    const { id } = useParams();
-    const { loading, error, data } = useQuery(GET_USER_PROFILE, {
-        variables: {
-            id,
-        },
-    });
+	const { id } = useParams();
+	const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+		variables: {
+			id,
+		},
+	});
 
-    if (loading) return <p>Loading...</p>;
+	if (loading) return <p>Loading...</p>;
 
-    if (error) {
-        console.log(error);
-        return <p>Error :(</p>;
-    }
-    return (
-        <div className="profile-section">
-            <div className="profile-section__left-side">
-                <UserCard
-                    firstName={data?.user?.firstName}
-                    lastName={data?.user?.lastName}
-                    email={data?.user?.email}
-                    avatar={data?.user?.profileImage}
-                    logOutButton={false}
-                />
-            </div>
-            <div className="profile-section__right-side">
-                {data?.user && <Timeline thread={data.user} />}
-            </div>
-        </div>
-    );
+	if (error) {
+		console.log(error);
+		return <p>Error :(</p>;
+	}
+
+	return (
+		<div className="profile-section">
+			<div className="profile-section__left-side">
+				<UserCard
+					firstName={data?.user?.firstName}
+					lastName={data?.user?.lastName}
+					email={data?.user?.email}
+					avatar={data?.user?.profileImage}
+					needLogOutButton={false}
+				/>
+			</div>
+			<div className="profile-section__right-side">
+				{data?.user && (
+					<Timeline
+						thread={data.user}
+						hideUnnecessaryElements={true}
+					/>
+				)}
+			</div>
+		</div>
+	);
 };
 
 export default UserProfile;

@@ -1,47 +1,48 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_QUOTES = gql`
-    query getAllQuotes {
-        quotes {
-            name
-            by {
-                _id
-                firstName
-                lastName
+	query getAllQuotes {
+		quotes {
+			name
+			by {
+				_id
+				firstName
+				lastName
 				profileImage
-            }
-            createdAt
-        }
-    }
+			}
+			createdAt
+		}
+	}
 `;
 
 export const GET_MY_PROFILE = gql`
-    query getMyProfile {
-        user: myProfile {
-            firstName
-            lastName
-            email
+	query getMyProfile {
+		user: myProfile {
+			firstName
+			lastName
+			email
 			profileImage
-            quotes {
-                name
-                createdAt
-            }
-        }
-    }
+			quotes {
+				_id
+				name
+				createdAt
+			}
+		}
+	}
 `;
 
 export const GET_USER_PROFILE = gql`
-    query getUserById($id: ID!) {
-        user(_id: $id) {
-            _id
-            firstName
-            lastName
-            email
-            profileImage
-            quotes {
-                name
-                createdAt
-            }
-        }
-    }
+	query getUserById($id: ID!) {
+		user(_id: $id) {
+			_id
+			firstName
+			lastName
+			email
+			profileImage
+			quotes {
+				name
+				createdAt
+			}
+		}
+	}
 `;

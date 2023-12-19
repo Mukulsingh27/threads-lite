@@ -71,6 +71,17 @@ const resolvers = {
 
 			await newQuote.save();
 			return 'Quote created successfully';
+		},
+		deleteQuote: async ( _, { _id }, { userID } ) => {
+			if( ! userID ) throw new Error( 'You are not authenticated' );
+
+			// Find and delete the quote
+			const findAndDelete = await Quote.findByIdAndDelete( _id );
+
+			if( ! findAndDelete ) throw new Error( 'Quote does not exists' );
+
+			// Return success message
+			return 'Quote deleted successfully';
 		}
 	}
 }
