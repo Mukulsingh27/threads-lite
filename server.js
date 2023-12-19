@@ -11,6 +11,11 @@ import jwt from "jsonwebtoken";
 import express from "express";
 import http from "http";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 // Read the .env file
 if (process.env.NODE_ENV !== "production") {
@@ -65,10 +70,10 @@ const server = new ApolloServer({
 
 // Serve static assets if in production
 // if( process.env.NODE_ENV === 'production' ) {
-	app.use( express.static( 'client/build' ) );
-	app.get( '*', ( req, res ) => {
-		res.sendFile( path.resolve( __dirname, 'client', 'build', 'index.html' ) );
-	} )
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 // }
 
 await server.start();
