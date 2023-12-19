@@ -1,7 +1,7 @@
 import {
-    ApolloServerPluginLandingPageGraphQLPlayground,
-    ApolloServerPluginDrainHttpServer,
-    ApolloServerPluginLandingPageDisabled,
+	ApolloServerPluginLandingPageGraphQLPlayground,
+	ApolloServerPluginDrainHttpServer,
+	ApolloServerPluginLandingPageDisabled,
 } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import typeDefs from "./schema.js";
@@ -14,12 +14,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
 
 // Read the .env file
 if (process.env.NODE_ENV !== "production") {
-    dotenv.config();
+	dotenv.config();
 }
 
 // Port
@@ -27,13 +26,13 @@ const port = process.env.PORT || 5000;
 
 // Connect to MongoDB
 mongoose
-    .connect(process.env.MONGO_DB_URL)
-    .then(() => {
-        console.log("MongoDB connected");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+	.connect(process.env.MONGO_DB_URL)
+	.then(() => {
+		console.log("MongoDB connected successfully !!");
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 // Import Models
 import "./models/User.js";
@@ -45,42 +44,42 @@ import resolvers from "./resolver.js";
 const app = express();
 const httpServer = http.createServer(app);
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: ({ req }) => {
-        const { authorization } = req.headers || {};
+	typeDefs,
+	resolvers,
+	context: ({ req }) => {
+		const { authorization } = req.headers || {};
 
-        // Check if authorization header is present
-        if (authorization) {
-            // Verify the token
-            const { userID } = jwt.verify(
-                authorization,
-                process.env.JWT_SECRET_KEY
-            );
-            return { userID };
-        }
-    },
-    plugins: [
-        ApolloServerPluginDrainHttpServer({ httpServer }),
-        process.env.NODE_ENV !== "production"
-            ? ApolloServerPluginLandingPageGraphQLPlayground()
-            : ApolloServerPluginLandingPageDisabled(),
-    ],
+		// Check if authorization header is present
+		if (authorization) {
+			// Verify the token
+			const { userID } = jwt.verify(
+				authorization,
+				process.env.JWT_SECRET_KEY
+			);
+			return { userID };
+		}
+	},
+	plugins: [
+		ApolloServerPluginDrainHttpServer({ httpServer }),
+		process.env.NODE_ENV !== "production"
+			? ApolloServerPluginLandingPageGraphQLPlayground()
+			: ApolloServerPluginLandingPageDisabled(),
+	],
 });
 
 // Serve static assets if in production
-// if( process.env.NODE_ENV === 'production' ) {
-app.use(express.static(path.join(__dirname, "client", "build")));
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
-// }
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "client", "build")));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+	});
+}
 
 await server.start();
 server.applyMiddleware({ app, path: "/graphql" });
 
 httpServer.listen({ port }, () => {
-    console.log(
-        `🚀 Server ready at http://localhost:4000${server.graphqlPath}`
-    );
+	console.log(
+		`🚀 Server ready at http://localhost:4000${server.graphqlPath}`
+	);
 });
