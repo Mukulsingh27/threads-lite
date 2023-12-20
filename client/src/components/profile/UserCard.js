@@ -1,8 +1,8 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UserCard = ({ firstName, lastName, email, avatar, needLogOutButton }) => {
-	const token = localStorage.getItem("token");
+	const token = localStorage.getItem('token');
 	const navigation = useNavigate();
 	return (
 		<div className="user-card">
@@ -11,7 +11,7 @@ const UserCard = ({ firstName, lastName, email, avatar, needLogOutButton }) => {
 					src={
 						avatar
 							? avatar
-							: "https://avatars.githubusercontent.com/u/54891099?v=4"
+							: 'https://avatars.githubusercontent.com/u/54891099?v=4'
 					}
 					alt="Profile avatar"
 				/>
@@ -26,10 +26,10 @@ const UserCard = ({ firstName, lastName, email, avatar, needLogOutButton }) => {
 			{token && needLogOutButton && (
 				<button
 					className="user-card__logoff-button"
-					style={{ cursor: "pointer" }}
+					style={{ cursor: 'pointer' }}
 					onClick={() => {
-						localStorage.removeItem("token");
-						navigation("/login");
+						localStorage.removeItem('token');
+						navigation('/login');
 						window.location.reload();
 					}}
 				>

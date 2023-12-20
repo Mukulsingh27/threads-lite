@@ -1,0 +1,54 @@
+$loader-size: 80px;
+$border-size: 8px;
+$animation-duration: 1.2s;
+$animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+
+    &__rings {
+        display: inline-block;
+        position: relative;
+        width: $loader-size;
+        height: $loader-size;
+
+        div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: $loader-size - 2 * $border-size;
+            height: $loader-size - 2 * $border-size;
+            margin: $border-size;
+            border: $border-size solid #688afd;
+            border-radius: 50%;
+            animation: lds-ring $animation-duration $animation-timing-function infinite;
+            border-color: #688afd transparent transparent transparent;
+
+            &:nth-child(1) {
+                animation-delay: -0.45s;
+            }
+
+            &:nth-child(2) {
+                animation-delay: -0.3s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: -0.15s;
+            }
+        }
+    }
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
