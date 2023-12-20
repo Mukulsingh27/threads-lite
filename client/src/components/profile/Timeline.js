@@ -1,13 +1,14 @@
-import React from "react";
-import { DELETE_QUOTE } from "../gql-operations/mutations";
-import Message from "../../assets/svgs/Message";
-import { useMutation } from "@apollo/client";
-import NewThread from "./NewThread";
-import { format } from "timeago.js";
-import "./timeline.scss";
+import React from 'react';
+import { DELETE_QUOTE } from '../gql-operations/mutations';
+import Message from '../../assets/svgs/Message';
+import { useMutation } from '@apollo/client';
+import NewThread from './NewThread';
+import { format } from 'timeago.js';
+import './timeline.scss';
+import Loader from '../Loader';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
-	const token = localStorage.getItem("token");
+	const token = localStorage.getItem('token');
 
 	const [deleteQuote, { loading, error }] = useMutation(DELETE_QUOTE, {
 		onCompleted: (data) => {
@@ -16,12 +17,12 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 		onError: (error) => {
 			console.log(error);
 		},
-		refetchQueries: ["getMyProfile"],
+		refetchQueries: ['getMyProfile'],
 	});
 
 	const handleDelete = (quoteId) => {
 		const shouldDelete = window.confirm(
-			"Are you sure you want to delete this thread?"
+			'Are you sure you want to delete this thread?'
 		);
 		if (shouldDelete) {
 			deleteQuote({
@@ -32,7 +33,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 		}
 	};
 
-	if (loading) return <p>Loading...</p>;
+	if (loading) return <Loader />;
 
 	if (error) {
 		console.log(error);
@@ -56,8 +57,8 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 							<span>
 								<p>{`${thread?.firstName} ${
 									thread?.lastName && thread?.lastName
-								}`}</p>{" "}
-								threaded{" "}
+								}`}</p>{' '}
+								threaded{' '}
 								<time dateTime={quote?.createdAt}>
 									{format(quote?.createdAt)}
 								</time>

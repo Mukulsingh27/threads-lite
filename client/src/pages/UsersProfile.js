@@ -1,10 +1,11 @@
-import React from "react";
-import "../components/profile/profile.scss";
-import Timeline from "../components/profile/Timeline";
-import UserCard from "../components/profile/UserCard";
-import { useQuery } from "@apollo/client";
-import { GET_USER_PROFILE } from "../components/gql-operations/queries";
-import { useParams } from "react-router-dom";
+import React from 'react';
+import '../components/profile/profile.scss';
+import Timeline from '../components/profile/Timeline';
+import UserCard from '../components/profile/UserCard';
+import { useQuery } from '@apollo/client';
+import { GET_USER_PROFILE } from '../components/gql-operations/queries';
+import { useParams } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 const UserProfile = () => {
 	const { id } = useParams();
@@ -14,7 +15,7 @@ const UserProfile = () => {
 		},
 	});
 
-	if (loading) return <p>Loading...</p>;
+	if (loading) return <Loader />;
 
 	if (error) {
 		console.log(error);
