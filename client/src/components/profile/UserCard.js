@@ -21,7 +21,7 @@ const UserCard = ({ firstName, lastName, email, avatar, needLogOutButton }) => {
 			</h2>
 			<h3 className="user-card__username">{email}</h3>
 			<p className="user-card__description">
-				Masih belajar CSS dan HTML.
+				Happy to see you here! Welcome to Threads Lite!
 			</p>
 			{token && needLogOutButton && (
 				<button
