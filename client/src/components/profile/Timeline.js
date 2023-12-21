@@ -4,8 +4,8 @@ import Message from '../../assets/svgs/Message';
 import { useMutation } from '@apollo/client';
 import NewThread from './NewThread';
 import { format } from 'timeago.js';
-import './timeline.scss';
 import Loader from '../Loader';
+import './timeline.scss';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
 	const [editLoading, setEditLoading] = useState(false);
