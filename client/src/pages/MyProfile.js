@@ -15,6 +15,7 @@ const MyProfile = () => {
 		navigate('/login');
 	}
 
+	// Get my profile data.
 	const { loading, error, data } = useQuery(GET_MY_PROFILE);
 
 	if (loading) return <Loader />;

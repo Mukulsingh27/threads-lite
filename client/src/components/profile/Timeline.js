@@ -1,5 +1,5 @@
-import React from 'react';
-import { DELETE_QUOTE } from '../gql-operations/mutations';
+import React, { useState } from 'react';
+import { DELETE_QUOTE, UPDATE_QUOTE } from '../gql-operations/mutations';
 import Message from '../../assets/svgs/Message';
 import { useMutation } from '@apollo/client';
 import NewThread from './NewThread';
@@ -8,9 +8,11 @@ import './timeline.scss';
 import Loader from '../Loader';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
+	const [editLoading, setEditLoading] = useState(false);
 	const token = localStorage.getItem('token');
 
-	const [deleteQuote, { loading, error }] = useMutation(DELETE_QUOTE, {
+	// Delete graphql mutation
+	const [deleteQuote, { loading: deleteLoader }] = useMutation(DELETE_QUOTE, {
 		onCompleted: (data) => {
 			console.log(data);
 		},
@@ -20,24 +22,69 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 		refetchQueries: ['getMyProfile'],
 	});
 
-	const handleDelete = (quoteId) => {
-		const shouldDelete = window.confirm(
-			'Are you sure you want to delete this thread?'
-		);
-		if (shouldDelete) {
-			deleteQuote({
-				variables: {
-					id: quoteId,
-				},
-			});
+	// Update graphql mutation
+	const [updateQuote, { loading: updateLoader }] = useMutation(UPDATE_QUOTE, {
+		onCompleted: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+		refetchQueries: ['getMyProfile'],
+	});
+
+	// Handle edit.
+	const handleEdit = async (id, text) => {
+		setEditLoading(true);
+		const newText = window.prompt('Edit your thread', text);
+
+		if (newText) {
+			try {
+				await updateQuote({
+					variables: {
+						id,
+						name: newText,
+					},
+				});
+			} catch (error) {
+				console.error('Edit error:', error);
+			} finally {
+				setEditLoading(false);
+			}
+		} else {
+			setEditLoading(false);
 		}
 	};
 
-	if (loading) return <Loader />;
+	// Handle delete.
+	const handleDelete = async (quoteId) => {
+		const shouldDelete = window.confirm(
+			'Are you sure you want to delete this thread?'
+		);
 
-	if (error) {
-		console.log(error);
+		if (shouldDelete) {
+			try {
+				await deleteQuote({
+					variables: {
+						id: quoteId,
+					},
+				});
+			} catch (error) {
+				console.error('Delete error:', error);
+			}
+		}
+	};
+
+	if (updateLoader || editLoading || deleteLoader) {
+		return (
+			<div className="loader">
+				<Loader />
+			</div>
+		);
 	}
+
+	// Check if thread is edited.
+	const isEdited = (createdAt, updatedAt) => createdAt !== updatedAt;
 
 	return (
 		<ol className="timeline">
@@ -65,6 +112,16 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 							</span>
 						</div>
 						<div className="timeline__thread-wrap">
+							{!hideUnnecessaryElements &&
+								token &&
+								isEdited(
+									quote?.createdAt,
+									quote?.updatedAt
+								) && (
+									<div className="timeline__thread-edited">
+										Edited
+									</div>
+								)}
 							<div className="timeline__thread">
 								<p>{quote?.name}</p>
 							</div>
@@ -72,7 +129,9 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 								<div className="timeline__thread-buttons">
 									<button
 										className="timeline__thread-buttons-button timeline__thread-buttons-button-edit"
-										// onClick={() => handleEdit(quote?._id)}
+										onClick={() =>
+											handleEdit(quote?._id, quote?.name)
+										}
 									>
 										Edit
 									</button>

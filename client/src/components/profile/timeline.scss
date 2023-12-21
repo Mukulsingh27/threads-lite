@@ -23,7 +23,7 @@ $blue-500: #688afd;
 		}
 
 		&+.extra-space {
-			margin-top: 48px;
+			margin-top: 45px;
 		}
 	}
 
@@ -38,8 +38,8 @@ $blue-500: #688afd;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				width: 45px;
-				height: 45px;
+				width: 50px;
+				height: 50px;
 				border-radius: 50%;
 				margin-left: -40px;
 				flex-shrink: 0;
@@ -138,7 +138,22 @@ $blue-500: #688afd;
 			.timeline__thread-buttons {
 				visibility: visible;
 			}
+
+			.timeline__thread-edited {
+				display: block;
+			}
 		}
+	}
+
+	&__thread-edited {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: $grey-300;
+		font-size: 12px;
+		padding: 3px 6px;
+		font-weight: 600;	
 	}
 
 	&__thread {
