@@ -69,12 +69,20 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 								<p>{quote?.name}</p>
 							</div>
 							{!hideUnnecessaryElements && token && (
-								<button
-									className="timeline__thread-delete"
-									onClick={() => handleDelete(quote?._id)}
-								>
-									X
-								</button>
+								<div className="timeline__thread-buttons">
+									<button
+										className="timeline__thread-buttons-button timeline__thread-buttons-button-edit"
+										// onClick={() => handleEdit(quote?._id)}
+									>
+										Edit
+									</button>
+									<button
+										className="timeline__thread-buttons-button timeline__thread-buttons-button-delete"
+										onClick={() => handleDelete(quote?._id)}
+									>
+										Delete
+									</button>
+								</div>
 							)}
 						</div>
 					</div>
