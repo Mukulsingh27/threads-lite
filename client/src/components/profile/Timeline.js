@@ -19,7 +19,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 		onError: (error) => {
 			console.log(error);
 		},
-		refetchQueries: ['getMyProfile'],
+		refetchQueries: ['getMyProfile', 'getAllQuotes'],
 	});
 
 	// Update graphql mutation

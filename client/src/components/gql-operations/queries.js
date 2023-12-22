@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_ALL_QUOTES = gql`
-	query getAllQuotes {
-		quotes {
+	query getAllQuotes($page: Int!, $pageSize: Int!) {
+		quotes(page: $page, pageSize: $pageSize) {
 			_id
 			name
 			by {
@@ -42,6 +42,7 @@ export const GET_USER_PROFILE = gql`
 			email
 			profileImage
 			quotes {
+				_id
 				name
 				createdAt
 			}
