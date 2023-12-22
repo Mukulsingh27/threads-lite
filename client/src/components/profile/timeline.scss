@@ -23,7 +23,7 @@ $blue-500: #688afd;
 		}
 
 		&+.extra-space {
-			margin-top: 48px;
+			margin-top: 45px;
 		}
 	}
 
@@ -38,8 +38,8 @@ $blue-500: #688afd;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				width: 45px;
-				height: 45px;
+				width: 50px;
+				height: 50px;
 				border-radius: 50%;
 				margin-left: -40px;
 				flex-shrink: 0;
@@ -49,6 +49,11 @@ $blue-500: #688afd;
 				color: #fff;
 				border: none;
 				cursor: pointer;
+				transition: all 0.2s ease;
+
+				&:hover {
+					background-color: #4570fb;
+				}
 			}
 
 			input {
@@ -130,10 +135,25 @@ $blue-500: #688afd;
 		position: relative;
 
 		&:hover {
-			.timeline__thread-delete {
+			.timeline__thread-buttons {
+				visibility: visible;
+			}
+
+			.timeline__thread-edited {
 				display: block;
 			}
 		}
+	}
+
+	&__thread-edited {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: $grey-300;
+		font-size: 12px;
+		padding: 3px 6px;
+		font-weight: 600;	
 	}
 
 	&__thread {
@@ -147,22 +167,31 @@ $blue-500: #688afd;
 		font-size: 18px;
 	}
 
-	&__thread-delete {
-		display: none;
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 100%;
-		background-color: #ff6767;
-		border-radius: 0 8px 8px 0;
-		color: #ffffff;
-		border: none;
-		padding: 10px 15px;
-		font-weight: 900;
-		cursor: pointer;
+	&__thread-buttons {
+		visibility: hidden;
 
-		&:hover {
-			background-color: #ff4f4f;
+		&-button {
+			position: absolute;
+			background-color: transparent;
+			color: $grey-300;
+			border: none;
+			height: 40px;
+			width: 50%;
+			font-size: 16px;
+			font-weight: 900;
+			cursor: pointer;
+
+			&:hover {
+				color: $grey-400;
+			}
+
+			&-edit {
+				left: 0;
+			}
+
+			&-delete {
+				right: 0;
+			}
 		}
 	}
 }

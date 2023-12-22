@@ -27,6 +27,7 @@ export const GET_MY_PROFILE = gql`
 				_id
 				name
 				createdAt
+				updatedAt
 			}
 		}
 	}

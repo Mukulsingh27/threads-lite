@@ -82,17 +82,34 @@ const resolvers = {
 				name,
 				by: userID,
 				createdAt: new Date().toISOString(),
+				updatedAt: new Date().toISOString(),
 			});
-
 			await newQuote.save();
+
 			return 'Quote created successfully';
 		},
+		updateQuote: async (_, { _id, name }, { userID }) => {
+			if (!userID) throw new Error('You are not authenticated');
+
+			// Find and update the quote
+			const findAndUpdate = await Quote.findByIdAndUpdate(_id, {
+				name,
+				updatedAt: new Date().toISOString(),
+			});
+
+			if (!findAndUpdate) throw new Error('Quote does not exists');
+
+			// Return success message
+			return 'Quote updated successfully';
+		},
 		deleteQuote: async (_, { _id }, { userID }) => {
+			// Check if user is authenticated
 			if (!userID) throw new Error('You are not authenticated');
 
 			// Find and delete the quote
 			const findAndDelete = await Quote.findByIdAndDelete(_id);
 
+			// Check if quote exists
 			if (!findAndDelete) throw new Error('Quote does not exists');
 
 			// Return success message
