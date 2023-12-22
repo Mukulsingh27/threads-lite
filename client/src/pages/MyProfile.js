@@ -31,10 +31,11 @@ const MyProfile = () => {
 				<>
 					<div className="profile-section__left-side">
 						<UserCard
-							firstName={data.user.firstName}
-							lastName={data.user.lastName}
-							email={data.user.email}
-							avatar={data.user.profileImage}
+							userId={data?.user._id}
+							firstName={data?.user.firstName}
+							lastName={data?.user.lastName}
+							email={data?.user.email}
+							avatar={data?.user.profileImage}
 							needLogOutButton={true}
 						/>
 					</div>

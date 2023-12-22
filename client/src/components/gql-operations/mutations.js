@@ -17,6 +17,12 @@ export const SIGN_IN_USER = gql`
 	}
 `;
 
+export const DELETE_USER = gql`
+	mutation deleteUser($id: ID!) {
+		deleteUserWithQuotes(_id: $id)
+	}
+`;
+
 export const CREATE_QUOTE = gql`
 	mutation createQuote($name: String!) {
 		createQuote(name: $name)

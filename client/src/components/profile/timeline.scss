@@ -10,7 +10,7 @@ $blue-500: #688afd;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
-	padding: 32px 0 32px 32px;
+	padding: 0 32px 32px;
 	border-left: 2px solid $grey-200;
 	font-family: inherit;
 
@@ -177,7 +177,7 @@ $blue-500: #688afd;
 			border: none;
 			height: 40px;
 			width: 50%;
-			font-size: 16px;
+			font-size: 15px;
 			font-weight: 900;
 			cursor: pointer;
 
