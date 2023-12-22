@@ -2,22 +2,22 @@ import {
 	ApolloServerPluginLandingPageGraphQLPlayground,
 	ApolloServerPluginDrainHttpServer,
 	ApolloServerPluginLandingPageDisabled,
-} from "apollo-server-core";
-import { ApolloServer } from "apollo-server-express";
-import typeDefs from "./schema.js";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import express from "express";
-import http from "http";
-import path from "path";
-import { fileURLToPath } from "url";
+} from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
+import typeDefs from './schema.js';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import express from 'express';
+import http from 'http';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Read the .env file
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
 	dotenv.config();
 }
 
@@ -28,18 +28,18 @@ const port = process.env.PORT || 5000;
 mongoose
 	.connect(process.env.MONGO_DB_URL)
 	.then(() => {
-		console.log("MongoDB connected successfully !!");
+		console.log('MongoDB connected successfully !!');
 	})
 	.catch((err) => {
 		console.log(err);
 	});
 
 // Import Models
-import "./models/User.js";
-import "./models/Quote.js";
+import './models/User.js';
+import './models/Quote.js';
 
 // Import the resolvers
-import resolvers from "./resolver.js";
+import resolvers from './resolver.js';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -61,22 +61,22 @@ const server = new ApolloServer({
 	},
 	plugins: [
 		ApolloServerPluginDrainHttpServer({ httpServer }),
-		process.env.NODE_ENV !== "production"
+		process.env.NODE_ENV !== 'production'
 			? ApolloServerPluginLandingPageGraphQLPlayground()
 			: ApolloServerPluginLandingPageDisabled(),
 	],
 });
 
 // Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "client", "build")));
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, 'client', 'build')));
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 	});
 }
 
 await server.start();
-server.applyMiddleware({ app, path: "/graphql" });
+server.applyMiddleware({ app, path: '/graphql' });
 
 httpServer.listen({ port }, () => {
 	console.log(
