@@ -23,7 +23,7 @@ $blue-500: #688afd;
 		}
 
 		&+.extra-space {
-			margin-top: 45px;
+			margin-top: 40px;
 		}
 	}
 
@@ -108,7 +108,7 @@ $blue-500: #688afd;
 
 	&__timeline-item-description {
 		display: flex;
-		padding-top: 6px;
+		padding-top: 10px;
 		gap: 8px;
 		color: $grey-400;
 
