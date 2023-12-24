@@ -119,7 +119,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 									quote?.updatedAt
 								) && (
 									<div className="timeline__thread-edited">
-										Edited
+										edited
 									</div>
 								)}
 							<div className="timeline__thread">

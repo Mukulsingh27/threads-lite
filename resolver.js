@@ -75,6 +75,22 @@ const resolvers = {
 
 			return { token };
 		},
+		deleteUserWithQuotes: async (_, { _id }, { userID }) => {
+			// Check if user is authenticated
+			if (!userID) throw new Error('You are not authenticated');
+
+			// Find and delete the user
+			const findAndDelete = await User.findByIdAndDelete(_id);
+
+			// Check if user exists
+			if (!findAndDelete) throw new Error('User does not exists');
+
+			// Delete all quotes by the user
+			await Quote.deleteMany({ by: _id });
+
+			// Return success message
+			return 'User deleted successfully';
+		},
 		createQuote: async (_, { name }, { userID }) => {
 			if (!userID) throw new Error('You are not authenticated');
 
