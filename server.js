@@ -6,13 +6,13 @@ import {
 import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './schema.js';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import express from 'express';
+import dotenv from 'dotenv';
 import http from 'http';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,66 +77,9 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-app.use(cors({ origin: 'https://threads-lite-ms.vercel.app', credentials: true }));
-
+// CORS
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json()); // tell the server to accept the json data from frontend
-
-// Verify email
-app.use('/verify/:token', async (req, res) => {
-	try {
-		const { token } = req.params;
-
-		// Check if token is present
-		if (!token) {
-			return res.status(400).send('Token not found');
-		}
-
-		// Verify the token
-		const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-		// Check if user exists
-		const userVerification = await mongoose
-			.model('UserVerification')
-			.findOne({ email });
-
-		if (!userVerification) {
-			return res.status(400).send('User verification not found');
-		}
-
-		// Check if user is already verified
-		const verified = await mongoose
-			.model('User')
-			.findOne({ email, verified: true });
-
-		if (verified) {
-			return res.status(400).send('User already verified');
-		}
-
-		// Update the user to verified and remove the auto-expiration
-		await mongoose
-			.model('User')
-			.findOneAndUpdate(
-				{ email },
-				{ verified: true },
-				{ new: true, useFindAndModify: false }
-			);
-
-		// Send the response
-		// res.status(200).send('User verified successfully');
-
-		// redirect to login page
-		return res.redirect( process.env.CLIENT_URL + '/login');
-	} catch (error) {
-		console.error('Error verifying user:', error);
-
-		if (error.name === 'TokenExpiredError') {
-			return res.status(401).send('Token has expired');
-		}
-
-		// Handle other errors
-		res.status(500).send('Internal Server Error');
-	}
-});
 
 await server.start();
 server.applyMiddleware({ app, path: '/graphql' });

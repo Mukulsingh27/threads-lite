@@ -23,6 +23,12 @@ export const DELETE_USER = gql`
 	}
 `;
 
+export const VERIFY_USER = gql`
+	mutation verifyUser($token: String!) {
+		verifyUser(token: $token)
+	}
+`;
+
 export const CREATE_QUOTE = gql`
 	mutation createQuote($name: String!) {
 		createQuote(name: $name)

@@ -56,7 +56,8 @@ const SignUp = () => {
 					{data && data?.user && (
 						<p>
 							{data.user?.firstName} {data.user?.lastName} has
-							been successfully registered
+							been successfully registered, Please check your
+							email to verify your account.
 						</p>
 					)}
 				</div>

@@ -4,6 +4,7 @@ import MyProfile from './MyProfile';
 import UserProfile from './UsersProfile';
 import Login from '../components/auth/Login';
 import SignUp from '../components/auth/SignUp';
+import Verify from '../components/auth/Verify';
 
 const routes = [
 	{
@@ -29,6 +30,11 @@ const routes = [
 	{
 		path: '/profile/:id',
 		element: <UserProfile />,
+		exact: true,
+	},
+	{
+		path: '/verify/:token',
+		element: <Verify />,
 		exact: true,
 	},
 	// 404 page

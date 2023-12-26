@@ -153,6 +153,35 @@ const resolvers = {
 			// Return success message
 			return 'User deleted successfully';
 		},
+		verifyUser: async (_, { token }) => {
+			// Check if token is present
+			if (!token) return 'Token not found';
+
+			// Verify the token
+			const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+			// Check if user exists
+			const userVerification = await UserVerification.findOne({
+				email,
+			});
+
+			if (!userVerification) return 'User verification not found';
+
+			// Check if user is already verified
+			const verified = await User.findOne({ email, verified: true });
+
+			if (verified) return 'User is already verified';
+
+			// Update the user to verified and remove the auto-expiration
+			await User.findOneAndUpdate(
+				{ email },
+				{ verified: true },
+				{ new: true, useFindAndModify: false }
+			);
+
+			// Return a success message
+			return 'User verified successfully';
+		},
 		createQuote: async (_, { name }, { userID }) => {
 			if (!userID) throw new Error('You are not authenticated');
 

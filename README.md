@@ -10,10 +10,10 @@ This is a Node + React application that uses Apollo Client for GraphQL and React
 
 ## Environments
 
-| Environment | Branch | URL                                 | Server/Playground URL |
-| ----------- | ------ | ----------------------------------  | --------------------- |
-| Production  | master | https://threads-lite-ms.vercel.app/ |                       |
-| Local       |        | http://localhost:3000               | http://localhost:4000 |
+| Environment | Branch | URL                                 | Server/Playground URL         |
+| ----------- | ------ | ----------------------------------  | ----------------------------- |
+| Production  | master | https://threads-lite-ms.vercel.app/ |                               |
+| Local       |        | http://localhost:3000               | http://localhost:4000/graphql |
 
 ## Local Environment Setup
 
@@ -41,9 +41,14 @@ npm install
 3. Create a `.env` file in the root directory and add the following environment variables
 
 ```bash
-MONGO_DB_URL = "<CONNECTION_URL>"
-JWT_SECRET_KEY = "<KEY>"
+MONGO_DB_URL = <CONNECTION_URL>
+JWT_SECRET_KEY = <KEY>
 PORT = <PORT>
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_MAIL=<EMAIL_ID>
+SMTP_PASSWORD=<APP_PASSWORD>
+CLIENT_URL=http://localhost:3000
 ```
 
 4. Start the server from root directory
