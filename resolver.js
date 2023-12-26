@@ -2,24 +2,40 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
+import confirmation from './templates/confirmation.js';
 
 // Read the .env file
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+	dotenv.config();
+}
+
+// Create the transporter
+const transporter = nodemailer.createTransport({
+	host: process.env.SMTP_HOST,
+	port: process.env.SMTP_PORT,
+	secure: false, // true for 465, false for other ports
+	auth: {
+		user: process.env.SMTP_MAIL, // user email
+		pass: process.env.SMTP_PASSWORD, // user app password
+	},
+});
 
 // User Modal
 const User = mongoose.model('User');
 const Quote = mongoose.model('Quote');
+const UserVerification = mongoose.model('UserVerification');
 
 const resolvers = {
 	Query: {
 		users: async () => await User.find({}),
 		user: async (_, { _id }) => await User.findOne({ _id }),
 		quotes: async (_, { page = 1, pageSize = 10 }) => {
-			const offset = (page - 1) * pageSize;
+			const offset = parseInt(page - 1) * pageSize;
 			const quotes = await Quote.find({})
 				.sort({ createdAt: -1 })
-				.skip(offset)
-				.limit(pageSize)
+				.skip(parseInt(offset))
+				.limit(parseInt(pageSize))
 				.populate('by', '_id firstName lastName profileImage');
 			return quotes;
 		},
@@ -43,19 +59,65 @@ const resolvers = {
 			const hashedPassword = await bcrypt.hash(newUser?.password, 10);
 
 			// Create new user
-			const newUSer = await new User({
+			const newUSerData = await new User({
 				...newUser,
 				profileImage: `https://robohash.org/${newUser.firstName.toLowerCase()}?size=300x300`,
 				password: hashedPassword,
 			});
 
-			return newUSer.save();
+			// Save the user
+			const savedUser = await newUSerData.save();
+
+			// Create token
+			const token = jwt.sign(
+				{ email: newUser.email },
+				process.env.JWT_SECRET_KEY,
+				{ expiresIn: '10m' }
+			);
+
+			// Create new user verification
+			const newUserVerification = new UserVerification({
+				userID: savedUser._id,
+				email: newUser.email,
+				token,
+			});
+
+			// Save the user verification
+			await newUserVerification.save();
+
+			// Define the email
+			var mailConfigs = {
+				from: process.env.SMTP_MAIL,
+				to: newUser.email,
+				subject: 'Threads Lite: Email Confirmation',
+				html: confirmation({
+					name: newUser.firstName,
+					link: process.env.CLIENT_URL + '/verify/' + token,
+				}),
+			};
+
+			// Send the email
+			await transporter.sendMail(mailConfigs, (error, info) => {
+				if (error) {
+					console.log(error);
+					res.status(500).send('Something went wrong.');
+				} else {
+					console.log('Email sent successfully: ' + info.response);
+					res.status(200).send('Email Sent');
+				}
+			});
+
+			return savedUser;
 		},
 		signInUser: async (_, { userSignIn }) => {
 			const user = await User.findOne({ email: userSignIn.email });
 
-			// Check if user exists
-			if (!user) throw new Error('User does not exists');
+			// Check if user exists and is verified
+			if (!user || !user.verified) {
+				throw new Error(
+					!user ? 'User does not exist' : 'User is not verified'
+				);
+			}
 
 			// Compare password
 			const passMatch = await bcrypt.compare(

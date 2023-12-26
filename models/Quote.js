@@ -11,12 +11,10 @@ const quoteSchema = new mongoose.Schema( {
 	},
 	createdAt: {
 		type: Date,
-		default: String,
 		required: true
 	},
 	updatedAt: {
 		type: Date,
-		default: String,
 		required: true
 	}
 } )

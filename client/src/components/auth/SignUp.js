@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './auth.scss';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP_USER } from '../gql-operations/mutations';
 import Loader from '../Loader';
+import './auth.scss';
 
 const SignUp = () => {
 	const [signUpData, setSignUpData] = useState({});
 
+	// Mutation Hook
 	const [signUpUser, { loading, error, data }] = useMutation(SIGN_UP_USER, {
 		onCompleted: (data) => {
 			console.log(data);
