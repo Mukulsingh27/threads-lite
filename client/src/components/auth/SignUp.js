@@ -8,28 +8,7 @@ import './auth.scss';
 const SignUp = () => {
 	const [signUpData, setSignUpData] = useState({});
 
-	const sendEmail = async () => {
-		await fetch(`http://localhost:4000/api/mail/`, {
-			method: 'POST',
-			body: JSON.stringify({
-				name: signUpData.firstName + ' ' + signUpData.lastName,
-				email: signUpData.email,
-			}),
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		})
-			.then((res) => {
-				if (res.status > 199 && res.status < 300) {
-					window.alert('Send Successfully !');
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
+	// Mutation Hook
 	const [signUpUser, { loading, error, data }] = useMutation(SIGN_UP_USER, {
 		onCompleted: (data) => {
 			console.log(data);
@@ -57,7 +36,6 @@ const SignUp = () => {
 				},
 			},
 		});
-		sendEmail();
 	};
 	return (
 		<div className="login-container">
