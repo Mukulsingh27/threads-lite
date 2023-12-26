@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+import confirmation from '../templates/confirmation.js';
 
 // Read the .env file
 if (process.env.NODE_ENV !== 'production') {
@@ -28,7 +29,10 @@ export const sendEmail = async (req, res) => {
 		from: process.env.SMTP_MAIL,
 		to: email,
 		subject: subject,
-		text: 'Welcome to the Quote App',
+		html: confirmation({
+			name,
+			token,
+		}),
 	};
 
 	transporter.sendMail(mailConfigs, (error, info) => {
