@@ -9,10 +9,15 @@ const Login = () => {
 	const navigation = useNavigate();
 	const [loginData, setLoginData] = useState({});
 
+	const [passwordVisible, setPasswordVisible] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setPasswordVisible(!passwordVisible);
+	};
+
 	const [signInUser, { loading, error }] = useMutation(SIGN_IN_USER, {
 		onCompleted: (data) => {
 			localStorage.setItem('token', data?.user?.token);
-			// Check if there is no error before navigating
 			if (!error) {
 				navigation('/profile');
 			}
@@ -86,7 +91,7 @@ const Login = () => {
 							Password
 						</label>
 						<input
-							type="password"
+							type={passwordVisible ? 'text' : 'password'}
 							name="password"
 							id="Enter Password"
 							className="input-field"
@@ -95,9 +100,18 @@ const Login = () => {
 							required
 							autoComplete="on"
 						/>
+						<button
+							type="button"
+							onClick={togglePasswordVisibility}
+							className="toggle-password-button"
+						>
+							{passwordVisible ? 'Hide' : 'Show'}
+						</button>
 					</div>
+					{/* <Link to="/reset-password" className="text text-links">
+						Forgot Password
+					</Link> */}
 					<div className="input-control">
-						{/* <a href="#" className="text text-links">Forgot Password</a> */}
 						<input
 							type="submit"
 							name="submit"

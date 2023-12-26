@@ -8,6 +8,12 @@ import './auth.scss';
 const SignUp = () => {
 	const [signUpData, setSignUpData] = useState({});
 
+	const [passwordVisible, setPasswordVisible] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setPasswordVisible(!passwordVisible);
+	};
+
 	// Mutation Hook
 	const [signUpUser, { loading, error, data }] = useMutation(SIGN_UP_USER, {
 		onCompleted: (data) => {
@@ -126,7 +132,7 @@ const SignUp = () => {
 							Password
 						</label>
 						<input
-							type="password"
+							type={passwordVisible ? 'text' : 'password'}
 							name="password"
 							id="Enter Password"
 							className="input-field"
@@ -135,6 +141,13 @@ const SignUp = () => {
 							required
 							autoComplete="on"
 						/>
+						<button
+							type="button"
+							onClick={togglePasswordVisibility}
+							className="toggle-password-button"
+						>
+							{passwordVisible ? 'Hide' : 'Show'}
+						</button>
 					</div>
 					<div className="input-control">
 						<input

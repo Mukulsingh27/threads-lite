@@ -27,6 +27,20 @@ const UserCard = ({
 
 	if (loading) return <Loader />;
 
+	// Log out
+	const handleLogOut = () => {
+		const confirmLogOut = window.confirm(
+			'Are you sure you want to log out?'
+		);
+
+		if (confirmLogOut) {
+			localStorage.removeItem('token');
+			navigation('/login');
+			window.location.reload();
+		}
+	};
+
+	// Delete user
 	const handleDelete = async (id) => {
 		// Alter and confirm delete.
 		const confirmDelete = window.confirm(
@@ -72,20 +86,16 @@ const UserCard = ({
 			{token && needLogOutButton && (
 				<div className="user-card__buttons">
 					<button
-						className="user-card__logoff-button"
-						onClick={() => {
-							localStorage.removeItem('token');
-							navigation('/login');
-							window.location.reload();
-						}}
-					>
-						Log Out
-					</button>
-					<button
 						className="user-card__delete-button"
 						onClick={() => handleDelete(userId)}
 					>
 						Delete Account
+					</button>
+					<button
+						className="user-card__logoff-button"
+						onClick={() => handleLogOut()}
+					>
+						Log Out
 					</button>
 				</div>
 			)}
