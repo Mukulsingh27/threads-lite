@@ -45,11 +45,10 @@ const Home = () => {
 		fetchMore({
 			variables: { page: page + 1, pageSize },
 			updateQuery: (prev, { fetchMoreResult }) => {
-				if (fetchMoreResult.quotes.length === 0) setDeadEnd(true);
-
-				if (fetchMoreResult || fetchMoreResult.quotes.length !== 0) {
-					setThreads([...threads, ...fetchMoreResult.quotes]);
+				if (fetchMoreResult.quotes.length === 0) {
+					setDeadEnd(true);
 				}
+				setThreads([...threads, ...fetchMoreResult.quotes]);
 			},
 		});
 

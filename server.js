@@ -12,6 +12,8 @@ import express from 'express';
 import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import router from './routes/emailRoutes.js';
+import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -74,6 +76,13 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 	});
 }
+
+app.use(cors()); // Use this after the variable declaration
+
+app.use(express.json()); // tell the server to accept the json data from frontend
+
+//Signup and login
+app.use('/api', router);
 
 await server.start();
 server.applyMiddleware({ app, path: '/graphql' });
