@@ -48,7 +48,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_MAIL=<EMAIL_ID>
 SMTP_PASSWORD=<APP_PASSWORD>
-CLIENT_URL=<CLIENT_URL>
+CLIENT_URL=http://localhost:3000
 ```
 
 4. Start the server from root directory
@@ -63,9 +63,7 @@ npm run dev
 cd client && npm run start
 ```
 
-Notes: 
-- Change the `ApolloClient` URI in `client/src/index.js` to `http://localhost:<PORT>/graphql` before starting the client while running the application locally. And change it back to `/graphql` before creating a production build.
-- Change the `CLIENT_URL` in `.env` file to `http://localhost:3000` while running the application locally. And change it back to `https://threads-lite-ms.vercel.app` before creating a production build.
+Note: Change the `ApolloClient` URI in `client/src/index.js` to `http://localhost:<PORT>/graphql` before starting the client while running the application locally. And change it back to `/graphql` before creating a production build.
 
 ## Usage
 
