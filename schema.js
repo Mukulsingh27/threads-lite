@@ -41,6 +41,7 @@ const typeDefs = gql`
 		email: String!
 		password: String
 		profileImage: String!
+		verified: Boolean!
 		quotes: [Quote]
 	}
 

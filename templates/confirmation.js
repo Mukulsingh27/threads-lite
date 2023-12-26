@@ -1,4 +1,4 @@
-const confirmation = ({ name, token }) => {
+const confirmation = ({ name, link }) => {
 	return `
 	<!DOCTYPE html>
 	<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -226,11 +226,11 @@ const confirmation = ({ name, token }) => {
 															<tr>
 																<td class="pad" style="padding-bottom:10px;padding-top:10px;text-align:center;">
 																	<div class="alignment" align="center"><!--[if mso]>
-	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://example.com" style="height:44px;width:97px;v-text-anchor:middle;" arcsize="0%" stroke="false" fillcolor="#688afd">
-	<w:anchorlock/>
-	<v:textbox inset="0px,0px,0px,0px">
-	<center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px">
-	<![endif]--><a href="https://example.com" target="_blank" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#688afd;border-radius:0px;width:auto;border-top:0px solid #4D4997;font-weight:400;border-right:0px solid #4D4997;border-bottom:0px solid #4D4997;border-left:0px solid #4D4997;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span style="padding-left:15px;padding-right:15px;font-size:16px;display:inline-block;letter-spacing:normal;"><span style="word-break: break-word; line-height: 32px;">Confirm</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
+																		<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://example.com" style="height:44px;width:97px;v-text-anchor:middle;" arcsize="0%" stroke="false" fillcolor="#688afd">
+																		<w:anchorlock/>
+																		<v:textbox inset="0px,0px,0px,0px">
+																		<center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px">
+																		<![endif]--><a href="${link}" target="_blank" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#688afd;border-radius:0px;width:auto;border-top:0px solid #4D4997;font-weight:400;border-right:0px solid #4D4997;border-bottom:0px solid #4D4997;border-left:0px solid #4D4997;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span style="padding-left:15px;padding-right:15px;font-size:16px;display:inline-block;letter-spacing:normal;"><span style="word-break: break-word; line-height: 32px;">Confirm</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
 																</td>
 															</tr>
 														</table>
