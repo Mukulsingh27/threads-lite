@@ -25,8 +25,6 @@ const UserCard = ({
 		},
 	});
 
-	if (loading) return <Loader />;
-
 	// Log out
 	const handleLogOut = () => {
 		const confirmLogOut = window.confirm(
@@ -63,6 +61,9 @@ const UserCard = ({
 			}
 		}
 	};
+
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
 
 	return (
 		<div className="user-card">

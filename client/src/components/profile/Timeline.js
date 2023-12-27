@@ -8,6 +8,7 @@ import Loader from '../Loader';
 import './timeline.scss';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
+	// Local State.
 	const [editLoading, setEditLoading] = useState(false);
 	const token = localStorage.getItem('token');
 
@@ -75,6 +76,10 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 		}
 	};
 
+	// Check if thread is edited.
+	const isEdited = (createdAt, updatedAt) => createdAt !== updatedAt;
+
+	// If the data is loading, return a loader.
 	if (updateLoader || editLoading || deleteLoader) {
 		return (
 			<div className="loader">
@@ -82,9 +87,6 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			</div>
 		);
 	}
-
-	// Check if thread is edited.
-	const isEdited = (createdAt, updatedAt) => createdAt !== updatedAt;
 
 	return (
 		<ol className="timeline">

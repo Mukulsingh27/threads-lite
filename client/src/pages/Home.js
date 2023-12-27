@@ -11,8 +11,8 @@ const Home = () => {
 	const [threads, setThreads] = useState([]);
 	const [deadEnd, setDeadEnd] = useState(false);
 
-	// Fetch the data.
-	const { loading, error, fetchMore } = useQuery(GET_ALL_QUOTES, {
+	// Get all threads query hook.
+	const { loading, fetchMore } = useQuery(GET_ALL_QUOTES, {
 		onCompleted: (data) => {
 			setThreads(data.quotes);
 		},
@@ -20,14 +20,10 @@ const Home = () => {
 			page,
 			pageSize,
 		},
+		onError: (error) => {
+			console.log(error);
+		},
 	});
-
-	// If the data is loading, return a loader.
-	if (loading) return <Loader />;
-
-	if (error) {
-		console.log(error);
-	}
 
 	// If there are no threads, return a message.
 	if (threads.length === 0)
@@ -55,6 +51,9 @@ const Home = () => {
 		// Update the current page
 		setPage(page + 1);
 	};
+
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
 
 	return (
 		<div className="home">

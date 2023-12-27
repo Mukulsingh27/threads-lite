@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// User Modal
 const userSchema = new mongoose.Schema({
 	firstName: {
 		type: String,

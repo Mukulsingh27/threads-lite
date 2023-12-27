@@ -6,15 +6,16 @@ import Loader from '../Loader';
 import './auth.scss';
 
 const SignUp = () => {
+	// Local States.
 	const [signUpData, setSignUpData] = useState({});
-
 	const [passwordVisible, setPasswordVisible] = useState(false);
 
+	// Toggle Password Visibility.
 	const togglePasswordVisibility = () => {
 		setPasswordVisible(!passwordVisible);
 	};
 
-	// Mutation Hook
+	// Sign Up Mutation Hook.
 	const [signUpUser, { loading, error, data }] = useMutation(SIGN_UP_USER, {
 		onCompleted: (data) => {
 			console.log(data);
@@ -24,15 +25,15 @@ const SignUp = () => {
 		},
 	});
 
-	if (loading) return <Loader />;
-
+	// Handle Sign Up Data Change.
 	const handleSignUpDataChange = (e) => {
 		setSignUpData({
 			...signUpData,
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.value.trim(),
 		});
 	};
 
+	// Handle Form Submit.
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		signUpUser({
@@ -43,6 +44,10 @@ const SignUp = () => {
 			},
 		});
 	};
+
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
+
 	return (
 		<div className="login-container">
 			<section className="wrapper">
@@ -57,10 +62,25 @@ const SignUp = () => {
 						</span>
 					</p>
 				</div>
-				<div className="error">{error && <p>{error.message}</p>}</div>
+				<div
+					className="error"
+					style={{
+						color: 'red',
+						paddingTop: '5px',
+						fontWeight: '500',
+					}}
+				>
+					{error && <p>{error.message}</p>}
+				</div>
 				<div className="success">
 					{data && data?.user && (
-						<p>
+						<p
+							style={{
+								color: 'green',
+								paddingTop: '5px',
+								fontWeight: '500',
+							}}
+						>
 							{data.user?.firstName} {data.user?.lastName} has
 							been successfully registered, Please check your
 							email to verify your account.

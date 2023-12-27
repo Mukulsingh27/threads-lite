@@ -25,6 +25,7 @@ const transporter = nodemailer.createTransport({
 const User = mongoose.model('User');
 const Quote = mongoose.model('Quote');
 
+// Resolvers
 const resolvers = {
 	Query: {
 		users: async () => await User.find({}),

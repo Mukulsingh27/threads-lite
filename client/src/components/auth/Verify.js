@@ -9,7 +9,7 @@ const Verify = () => {
 	const { token } = useParams();
 	const [countDown, setCountDown] = useState(10);
 
-	// Mutation Hook
+	// Verify User Mutation Hook
 	const [verifyUser, { loading, error, data }] = useMutation(VERIFY_USER);
 
 	// Verify user

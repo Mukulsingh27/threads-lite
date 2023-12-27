@@ -7,14 +7,17 @@ import Loader from '../Loader';
 
 const Login = () => {
 	const navigation = useNavigate();
-	const [loginData, setLoginData] = useState({});
 
+	// Local States.
+	const [loginData, setLoginData] = useState({});
 	const [passwordVisible, setPasswordVisible] = useState(false);
 
+	// Toggle Password Visibility.
 	const togglePasswordVisibility = () => {
 		setPasswordVisible(!passwordVisible);
 	};
 
+	// Sign In Mutation Hook.
 	const [signInUser, { loading, error }] = useMutation(SIGN_IN_USER, {
 		onCompleted: (data) => {
 			localStorage.setItem('token', data?.user?.token);
@@ -28,15 +31,15 @@ const Login = () => {
 		refetchQueries: ['getMyProfile'],
 	});
 
-	if (loading) return <Loader />;
-
+	// Handle Login Data Change.
 	const handleLoginDataChange = (e) => {
 		setLoginData({
 			...loginData,
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.value.trim(),
 		});
 	};
 
+	// Handle Form Submit.
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		signInUser({
@@ -47,6 +50,9 @@ const Login = () => {
 			},
 		});
 	};
+
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
 
 	return (
 		<div className="login-container">

@@ -1,29 +1,31 @@
 import React from 'react';
-import '../components/profile/profile.scss';
+import { GET_MY_PROFILE } from '../components/gql-operations/queries';
 import Timeline from '../components/profile/Timeline';
 import UserCard from '../components/profile/UserCard';
-import { useQuery } from '@apollo/client';
-import { GET_MY_PROFILE } from '../components/gql-operations/queries';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
+import { useQuery } from '@apollo/client';
+import '../components/profile/profile.scss';
 
 const MyProfile = () => {
 	const navigate = useNavigate();
 	const token = localStorage.getItem('token');
 
+	// If there is no token, redirect to login page.
 	if (!token) {
 		navigate('/login');
 	}
 
 	// Get my profile data.
-	const { loading, error, data } = useQuery(GET_MY_PROFILE);
+	const { loading, data } = useQuery(GET_MY_PROFILE, {
+		onError: (error) => {
+			console.log(error);
+			window.location.reload();
+		},
+	});
 
+	// If there is an error, return a message.
 	if (loading) return <Loader />;
-
-	if (error) {
-		console.error('Error fetching profile data:', error);
-		window.location.reload();
-	}
 
 	return (
 		<div className="profile-section">
