@@ -1,22 +1,23 @@
 import mongoose from 'mongoose';
 
-const quoteSchema = new mongoose.Schema( {
+// Quote Modal
+const quoteSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true
+		required: true,
 	},
 	by: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'User',
 	},
 	createdAt: {
 		type: Date,
-		required: true
+		required: true,
 	},
 	updatedAt: {
 		type: Date,
-		required: true
-	}
-} )
+		required: true,
+	},
+});
 
-mongoose.model( 'Quote', quoteSchema );
+mongoose.model('Quote', quoteSchema);

@@ -2,6 +2,7 @@ const confirmation = ({ name, link }) => {
 	return `
 	<!DOCTYPE html>
 	<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+	
 	<head>
 		<title></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -48,7 +49,7 @@ const confirmation = ({ name, link }) => {
 				mso-hide: all;
 			}
 	
-			@media (max-width:640px) {
+			@media (max-width:670px) {
 	
 				.desktop_hide table.icons-inner,
 				.social_block.desktop_hide .social-table {
@@ -126,8 +127,8 @@ const confirmation = ({ name, link }) => {
 		</style>
 	</head>
 	
-	<body style="background-color: #e6e6e6; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
-		<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #e6e6e6;">
+	<body style="background-color: #f1f1f1; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+		<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f1f1f1;">
 			<tbody>
 				<tr>
 					<td>
@@ -135,7 +136,7 @@ const confirmation = ({ name, link }) => {
 							<tbody>
 								<tr>
 									<td>
-										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-bottom: 0 solid #E6E6E6; border-left: 0 solid #E6E6E6; border-radius: 0; border-right: 0px solid #E6E6E6; border-top: 0 solid #E6E6E6; color: #000000; width: 620px; margin: 0 auto;" width="620">
+										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-bottom: 0 solid #E6E6E6; border-left: 0 solid #E6E6E6; border-radius: 0; border-right: 0px solid #E6E6E6; border-top: 0 solid #E6E6E6; color: #000000; width: 650px; margin: 0 auto;" width="650">
 											<tbody>
 												<tr>
 													<td class="column column-1" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-left: 20px; padding-right: 20px; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -193,14 +194,14 @@ const confirmation = ({ name, link }) => {
 							<tbody>
 								<tr>
 									<td>
-										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-bottom: 0 solid #E6E6E6; border-left: 0 solid #E6E6E6; border-right: 0px solid #E6E6E6; border-top: 0 solid #E6E6E6; color: #000000; width: 620px; margin: 0 auto;" width="620">
+										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-bottom: 0 solid #E6E6E6; border-left: 0 solid #E6E6E6; border-right: 0px solid #E6E6E6; border-top: 0 solid #E6E6E6; color: #000000; width: 650px; margin: 0 auto;" width="650">
 											<tbody>
 												<tr>
 													<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-left: 20px; padding-right: 20px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
 														<table class="heading_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 															<tr>
 																<td class="pad" style="padding-bottom:10px;padding-top:10px;text-align:center;width:100%;">
-																	<h1 style="margin: 0; color: #393d47; direction: ltr; font-family: 'Merriweather', 'Georgia', serif; font-size: 38px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 45.6px;"><span class="tinyMce-placeholder">Welcome ${name}&nbsp;</span></h1>
+																	<h1 style="margin: 0; color: #393d47; direction: ltr; font-family: 'Merriweather', 'Georgia', serif; font-size: 38px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 45.6px;"><span class="tinyMce-placeholder">Welcome ${name}</span></h1>
 																</td>
 															</tr>
 														</table>
@@ -208,7 +209,7 @@ const confirmation = ({ name, link }) => {
 															<tr>
 																<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
 																	<div class="alignment" align="center" style="line-height:10px">
-																		<div class="fullWidth" style="max-width: 580px;"><img src="https://static.cdninstagram.com/rsrc.php/yH/r/JesX5Buw5jT.webp" style="display: block; height: auto; border: 0; width: 100%;" width="580" alt="Confirm subscription" title="Confirm subscription"></div>
+																		<div class="fullWidth" style="max-width: 610px;"><img src="https://static.cdninstagram.com/rsrc.php/yH/r/JesX5Buw5jT.webp" style="display: block; height: auto; border: 0; width: 100%;" width="610" alt="Confirm subscription" title="Confirm subscription"></div>
 																	</div>
 																</td>
 															</tr>
@@ -226,7 +227,7 @@ const confirmation = ({ name, link }) => {
 															<tr>
 																<td class="pad" style="padding-bottom:10px;padding-top:10px;text-align:center;">
 																	<div class="alignment" align="center"><!--[if mso]>
-																		<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://example.com" style="height:44px;width:97px;v-text-anchor:middle;" arcsize="0%" stroke="false" fillcolor="#688afd">
+																		<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://example.com" style="height:42px;width:95px;v-text-anchor:middle;" arcsize="0%" stroke="false" fillcolor="#688afd">
 																		<w:anchorlock/>
 																		<v:textbox inset="0px,0px,0px,0px">
 																		<center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px">
@@ -246,14 +247,16 @@ const confirmation = ({ name, link }) => {
 							<tbody>
 								<tr>
 									<td>
-										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #eeeeee; border-left: 20px solid #FFFFFF; border-radius: 0; border-right: 20px solid #FFFFFF; color: #000000; width: 620px; margin: 0 auto;" width="620">
+										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #eeeeee; border-left: 20px solid #FFFFFF; border-radius: 0; border-right: 20px solid #FFFFFF; color: #000000; width: 650px; margin: 0 auto;" width="650">
 											<tbody>
 												<tr>
 													<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-														<table class="empty_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<table class="paragraph_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
 															<tr>
 																<td class="pad">
-																	<div></div>
+																	<div style="color:#f40b0b;direction:ltr;font-family:'Merriweather', 'Georgia', serif;font-size:12px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:14.399999999999999px;">
+																		<p style="margin: 0;">Note: This verification link is only valid for 10 mins.</p>
+																	</div>
 																</td>
 															</tr>
 														</table>
@@ -269,7 +272,7 @@ const confirmation = ({ name, link }) => {
 							<tbody>
 								<tr>
 									<td>
-										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-top: 0 solid #E6E6E6; color: #000000; width: 620px; margin: 0 auto;" width="620">
+										<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-top: 0 solid #E6E6E6; color: #000000; width: 650px; margin: 0 auto;" width="650">
 											<tbody>
 												<tr class="reverse">
 													<td class="column column-1 last" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 25px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -279,7 +282,7 @@ const confirmation = ({ name, link }) => {
 																	<td class="pad" style="padding-top:15px;">
 																		<div style="font-family: sans-serif">
 																			<div class style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-																				<p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;">© 2023 Mukul Singh | All Rights Reserved ❤️</p>
+																				<p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;">© ${new Date().getFullYear()} Mukul Singh | All Rights Reserved ❤️</p>
 																			</div>
 																		</div>
 																	</td>

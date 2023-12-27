@@ -24,8 +24,8 @@ const transporter = nodemailer.createTransport({
 // User Modal
 const User = mongoose.model('User');
 const Quote = mongoose.model('Quote');
-const UserVerification = mongoose.model('UserVerification');
 
+// Resolvers
 const resolvers = {
 	Query: {
 		users: async () => await User.find({}),
@@ -74,16 +74,6 @@ const resolvers = {
 				process.env.JWT_SECRET_KEY,
 				{ expiresIn: '10m' }
 			);
-
-			// Create new user verification
-			const newUserVerification = new UserVerification({
-				userID: savedUser._id,
-				email: newUser.email,
-				token,
-			});
-
-			// Save the user verification
-			await newUserVerification.save();
 
 			// Define the email
 			var mailConfigs = {
@@ -160,23 +150,24 @@ const resolvers = {
 			// Verify the token
 			const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-			// Check if user exists
-			const userVerification = await UserVerification.findOne({
-				email,
-			});
+			// Find the user verification
+			const userVerification = await User.findOne({ email });
 
-			if (!userVerification) return 'User verification not found';
+			// Check if user verification exists
+			if (!userVerification) return 'User not found';
 
 			// Check if user is already verified
 			const verified = await User.findOne({ email, verified: true });
 
 			if (verified) return 'User is already verified';
 
-			// Update the user to verified and remove the auto-expiration
+			// Update the user to verified and remove the auto-expiration.
 			await User.findOneAndUpdate(
 				{ email },
-				{ verified: true },
-				{ new: true, useFindAndModify: false }
+				{
+					verified: true,
+					$unset: { createdAt: 1 },
+				}
 			);
 
 			// Return a success message

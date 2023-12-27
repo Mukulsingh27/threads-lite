@@ -34,10 +34,10 @@ const Footer = () => {
 				<li className="footer__menu-item">
 					<Link
 						className="footer__menu-link"
-						to="https://mukulsingh.dev/"
+						to="https://github.com/Mukulsingh27/threads-lite"
 						target="__blank"
 					>
-						Contact
+						Contribute
 					</Link>
 				</li>
 			</ul>

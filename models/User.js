@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// User Modal
 const userSchema = new mongoose.Schema({
 	firstName: {
 		type: String,
@@ -23,6 +24,11 @@ const userSchema = new mongoose.Schema({
 	verified: {
 		type: Boolean,
 		default: false,
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now,
+		expires: 600, // 10 minutes.
 	},
 });
 

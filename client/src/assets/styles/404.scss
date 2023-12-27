@@ -4,8 +4,10 @@
 .not-found {
 	max-width: 960px;
 	width: 100%;
-	margin: 30px auto;
+	margin: auto auto;
 	transform: scale(0.8);
+	display: flex;
+	flex-direction: column;
 
 	&__page {
 		max-width: 960px;

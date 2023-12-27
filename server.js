@@ -38,7 +38,6 @@ mongoose
 // Import Models
 import './models/User.js';
 import './models/Quote.js';
-import './models/UserVerification.js';
 
 // Import the resolvers
 import resolvers from './resolver.js';

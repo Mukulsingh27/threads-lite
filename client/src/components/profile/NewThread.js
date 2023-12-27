@@ -4,8 +4,10 @@ import { CREATE_QUOTE } from '../gql-operations/mutations';
 import Loader from '../Loader';
 
 const NewThread = ({ avatar }) => {
+	// Local State.
 	const [newThread, setNewThread] = useState('');
 
+	// Create Quote Mutation Hook.
 	const [createQuote, { loading, error, data }] = useMutation(CREATE_QUOTE, {
 		onCompleted: (data) => {
 			console.log(data);
@@ -16,8 +18,7 @@ const NewThread = ({ avatar }) => {
 		refetchQueries: ['getAllQuotes', 'getMyProfile'],
 	});
 
-	if (loading) return <Loader />;
-
+	// Handle Form Submit.
 	const handleThreadSubmit = (e) => {
 		e.preventDefault();
 		createQuote({
@@ -26,6 +27,9 @@ const NewThread = ({ avatar }) => {
 			},
 		});
 	};
+
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
 
 	return (
 		<>
@@ -39,7 +43,9 @@ const NewThread = ({ avatar }) => {
 				<div className="timeline__new-thread">
 					<form onSubmit={handleThreadSubmit} className="thread-form">
 						<input
-							onChange={(e) => setNewThread(e.target.value)}
+							onChange={(e) =>
+								setNewThread(e.target.value.trim())
+							}
 							type="text"
 							placeholder="Post a thread"
 						/>

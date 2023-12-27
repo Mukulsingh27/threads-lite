@@ -71,24 +71,39 @@ $shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 1.25rem;
+				position: relative;
+			}
+
+			.toggle-password-button {
+				position: absolute;
+				top: 50%;
+				right: 10px;
+				transform: translateY(-50%);
+				background: none;
+				border: none;
+				cursor: pointer;
+				color: #007bff; // Change color as needed
+				font-size: 14px;
+				outline: none;
 			}
 
 			.input-field {
-				font-size: 18px;
+				font-size: 16px;
 				width: 100%;
 				height: auto;
-				padding: 0.75rem 1.25rem;
+				padding: 0.75rem 3.25rem 0.75rem 1.25rem;
 				border: none;
 				outline: none;
 				border-radius: 2rem;
 				color: $color-black;
 				background: #f1f5f9;
+				position: relative;
 			}
 
 			.input-submit {
-				font-size: 18px;
+				font-size: 16px;
 				cursor: pointer;
-				min-width: 30%;
+				min-width: 25%;
 				padding: 0.65rem 1.3rem;
 				margin: auto;
 				border: none;

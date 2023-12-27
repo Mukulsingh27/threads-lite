@@ -9,18 +9,24 @@ import Loader from '../components/Loader';
 
 const UserProfile = () => {
 	const { id } = useParams();
+
+	// Get user profile query hook.
 	const { loading, error, data } = useQuery(GET_USER_PROFILE, {
 		variables: {
 			id,
 		},
+		onError: (error) => {
+			console.log(error);
+		},
 	});
-
-	if (loading) return <Loader />;
 
 	if (error) {
 		console.log(error);
 		return <p>Error :(</p>;
 	}
+
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
 
 	return (
 		<div className="profile-section">

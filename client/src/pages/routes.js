@@ -37,7 +37,6 @@ const routes = [
 		element: <Verify />,
 		exact: true,
 	},
-	// 404 page
 	{
 		path: '*',
 		element: <NotFound />,
