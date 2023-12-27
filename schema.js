@@ -15,6 +15,7 @@ const typeDefs = gql`
 		signInUser(userSignIn: userSignInInput!): Token
 		deleteUserWithQuotes(_id: ID!): String
 		verifyUser(token: String!): String
+		resetPassword(email: String!): String
 		createQuote(name: String!): String
 		updateQuote(_id: ID!, name: String!): String
 		deleteQuote(_id: ID!): String
