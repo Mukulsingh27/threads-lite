@@ -13,28 +13,25 @@ This small-scale Node + React application uses Apollo Client for GraphQL and Rea
 1. **Node.js**
     - Description: Fueling the Backend Engine, Node.js handles requests, processes data, and orchestrates the communication flow with efficiency.
     - Modules Used: Express, Mongoose, JWT, dotenv, and more.
-2. **Apollo Server**
-    - Description: A community-driven GraphQL server that seamlessly works with any GraphQL schema and can be deployed in any environment.
-    - Usage: We leverage ApolloServer from 'apollo-server-express' and various plugins from 'apollo-server-core'.
-3. **GraphQL**
-    - Description: The cutting-edge query language for APIs and a runtime for executing queries with existing data, providing an efficient alternative to REST.
-    - Implementation: Defines our schema and resolvers for effective data communication.
-4. **MongoDB**
+2. **GraphQL + Apollo Server**
+    - Description: The cutting-edge query language for APIs and a runtime for executing queries with existing data, providing an efficient alternative to REST combined with community-driven GraphQL server that seamlessly works with any GraphQL schema and can be deployed in any environment.
+    - Usage: We leverage ApolloServer from 'apollo-server-express' and various plugins from 'apollo-server-core' to create a GraphQL server and define our schema and resolvers for effective data communication.
+3. **MongoDB**
     - Description: A powerful, cross-platform document-oriented database program that stores and retrieves data efficiently.
     - Connection: We use Mongoose to connect with our MongoDB database.
-5. **JWT (JSON Web Tokens)**
+4. **JWT (JSON Web Tokens)**
     - Description: Compact, URL-safe means representing claims for secure data transfer between parties.
     - Purpose: Primarily utilized for authentication to ensure a secure user experience.
-6. **Express**
+5. **Express**
     - Description: A minimal and flexible Node.js web application framework, providing a robust set of features for web and mobile applications.
     - Role: Powers our server, handling requests from the client.
-7. **React**
+6. **React**
     - Description: A JavaScript library for building user interfaces, particularly effective for single-page applications.
     - Implementation: Drives our front end, providing an interactive and dynamic user experience.
-8. **SCSS**
+7. **SCSS**
     - Description: A preprocessor scripting language compiled into Cascading Style Sheets (CSS) for enhanced styling capabilities.
     - Application: Used to style our front end, ensuring an aesthetically pleasing and modern look.
-9. **React Router**
+8. **React Router**
     - Description: A standard routing library for React, crucial for handling navigation seamlessly within our application.
     - Role: Manages routing to enhance the user experience.
 
@@ -128,4 +125,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 <img width="1800" alt="Screenshot 2023-12-27 at 10 58 57 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/afce43cb-30a1-4cdb-9a17-df57e3db0553">
 
-*For more visual insights, explore the Screenshots in the Client Folder [README.md](./client/README.md) showcasing the Threads Lite interface, highlighting key features and design elements.*
+_For more visual insights, explore the Screenshots in the Client Folder [README.md](./client/README.md) showcasing the Threads Lite interface, highlighting key features and design elements._
