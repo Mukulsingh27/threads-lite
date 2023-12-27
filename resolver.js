@@ -201,7 +201,7 @@ const resolvers = {
 				}
 			});
 
-			return 'Password reset link sent successfully';
+			return 'Password reset link sent successfully, Please check your email';
 		},
 		createQuote: async (_, { name }, { userID }) => {
 			if (!userID) throw new Error('You are not authenticated');

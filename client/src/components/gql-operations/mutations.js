@@ -29,6 +29,12 @@ export const VERIFY_USER = gql`
 	}
 `;
 
+export const RESET_PASSWORD = gql`
+	mutation resetPassword($email: String!) {
+		resetPassword(email: $email)
+	}
+`;
+
 export const CREATE_QUOTE = gql`
 	mutation createQuote($name: String!) {
 		createQuote(name: $name)

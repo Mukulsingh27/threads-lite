@@ -6,7 +6,11 @@ import Loader from '../Loader';
 
 const Verify = () => {
 	const navigate = useNavigate();
+
+	// Get token from url.
 	const { token } = useParams();
+
+	// Local State.
 	const [countDown, setCountDown] = useState(10);
 
 	// Verify User Mutation Hook
