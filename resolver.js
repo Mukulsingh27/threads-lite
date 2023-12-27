@@ -203,6 +203,32 @@ const resolvers = {
 
 			return 'Password reset link sent successfully, Please check your email';
 		},
+		setNewPassword: async (_, { token, password }) => {
+			if (!token) throw new Error('Token not found');
+
+			// Verify the token
+			const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+			// Find the user
+			const user = await User.findOne({ email });
+
+			// Check if user exists
+			if (!user) throw new Error('User not found');
+
+			// Hash the password
+			const hashedPassword = await bcrypt.hash(password, 10);
+
+			// Update the user password
+			await User.findOneAndUpdate(
+				{ email },
+				{
+					password: hashedPassword,
+				}
+			);
+
+			// Return a success message
+			return 'Password updated successfully';
+		},
 		createQuote: async (_, { name }, { userID }) => {
 			if (!userID) throw new Error('You are not authenticated');
 

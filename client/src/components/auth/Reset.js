@@ -80,6 +80,7 @@ const Reset = () => {
 							placeholder="Enter Email Address"
 							onChange={(e) => setEmail(e.target.value)}
 							required
+							autoComplete="on"
 						/>
 					</div>
 					<div className="input-control">

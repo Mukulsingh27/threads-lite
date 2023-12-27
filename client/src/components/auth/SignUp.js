@@ -141,6 +141,7 @@ const SignUp = () => {
 							placeholder="Enter Email Address"
 							onChange={handleSignUpDataChange}
 							required
+							autoComplete="on"
 						/>
 					</div>
 					<div className="input-control">

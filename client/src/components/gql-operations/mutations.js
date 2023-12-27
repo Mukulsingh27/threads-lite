@@ -35,6 +35,12 @@ export const RESET_PASSWORD = gql`
 	}
 `;
 
+export const SET_NEW_PASSWORD = gql`
+	mutation setNewPassword($token: String!, $password: String!) {
+		setNewPassword(token: $token, password: $password)
+	}
+`;
+
 export const CREATE_QUOTE = gql`
 	mutation createQuote($name: String!) {
 		createQuote(name: $name)

@@ -4,7 +4,8 @@ import { useMutation } from '@apollo/client';
 import { VERIFY_USER } from '../gql-operations/mutations';
 import Loader from '../Loader';
 
-const Verify = () => {
+const VerifyUser = () => {
+	// Navigate Hook.
 	const navigate = useNavigate();
 
 	// Get token from url.
@@ -14,7 +15,14 @@ const Verify = () => {
 	const [countDown, setCountDown] = useState(10);
 
 	// Verify User Mutation Hook
-	const [verifyUser, { loading, error, data }] = useMutation(VERIFY_USER);
+	const [verifyUser, { loading, error, data }] = useMutation(VERIFY_USER, {
+		onCompleted: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
 
 	// Verify user
 	useEffect(() => {
@@ -42,19 +50,38 @@ const Verify = () => {
 	return (
 		<div className="login-container">
 			<section className="wrapper">
-				{data ? (
-					<div>
-						<b>{data.verifyUser}</b>
+				{data && data.verifyUser && (
+					<>
+						<div
+							className="success"
+							style={{
+								color: 'green',
+								paddingTop: '5px',
+								fontWeight: '500',
+							}}
+						>
+							{data.verifyUser}
+						</div>
 						<p>
 							{`You will be redirected to the login page in ${countDown} seconds`}
 						</p>
+					</>
+				)}
+				{error && (
+					<div
+						className="error"
+						style={{
+							color: 'red',
+							paddingTop: '5px',
+							fontWeight: '500',
+						}}
+					>
+						{error.message}
 					</div>
-				) : (
-					<p>{error && <p>{error.message}</p>}</p>
 				)}
 			</section>
 		</div>
 	);
 };
 
-export default Verify;
+export default VerifyUser;
