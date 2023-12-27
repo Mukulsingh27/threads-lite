@@ -25,17 +25,6 @@ const Home = () => {
 		},
 	});
 
-	// If there are no threads, return a message.
-	if (threads.length === 0)
-		return (
-			<div className="home no-thread">
-				<h1>
-					Oops, No Threads found please login to create one, Happy
-					Threading...
-				</h1>
-			</div>
-		);
-
 	const loadMoreThreads = () => {
 		// Fetch the next page of data
 		fetchMore({
@@ -54,6 +43,17 @@ const Home = () => {
 
 	// If the data is loading, return a loader.
 	if (loading) return <Loader />;
+
+	// If there are no threads, return a message.
+	if (threads.length === 0)
+		return (
+			<div className="home no-thread">
+				<h1>
+					Oops, No Threads found please login to create one, Happy
+					Threading...
+				</h1>
+			</div>
+		);
 
 	return (
 		<div className="home">

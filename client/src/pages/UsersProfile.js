@@ -20,13 +20,13 @@ const UserProfile = () => {
 		},
 	});
 
+	// If the data is loading, return a loader.
+	if (loading) return <Loader />;
+
 	if (error) {
 		console.log(error);
 		return <p>Error :(</p>;
 	}
-
-	// If the data is loading, return a loader.
-	if (loading) return <Loader />;
 
 	return (
 		<div className="profile-section">
