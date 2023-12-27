@@ -80,9 +80,13 @@ const resolvers = {
 			await transporter.sendMail(mailConfigs, (error, info) => {
 				if (error) {
 					console.log(error);
-					res.status(500).send('Something went wrong.');
+					res.status(500).send(
+						'Something went wrong with the confirmation email.'
+					);
 				} else {
-					console.log('Email sent successfully: ' + info.response);
+					console.log(
+						'Confirmation email sent successfully: ' + info.response
+					);
 					res.status(200).send('Email Sent');
 				}
 			});
@@ -194,9 +198,14 @@ const resolvers = {
 			await transporter.sendMail(mailConfigs, (error, info) => {
 				if (error) {
 					console.log(error);
-					res.status(500).send('Something went wrong.');
+					res.status(500).send(
+						'Something went wrong with the password reset email.'
+					);
 				} else {
-					console.log('Email sent successfully: ' + info.response);
+					console.log(
+						'Password reset email sent successfully: ' +
+							info.response
+					);
 					res.status(200).send('Email Sent');
 				}
 			});
