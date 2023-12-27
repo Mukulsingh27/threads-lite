@@ -1,4 +1,4 @@
-# Threads Lite - Social Media Platform
+# Threads Lite - Unleashing Ideas, Connecting Minds
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
@@ -6,12 +6,12 @@ Welcome to Threads Lite, your go-to social media platform for sharing thoughts a
 
 ## Description
 
-This is a small scale Node + React application that uses Apollo Client for GraphQL and React Router for routing. The application is styled using SCSS. The application is deployed on Vercel.
+This small-scale Node + React application uses Apollo Client for GraphQL and React Router for routing. The application is styled using SCSS. The application is deployed on Vercel.
 
 ## Tech Stack
 
 1. **Node.js**
-    - Description: The backbone of our application, Node.js handles requests from the frontend, processes them, and sends back responses.
+    - Description: Fueling the Backend Engine, Node.js handles requests, processes data, and orchestrates the communication flow with efficiency.
     - Modules Used: Express, Mongoose, JWT, dotenv, and more.
 2. **Apollo Server**
     - Description: A community-driven GraphQL server that seamlessly works with any GraphQL schema and can be deployed in any environment.
@@ -21,19 +21,19 @@ This is a small scale Node + React application that uses Apollo Client for Graph
     - Implementation: Defines our schema and resolvers for effective data communication.
 4. **MongoDB**
     - Description: A powerful, cross-platform document-oriented database program that stores and retrieves data efficiently.
-    - Connection: We use Mongoose to establish a connection with our MongoDB database.
+    - Connection: We use Mongoose to connect with our MongoDB database.
 5. **JWT (JSON Web Tokens)**
-    - Description: Compact, URL-safe means of representing claims for secure data transfer between parties.
+    - Description: Compact, URL-safe means representing claims for secure data transfer between parties.
     - Purpose: Primarily utilized for authentication to ensure a secure user experience.
 6. **Express**
     - Description: A minimal and flexible Node.js web application framework, providing a robust set of features for web and mobile applications.
     - Role: Powers our server, handling requests from the client.
 7. **React**
     - Description: A JavaScript library for building user interfaces, particularly effective for single-page applications.
-    - Implementation: Drives our frontend, providing an interactive and dynamic user experience.
+    - Implementation: Drives our front end, providing an interactive and dynamic user experience.
 8. **SCSS**
     - Description: A preprocessor scripting language compiled into Cascading Style Sheets (CSS) for enhanced styling capabilities.
-    - Application: Used to style our frontend, ensuring an aesthetically pleasing and modern look.
+    - Application: Used to style our front end, ensuring an aesthetically pleasing and modern look.
 9. **React Router**
     - Description: A standard routing library for React, crucial for handling navigation seamlessly within our application.
     - Role: Manages routing to enhance the user experience.
@@ -53,7 +53,7 @@ Explore Threads Lite and connect with the world through a cutting-edge social me
 
 ## Local Environment Setup
 
-Follow these steps to setup the project locally.
+Follow these steps to set up the project locally.
 
 ### Prerequisites
 
@@ -91,7 +91,7 @@ SMTP_PASSWORD=<APP_PASSWORD>
 CLIENT_URL=http://localhost:3000
 ```
 
-4. Start the server from root directory
+4. Start the server from the root directory
 
 ```bash
 npm run dev
@@ -123,3 +123,9 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 2. Create a new branch from master
 3. Make changes and commit them
 4. Push the changes and open a pull request
+
+## Screenshots
+
+<img width="1800" alt="Screenshot 2023-12-27 at 10 58 57 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/afce43cb-30a1-4cdb-9a17-df57e3db0553">
+
+*For more visual insights, explore the Screenshots in the Client Folder [README.md](./client/README.md) showcasing the Threads Lite interface, highlighting key features and design elements.*
