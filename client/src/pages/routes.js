@@ -4,7 +4,9 @@ import MyProfile from './MyProfile';
 import UserProfile from './UsersProfile';
 import Login from '../components/auth/Login';
 import SignUp from '../components/auth/SignUp';
-import Verify from '../components/auth/Verify';
+import VerifyUser from '../components/auth/VerifyUser';
+import Reset from '../components/auth/Reset';
+import NewPassword from '../components/auth/NewPassword';
 
 const routes = [
 	{
@@ -34,7 +36,17 @@ const routes = [
 	},
 	{
 		path: '/verify/:token',
-		element: <Verify />,
+		element: <VerifyUser />,
+		exact: true,
+	},
+	{
+		path: '/reset',
+		element: <Reset />,
+		exact: true,
+	},
+	{
+		path: '/reset/:token',
+		element: <NewPassword />,
 		exact: true,
 	},
 	{

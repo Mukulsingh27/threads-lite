@@ -1,25 +1,15 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import nodemailer from 'nodemailer';
+import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 import confirmation from './templates/confirmation.js';
+import resetPassword from './templates/resetPassword.js';
+import transporter from './nodemailer/transporter.js';
 
 // Read the .env file
 if (process.env.NODE_ENV !== 'production') {
 	dotenv.config();
 }
-
-// Create the transporter
-const transporter = nodemailer.createTransport({
-	host: process.env.SMTP_HOST,
-	port: process.env.SMTP_PORT,
-	secure: false, // true for 465, false for other ports
-	auth: {
-		user: process.env.SMTP_MAIL, // user email
-		pass: process.env.SMTP_PASSWORD, // user app password
-	},
-});
 
 // User Modal
 const User = mongoose.model('User');
@@ -90,9 +80,13 @@ const resolvers = {
 			await transporter.sendMail(mailConfigs, (error, info) => {
 				if (error) {
 					console.log(error);
-					res.status(500).send('Something went wrong.');
+					res.status(500).send(
+						'Something went wrong with the confirmation email.'
+					);
 				} else {
-					console.log('Email sent successfully: ' + info.response);
+					console.log(
+						'Confirmation email sent successfully: ' + info.response
+					);
 					res.status(200).send('Email Sent');
 				}
 			});
@@ -172,6 +166,77 @@ const resolvers = {
 
 			// Return a success message
 			return 'User verified successfully';
+		},
+		resetPassword: async (_, { email }) => {
+			if (!email) throw new Error('Email not found');
+
+			// Find the user
+			const user = await User.findOne({ email });
+
+			// Check if user exists
+			if (!user) throw new Error('User not found');
+
+			// Create token
+			const token = jwt.sign(
+				{ email: user.email },
+				process.env.JWT_SECRET_KEY,
+				{ expiresIn: '10m' }
+			);
+
+			// Define the email
+			var mailConfigs = {
+				from: process.env.SMTP_MAIL,
+				to: user.email,
+				subject: 'Threads Lite: Password Reset',
+				html: resetPassword({
+					name: user.firstName,
+					link: process.env.CLIENT_URL + '/reset/' + token,
+				}),
+			};
+
+			// Send the email
+			await transporter.sendMail(mailConfigs, (error, info) => {
+				if (error) {
+					console.log(error);
+					res.status(500).send(
+						'Something went wrong with the password reset email.'
+					);
+				} else {
+					console.log(
+						'Password reset email sent successfully: ' +
+							info.response
+					);
+					res.status(200).send('Email Sent');
+				}
+			});
+
+			return 'Password reset link sent successfully, Please check your email';
+		},
+		setNewPassword: async (_, { token, password }) => {
+			if (!token) throw new Error('Token not found');
+
+			// Verify the token
+			const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+			// Find the user
+			const user = await User.findOne({ email });
+
+			// Check if user exists
+			if (!user) throw new Error('User not found');
+
+			// Hash the password
+			const hashedPassword = await bcrypt.hash(password, 10);
+
+			// Update the user password
+			await User.findOneAndUpdate(
+				{ email },
+				{
+					password: hashedPassword,
+				}
+			);
+
+			// Return a success message
+			return 'Password updated successfully';
 		},
 		createQuote: async (_, { name }, { userID }) => {
 			if (!userID) throw new Error('You are not authenticated');

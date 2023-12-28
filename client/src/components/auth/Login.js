@@ -99,7 +99,7 @@ const Login = () => {
 						<input
 							type={passwordVisible ? 'text' : 'password'}
 							name="password"
-							id="Enter Password"
+							id="password"
 							className="input-field"
 							placeholder="Password"
 							onChange={handleLoginDataChange}
@@ -114,9 +114,17 @@ const Login = () => {
 							{passwordVisible ? 'Hide' : 'Show'}
 						</button>
 					</div>
-					{/* <Link to="/reset-password" className="text text-links">
+					<Link
+						to="/reset"
+						className="text text-links"
+						style={{
+							marginBottom: '14px',
+							display: 'block',
+							paddingLeft: '1.25rem',
+						}}
+					>
 						Forgot Password
-					</Link> */}
+					</Link>
 					<div className="input-control">
 						<input
 							type="submit"
