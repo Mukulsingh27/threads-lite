@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import NewThread from './NewThread';
 import { format } from 'timeago.js';
 import Loader from '../Loader';
+import MentionRegex from '../../utility/MentionRegex';
 import './timeline.scss';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
@@ -125,7 +126,11 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 									</div>
 								)}
 							<div className="timeline__thread">
-								<p>{quote?.name}</p>
+								<p
+									dangerouslySetInnerHTML={{
+										__html: MentionRegex(quote?.name),
+									}}
+								/>
 							</div>
 							{!hideUnnecessaryElements && token && (
 								<div className="timeline__thread-buttons">

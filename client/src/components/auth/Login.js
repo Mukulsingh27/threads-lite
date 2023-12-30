@@ -42,6 +42,13 @@ const Login = () => {
 	// Handle Form Submit.
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
+
+		// Check if required fields are not empty
+		if (!loginData.email || !loginData.password) {
+			window.alert('Please fill in all required fields');
+			return;
+		}
+
 		signInUser({
 			variables: {
 				userSignIn: {

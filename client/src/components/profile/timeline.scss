@@ -10,7 +10,7 @@ $blue-500: #688afd;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
-	padding: 0 32px 32px;
+	padding: 32px 32px;
 	border-left: 2px solid $grey-200;
 	font-family: inherit;
 
@@ -27,24 +27,26 @@ $blue-500: #688afd;
 		}
 	}
 
+	&__timeline-item-wrapper {
+		min-width: -webkit-fill-available;
+	}
+
 	&__new-thread {
 		width: 100%;
+		min-width: -webkit-fill-available;
 
 		.thread-form {
-			display: flex;
-			gap: 20px;
+			position: relative;
 
 			.thread-button {
-				display: flex;
-				align-items: center;
-				justify-content: center;
+				position: absolute;
+				top: 0;
+				right: 0;
 				width: 50px;
 				height: 50px;
 				border-radius: 50%;
-				margin-left: -40px;
-				flex-shrink: 0;
 				overflow: hidden;
-				box-shadow: 0 0 0 6px #eee;
+				box-shadow: 0 0 0 8px #eee;
 				background-color: $blue-500;
 				color: #fff;
 				border: none;
@@ -56,11 +58,11 @@ $blue-500: #688afd;
 				}
 			}
 
-			input {
+			.thread-input {
 				border: 1px solid $grey-200;
 				border-radius: 8px;
-				height: 50px;
-				padding: 0 16px;
+				resize: none;
+				padding: 10px 15px;
 				width: 100%;
 				font-family: inherit;
 				font-size: large;
@@ -165,6 +167,7 @@ $blue-500: #688afd;
 		border-radius: 8px;
 		padding: 16px;
 		font-size: 18px;
+		text-align: left;
 	}
 
 	&__thread-buttons {

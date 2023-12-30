@@ -4,6 +4,7 @@ import { GET_ALL_QUOTES } from '../components/gql-operations/queries';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
+import MentionRegex from '../utility/MentionRegex';
 
 const Home = () => {
 	const pageSize = 10;
@@ -84,7 +85,11 @@ const Home = () => {
 								</span>
 							</div>
 							<div className="timeline__thread">
-								<p>{quote?.name}</p>
+								<p
+									dangerouslySetInnerHTML={{
+										__html: MentionRegex(quote?.name),
+									}}
+								/>
 							</div>
 						</div>
 					</li>

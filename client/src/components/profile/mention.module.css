@@ -1,0 +1,71 @@
+/* .mentions {
+	margin: 1em 0;
+} */
+
+/* .mentions--singleLine .mentions__control {
+	display: inline-block;
+	width: 130px;
+}
+
+.mentions--singleLine .mentions__highlighter {
+	padding: 1px;
+	border: 2px inset transparent;
+}
+
+.mentions--singleLine .mentions__input {
+	padding: 1px;
+	border: 2px inset;
+} */
+
+.mentions--multiLine .mentions__control {
+	font-family: "DM Sans", sans-serif;
+	font-size: large;
+	background-color: white;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.mentions--multiLine .mentions__highlighter {
+	border: 1px solid transparent;
+	padding: 12px 50px 12px 15px;
+	min-height: 140px;
+}
+
+.mentions--multiLine .mentions__input {
+	border: 1px solid #e3e3e3;
+	padding: 12px 50px 12px 15px;
+	outline: 0;
+	border-radius: 8px;
+}
+
+.mentions--multiLine .mentions__input::placeholder {
+	color: #b2b2b2;
+}
+
+.mentions--multiLine .mentions__input:focus {
+	border-color: #b2b2b2;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+
+}
+
+.mentions__suggestions__list {
+	background-color: white;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.mentions__suggestions__item {
+	padding: 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.mentions__suggestions__item--focused {
+	background-color: #cee4e5;
+}
+
+.mentions__mention {
+	position: relative;
+	z-index: 1;
+	color: blue;
+	text-decoration: underline;
+	pointer-events: none;
+}

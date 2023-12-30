@@ -8,6 +8,7 @@ const typeDefs = gql`
 		quotes(page: Int!, pageSize: Int!): [QuoteWithUser]
 		quote(by: ID!): [Quote]
 		myProfile: User
+		fetchUsers(query: String!): [User]
 	}
 
 	type Mutation {
