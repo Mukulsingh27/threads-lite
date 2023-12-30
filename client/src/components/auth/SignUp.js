@@ -36,6 +36,17 @@ const SignUp = () => {
 	// Handle Form Submit.
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
+
+		// Check if required fields are not empty
+		if (
+			!signUpData.firstName ||
+			!signUpData.email ||
+			!signUpData.password
+		) {
+			window.alert('Please fill in all required fields');
+			return;
+		}
+
 		signUpUser({
 			variables: {
 				newUser: {
@@ -105,7 +116,7 @@ const SignUp = () => {
 							name="firstName"
 							id="first-name"
 							className="input-field"
-							placeholder="Enter First Name"
+							placeholder="Enter First Name*"
 							onChange={handleSignUpDataChange}
 							required
 						/>
@@ -138,7 +149,7 @@ const SignUp = () => {
 							name="email"
 							id="email"
 							className="input-field"
-							placeholder="Enter Email Address"
+							placeholder="Enter Email Address*"
 							onChange={handleSignUpDataChange}
 							required
 							autoComplete="on"
@@ -157,7 +168,7 @@ const SignUp = () => {
 							name="password"
 							id="Enter Password"
 							className="input-field"
-							placeholder="Password"
+							placeholder="Set a Password*"
 							onChange={handleSignUpDataChange}
 							required
 							autoComplete="on"

@@ -42,7 +42,7 @@ const resolvers = {
 					{ lastName: { $regex: query, $options: 'i' } },
 					{ email: { $regex: query, $options: 'i' } },
 				],
-			});
+			}).limit(10);
 		},
 	},
 	User: {

@@ -13,6 +13,7 @@ const NewThread = ({ avatar }) => {
 	const [emojis, setEmojis] = useState([]);
 	const neverMatchingRegex = /($a)/;
 
+	// Fetch emojis.
 	useEffect(() => {
 		fetch(
 			'https://gist.githubusercontent.com/oliveratgithub/0bf11a9aff0d6da7b46f1490f86a71eb/raw/d8e4b78cfe66862cf3809443c1dba017f37b61db/emojis.json'
@@ -25,6 +26,7 @@ const NewThread = ({ avatar }) => {
 			});
 	}, []);
 
+	// Get user by query.
 	const { refetch } = useQuery(GET_USER_BY_QUERY, {
 		variables: {
 			query: '',
@@ -43,21 +45,17 @@ const NewThread = ({ avatar }) => {
 		// If the query is empty, return.
 		if (query.length === 0) return;
 
-		// Refetch the query.
-		const data = refetch({
+		// Refetch the query and transform the users.
+		refetch({
 			query,
-		});
-
-		// Transform the users to what react-mentions expects
-		data.then((res) => {
-			return res.data.fetchUsers.map((user) => ({
-				id: user._id,
-				display: `${user.firstName} ${user.lastName}`,
-			}));
 		})
-			.then((users) => {
-				callback(users);
-			})
+			.then((res) =>
+				res.data.fetchUsers.map((user) => ({
+					id: user._id,
+					display: `${user.firstName} ${user.lastName}`,
+				}))
+			)
+			.then(callback)
 			.catch((err) => {
 				console.log(err);
 			});
