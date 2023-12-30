@@ -34,6 +34,16 @@ const resolvers = {
 			if (!userID) throw new Error('You are not authenticated !! !!');
 			return await User.findOne({ _id: userID });
 		},
+		fetchUsers: async (_, { query }) => {
+			if (!query) throw new Error('Query not found');
+			return await User.find({
+				$or: [
+					{ firstName: { $regex: query, $options: 'i' } },
+					{ lastName: { $regex: query, $options: 'i' } },
+					{ email: { $regex: query, $options: 'i' } },
+				],
+			});
+		},
 	},
 	User: {
 		quotes: async (parent) => await Quote.find({ by: parent._id }),

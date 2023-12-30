@@ -50,3 +50,14 @@ export const GET_USER_PROFILE = gql`
 		}
 	}
 `;
+
+export const GET_USER_BY_QUERY = gql`
+	query fetchUsers($query: String!) {
+		fetchUsers(query: $query) {
+			_id
+			firstName
+			lastName
+			email
+		}
+	}
+`;

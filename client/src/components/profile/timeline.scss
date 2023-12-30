@@ -32,17 +32,15 @@ $blue-500: #688afd;
 
 		.thread-form {
 			display: flex;
-			gap: 20px;
+			position: relative;
 
 			.thread-button {
-				display: flex;
-				align-items: center;
-				justify-content: center;
+				position: absolute;
+				top: 0;
+				right: 0;
 				width: 50px;
 				height: 50px;
 				border-radius: 50%;
-				margin-left: -40px;
-				flex-shrink: 0;
 				overflow: hidden;
 				box-shadow: 0 0 0 6px #eee;
 				background-color: $blue-500;
@@ -56,11 +54,11 @@ $blue-500: #688afd;
 				}
 			}
 
-			input {
+			.thread-input {
 				border: 1px solid $grey-200;
 				border-radius: 8px;
-				height: 50px;
-				padding: 0 16px;
+				resize: none;
+				padding: 10px 15px;
 				width: 100%;
 				font-family: inherit;
 				font-size: large;

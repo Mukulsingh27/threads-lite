@@ -1,12 +1,12 @@
-import Home from './Home';
-import NotFound from './NotFound';
-import MyProfile from './MyProfile';
-import UserProfile from './UsersProfile';
-import Login from '../components/auth/Login';
-import SignUp from '../components/auth/SignUp';
-import VerifyUser from '../components/auth/VerifyUser';
-import Reset from '../components/auth/Reset';
-import NewPassword from '../components/auth/NewPassword';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import MyProfile from './pages/MyProfile';
+import UserProfile from './pages/UsersProfile';
+import Login from './components/auth/Login';
+import SignUp from './components/auth/SignUp';
+import VerifyUser from './components/auth/VerifyUser';
+import Reset from './components/auth/Reset';
+import NewPassword from './components/auth/NewPassword';
 
 const routes = [
 	{
