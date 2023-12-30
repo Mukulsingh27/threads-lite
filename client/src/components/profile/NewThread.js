@@ -3,7 +3,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_QUOTE } from '../gql-operations/mutations';
 import { GET_USER_BY_QUERY } from '../gql-operations/queries';
 import { MentionsInput, Mention } from 'react-mentions';
-import mentionStyles from './MentionStyles';
+// import mentionStyles from './MentionStyles';
+import classNames from './mention.module.css';
 import Loader from '../Loader';
 
 const NewThread = ({ avatar }) => {
@@ -24,11 +25,7 @@ const NewThread = ({ avatar }) => {
 			});
 	}, []);
 
-	const {
-		loading: userLoading,
-		data: userData,
-		refetch,
-	} = useQuery(GET_USER_BY_QUERY, {
+	const { refetch } = useQuery(GET_USER_BY_QUERY, {
 		variables: {
 			query: '',
 		},
@@ -53,14 +50,12 @@ const NewThread = ({ avatar }) => {
 
 		// Transform the users to what react-mentions expects
 		data.then((res) => {
-			console.log(res);
 			return res.data.fetchUsers.map((user) => ({
 				id: user._id,
 				display: `${user.firstName} ${user.lastName}`,
 			}));
 		})
 			.then((users) => {
-				console.log('asdasd', users);
 				callback(users);
 			})
 			.catch((err) => {
@@ -83,6 +78,7 @@ const NewThread = ({ avatar }) => {
 	const [createQuote, { loading, error, data }] = useMutation(CREATE_QUOTE, {
 		onCompleted: (data) => {
 			console.log(data);
+			setNewThread('');
 		},
 		onError: (error) => {
 			console.log(error);
@@ -122,40 +118,32 @@ const NewThread = ({ avatar }) => {
 				</span>
 				<div className="timeline__new-thread">
 					<form onSubmit={handleThreadSubmit} className="thread-form">
-						<textarea
+						<MentionsInput
 							value={newThread}
-							className="thread-input"
-							onChange={(e) =>
-								setNewThread(e.target.value.trim())
-							}
-							type="text"
-							placeholder="What's on your mind?"
-							rows={5}
+							onChange={(e) => setNewThread(e.target.value)}
+							className="mentions"
+							classNames={classNames}
 							required
-						/>
+							placeholder={
+								"Post something, using '@' to mention or ':' to add emojis."
+							}
+						>
+							<Mention
+								data={fetchUsers}
+								trigger="@"
+								appendSpaceOnAdd
+								className={classNames.mentions__mention}
+							/>
+							<Mention
+								trigger=":"
+								markup="__id__"
+								regex={neverMatchingRegex}
+								appendSpaceOnAdd
+								data={queryEmojis}
+							/>
+						</MentionsInput>
 						<button className="thread-button">Post</button>
 					</form>
-					<MentionsInput
-						value={newThread}
-						onChange={(e) => setNewThread(e.target.value)}
-						style={mentionStyles}
-						placeholder={
-							"Press ':' for emojis, mention people using '@'"
-						}
-					>
-						<Mention
-							data={fetchUsers}
-							trigger="@"
-							appendSpaceOnAdd
-							style={{ backgroundColor: '#d1c4e9' }}
-						/>
-						<Mention
-							trigger=":"
-							markup="__id__"
-							regex={neverMatchingRegex}
-							data={queryEmojis}
-						/>
-					</MentionsInput>
 					<div className="error">
 						{error && <p>{error.message}</p>}
 					</div>

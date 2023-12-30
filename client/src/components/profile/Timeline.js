@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import NewThread from './NewThread';
 import { format } from 'timeago.js';
 import Loader from '../Loader';
+import MentionRegex from '../../utility/MentionRegex';
 import './timeline.scss';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
@@ -76,28 +77,6 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 		}
 	};
 
-	// Handle Output String.
-	const handleOutputString = (string) => {
-		const mentionRegex = /\@\[([^\]]+)\]\(([^\)]+)\)/g;
-
-		const outputString = string.replace(
-			mentionRegex,
-			(_, mentionName, userId) => {
-				// Assuming quote.by is the user object
-				const user = {
-					_id: '657eb3b009ee41be4e7ca404',
-					firstName: 'Tripti',
-					// Add other user properties as needed
-				};
-
-				// Construct the desired output
-				return `<Link to="/${user._id}">casdfa</Link>`;
-			}
-		);
-
-		return outputString;
-	};
-
 	// Check if thread is edited.
 	const isEdited = (createdAt, updatedAt) => createdAt !== updatedAt;
 
@@ -147,7 +126,11 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 									</div>
 								)}
 							<div className="timeline__thread">
-								<p>{handleOutputString(quote?.name)}</p>
+								<p
+									dangerouslySetInnerHTML={{
+										__html: MentionRegex(quote?.name),
+									}}
+								/>
 							</div>
 							{!hideUnnecessaryElements && token && (
 								<div className="timeline__thread-buttons">
