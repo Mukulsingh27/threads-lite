@@ -21,34 +21,38 @@ We use SCSS for styling the application. SCSS is a CSS preprocessor that allows 
 -   Displays a list of user-created threads
 -   Pagination for loading more threads efficiently with 10 threads per page.
 
-
-<img width="1800" alt="Screenshot 2023-12-27 at 10 58 57 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/2bbf42e6-b273-4d23-b0fd-d0558e67d802">
-
+<img width="1800" alt="Screenshot 2024-01-01 at 1 46 35 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/94a54079-20a9-4479-b40d-2d4133bfd068">
 
 ### Login Page
 
 -   The login page ensures secure access to the heart of the application.
 
-<img width="1800" alt="Screenshot 2023-12-27 at 10 59 38 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/551c5c0c-7f5a-48e6-9afd-2f44daf31493">
-
+<img width="1800" alt="Screenshot 2024-01-01 at 1 47 06 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/6a031e57-fbea-43e4-a647-3931a2378bb0">
 
 ### Signup Page
 
 -   Embark on the journey by registering as a new user.
 -   An email verification process to ensure authenticity.
 
-<img width="1800" alt="Screenshot 2023-12-27 at 3 04 10 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/9f229d60-12f1-4329-88ee-9d33b92a9aad">
+<img width="1800" alt="Screenshot 2024-01-01 at 1 47 39 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/657bae12-3a05-4f0b-bee8-21f42cccfce5">
 
 ### Email Template
 
 <img width="1800" alt="Screenshot 2023-12-27 at 2 55 12 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/f6455554-0562-4c0b-89b1-b12dbeff19ff">
-
 
 ### Verify Page
 
 -   A dedicated space to verify user accounts.
 
 <img width="1800" alt="Screenshot 2023-12-27 at 3 01 55 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/d218bcd7-4a67-40d9-8515-4fd909777418">
+
+### Reset and set a new password Page
+
+-   Dedicated spaces to reset and set new passwords for user accounts.
+
+<img width="1800" alt="Screenshot 2024-01-01 at 1 48 56 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/e2bc35cf-dcb1-4754-9872-18baace67ccd">
+
+<img width="1800" alt="Screenshot 2024-01-01 at 1 50 46 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/39c56888-7999-468a-bfaf-f36046d5bf88">
 
 
 ### Profile Page
@@ -57,20 +61,17 @@ We use SCSS for styling the application. SCSS is a CSS preprocessor that allows 
 -   Create new threads
 -   Manage existing threads (edit/delete)
 
-<img width="1800" alt="Screenshot 2023-12-27 at 11 00 27 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/b517392b-65aa-4f6f-84df-41d8ebcdae4a">
+<img width="1800" alt="Screenshot 2024-01-01 at 1 48 26 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/ce854cb7-045f-4a8e-a59f-45710ff1db4d">
 
 ### User Profile Page
 
 -   View user profile information
 -   View user threads
 
-<img width="1800" alt="Screenshot 2023-12-27 at 3 06 09 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/16e60d06-c172-4aae-bfe4-b3e43080eae2">
-
+<img width="1800" alt="Screenshot 2024-01-01 at 1 57 50 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/ba154326-e15e-4c8b-a93c-0d111c873427">
 
 ### 404 Page
 
 -   Custom 404 page for handling invalid routes
 
-
-<img width="1800" alt="Screenshot 2023-12-27 at 2 53 25 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/0482f891-d39c-4472-88c9-c771ff74f89f">
-
+<img width="1800" alt="Screenshot 2024-01-01 at 1 48 01 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/9166d9d0-c85c-4f87-9671-9b527288e697">

@@ -10,7 +10,7 @@ $blue-500: #688afd;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
-	padding: 32px 32px;
+	padding: 20px 35px;
 	border-left: 2px solid $grey-200;
 	font-family: inherit;
 
@@ -23,7 +23,7 @@ $blue-500: #688afd;
 		}
 
 		&+.extra-space {
-			margin-top: 40px;
+			margin-top: 35px;
 		}
 	}
 
@@ -85,8 +85,8 @@ $blue-500: #688afd;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 45px;
-		height: 45px;
+		width: 40px;
+		height: 40px;
 		border-radius: 50%;
 		margin-left: -55px;
 		flex-shrink: 0;
@@ -113,6 +113,7 @@ $blue-500: #688afd;
 		padding-top: 10px;
 		gap: 8px;
 		color: $grey-400;
+		text-align: left;
 
 		img {
 			flex-shrink: 0;
@@ -165,8 +166,8 @@ $blue-500: #688afd;
 		border: 1px solid $grey-200;
 		box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 		border-radius: 8px;
-		padding: 16px;
-		font-size: 18px;
+		padding: 15px;
+		font-size: 16px;
 		text-align: left;
 	}
 
