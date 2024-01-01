@@ -2,7 +2,7 @@
  * 404
  */
 .not-found {
-	max-width: 960px;
+	max-width: 700px;
 	width: 100%;
 	margin: auto auto;
 	transform: scale(0.8);
@@ -10,7 +10,7 @@
 	flex-direction: column;
 
 	&__page {
-		max-width: 960px;
+		max-width: 700px;
 		height: 475px;
 		margin: 0;
 		box-shadow: 0px 0px 8px 1px #ccc;
@@ -34,7 +34,6 @@
 		button {
 			margin-top: 20px;
 			padding: 16px 24px;
-			border-radius: 50px;
 			border: none;
 			background: #688afd;
 			color: #fff;

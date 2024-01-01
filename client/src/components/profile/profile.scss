@@ -14,7 +14,7 @@
 		width: 370px;
 		float: left;
 		position: sticky;
-		top: 50px;
+		top: 115px;
 		background: #ddd;
 	}
 
@@ -87,12 +87,9 @@
 	}
 
 	&__logoff-button {
-		display: inline-block;
 		padding: 10px 20px;
 		background-color: #688afd;
 		color: #fff;
-		text-decoration: none;
-		border-radius: 5px;
 		transition: background-color 0.3s;
 		border: none;
 		cursor: pointer;
@@ -104,12 +101,9 @@
 	}
 
 	&__delete-button {
-		display: inline-block;
 		padding: 10px 20px;
 		background-color: #fd4a4a;
 		color: #fff;
-		text-decoration: none;
-		border-radius: 5px;
 		transition: background-color 0.3s;
 		border: none;
 		cursor: pointer;
