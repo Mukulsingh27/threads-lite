@@ -14,7 +14,7 @@ This small-scale Node + React application uses Apollo Client for GraphQL and Rea
     - Description: Fueling the Backend Engine, Node.js handles requests, processes data, and orchestrates the communication flow with efficiency.
     - Modules Used: Express, Mongoose, JWT, dotenv, and more.
 2. **GraphQL + Apollo Server**
-    - Description: The cutting-edge query language for APIs and a runtime for executing queries with existing data, providing an efficient alternative to REST combined with community-driven GraphQL server that seamlessly works with any GraphQL schema and can be deployed in any environment.
+    - Description: The cutting-edge query language for APIs and a runtime for executing queries with existing data provide an efficient alternative to REST combined with a community-driven GraphQL server that seamlessly works with any GraphQL schema and can be deployed in any environment.
     - Usage: We leverage ApolloServer from 'apollo-server-express' and various plugins from 'apollo-server-core' to create a GraphQL server and define our schema and resolvers for effective data communication.
 3. **MongoDB**
     - Description: A powerful, cross-platform document-oriented database program that stores and retrieves data efficiently.
@@ -117,12 +117,12 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ### Steps to contribute
 
 1. Fork the repository
-2. Create a new branch from master
+2. Create a new branch from the master
 3. Make changes and commit them
 4. Push the changes and open a pull request
 
 ## Screenshots
 
-<img width="1800" alt="Screenshot 2023-12-27 at 10 58 57 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/afce43cb-30a1-4cdb-9a17-df57e3db0553">
+<img width="1800" alt="Screenshot 2024-01-01 at 1 46 35 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/7b8cfe59-725d-4553-8916-db8aa47abcc5">
 
 _For more visual insights, explore the screenshots in the Client Folder [README.md](./client/README.md) showcasing the Threads Lite interface, highlighting key features and design elements._
