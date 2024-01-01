@@ -125,4 +125,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 <img width="1800" alt="Screenshot 2023-12-27 at 10 58 57 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/afce43cb-30a1-4cdb-9a17-df57e3db0553">
 
-_For more visual insights, explore the Screenshots in the Client Folder [README.md](./client/README.md) showcasing the Threads Lite interface, highlighting key features and design elements._
+_For more visual insights, explore the screenshots in the Client Folder [README.md](./client/README.md) showcasing the Threads Lite interface, highlighting key features and design elements._

@@ -21,16 +21,13 @@ We use SCSS for styling the application. SCSS is a CSS preprocessor that allows 
 -   Displays a list of user-created threads
 -   Pagination for loading more threads efficiently with 10 threads per page.
 
-
 <img width="1800" alt="Screenshot 2023-12-27 at 10 58 57 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/2bbf42e6-b273-4d23-b0fd-d0558e67d802">
-
 
 ### Login Page
 
 -   The login page ensures secure access to the heart of the application.
 
 <img width="1800" alt="Screenshot 2023-12-27 at 10 59 38 AM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/551c5c0c-7f5a-48e6-9afd-2f44daf31493">
-
 
 ### Signup Page
 
@@ -43,13 +40,11 @@ We use SCSS for styling the application. SCSS is a CSS preprocessor that allows 
 
 <img width="1800" alt="Screenshot 2023-12-27 at 2 55 12 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/f6455554-0562-4c0b-89b1-b12dbeff19ff">
 
-
 ### Verify Page
 
 -   A dedicated space to verify user accounts.
 
 <img width="1800" alt="Screenshot 2023-12-27 at 3 01 55 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/d218bcd7-4a67-40d9-8515-4fd909777418">
-
 
 ### Profile Page
 
@@ -66,11 +61,8 @@ We use SCSS for styling the application. SCSS is a CSS preprocessor that allows 
 
 <img width="1800" alt="Screenshot 2023-12-27 at 3 06 09 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/16e60d06-c172-4aae-bfe4-b3e43080eae2">
 
-
 ### 404 Page
 
 -   Custom 404 page for handling invalid routes
 
-
 <img width="1800" alt="Screenshot 2023-12-27 at 2 53 25 PM" src="https://github.com/Mukulsingh27/threads-lite/assets/54891099/0482f891-d39c-4472-88c9-c771ff74f89f">
-
