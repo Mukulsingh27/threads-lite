@@ -104,189 +104,280 @@ const resolvers = {
 			return savedUser;
 		},
 		signInUser: async (_, { userSignIn }) => {
-			const user = await User.findOne({ email: userSignIn.email });
+			try {
+				const user = await User.findOne({ email: userSignIn.email });
 
-			// Check if user exists and is verified
-			if (!user || !user.verified) {
-				throw new Error(
-					!user ? 'User does not exist' : 'User is not verified'
+				// Check if user exists and is verified
+				if (!user || !user.verified) {
+					throw new AuthenticationError(
+						!user ? 'User does not exist' : 'User is not verified'
+					);
+				}
+
+				// Compare password
+				const passMatch = await bcrypt.compare(
+					userSignIn.password,
+					user.password
 				);
+
+				// Check if password matches
+				if (!passMatch) {
+					throw new AuthenticationError(
+						'Either email or password is incorrect'
+					);
+				}
+
+				// Create token
+				const token = jwt.sign(
+					{ userID: user._id },
+					process.env.JWT_SECRET_KEY
+				);
+
+				// Optionally, you may return more information about the user
+				return { token };
+			} catch (error) {
+				console.error('Error signing in user:', error);
+				throw new ApolloError('Failed to sign in user');
 			}
-
-			// Compare password
-			const passMatch = await bcrypt.compare(
-				userSignIn.password,
-				user.password
-			);
-
-			// Check if password matches
-			if (!passMatch)
-				throw new Error('Either email or password is incorrect');
-
-			// Create token
-			const token = jwt.sign(
-				{ userID: user._id },
-				process.env.JWT_SECRET_KEY
-			);
-
-			return { token };
 		},
+
 		deleteUserWithQuotes: async (_, { _id }, { userID }) => {
-			// Check if user is authenticated
-			if (!userID) throw new Error('You are not authenticated');
+			try {
+				// Check if user is authenticated
+				if (!userID) {
+					throw new AuthenticationError('You are not authenticated');
+				}
 
-			// Find and delete the user
-			const findAndDelete = await User.findByIdAndDelete(_id);
+				// Find and delete the user
+				const deletedUser = await User.findByIdAndDelete(_id);
 
-			// Check if user exists
-			if (!findAndDelete) throw new Error('User does not exists');
+				// Check if user exists
+				if (!deletedUser) {
+					throw new UserInputError('User does not exist');
+				}
 
-			// Delete all quotes by the user
-			await Quote.deleteMany({ by: _id });
+				// Delete all quotes by the user
+				await Quote.deleteMany({ by: _id });
 
-			// Return success message
-			return 'User deleted successfully';
+				// Optionally, you may return the deleted user object or a success message
+				return {
+					message: 'User deleted successfully',
+					deletedUser,
+				};
+			} catch (error) {
+				console.error('Error deleting user:', error);
+				throw new ApolloError('Failed to delete user');
+			}
 		},
 		verifyUser: async (_, { token }) => {
-			// Check if token is present
-			if (!token) return 'Token not found';
-
-			// Verify the token
-			const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-			// Find the user verification
-			const userVerification = await User.findOne({ email });
-
-			// Check if user verification exists
-			if (!userVerification) return 'User not found';
-
-			// Check if user is already verified
-			const verified = await User.findOne({ email, verified: true });
-
-			if (verified) return 'User is already verified';
-
-			// Update the user to verified and remove the auto-expiration.
-			await User.findOneAndUpdate(
-				{ email },
-				{
-					verified: true,
-					$unset: { createdAt: 1 },
+			try {
+				// Check if token is present
+				if (!token) {
+					throw new UserInputError('Token not found');
 				}
-			);
 
-			// Return a success message
-			return 'User verified successfully';
+				// Verify the token
+				const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+				// Find the user verification
+				const userVerification = await User.findOne({ email });
+
+				// Check if user verification exists
+				if (!userVerification) {
+					throw new UserInputError('User not found');
+				}
+
+				// Check if user is already verified
+				const verified = await User.findOne({ email, verified: true });
+
+				if (verified) {
+					throw new UserInputError('User is already verified');
+				}
+
+				// Update the user to verified and remove the auto-expiration.
+				await User.findOneAndUpdate(
+					{ email },
+					{
+						verified: true,
+						$unset: { createdAt: 1 },
+					}
+				);
+
+				// Optionally, you may return the updated user object or a new token
+				return 'User verified successfully';
+			} catch (error) {
+				console.error('Error verifying user:', error);
+				throw new ApolloError('Failed to verify user');
+			}
 		},
 		resetPassword: async (_, { email }) => {
-			if (!email) throw new Error('Email not found');
-
-			// Find the user
-			const user = await User.findOne({ email });
-
-			// Check if user exists
-			if (!user) throw new Error('User not found');
-
-			// Create token
-			const token = jwt.sign(
-				{ email: user.email },
-				process.env.JWT_SECRET_KEY,
-				{ expiresIn: '10m' }
-			);
-
-			// Define the email
-			var mailConfigs = {
-				from: process.env.SMTP_MAIL,
-				to: user.email,
-				subject: 'Threads Lite: Password Reset',
-				html: resetPassword({
-					name: user.firstName,
-					link: process.env.CLIENT_URL + '/reset/' + token,
-				}),
-			};
-
-			// Send the email
-			await transporter.sendMail(mailConfigs, (error, info) => {
-				if (error) {
-					console.log(error);
-					res.status(500).send(
-						'Something went wrong with the password reset email.'
-					);
-				} else {
-					console.log(
-						'Password reset email sent successfully: ' +
-							info.response
-					);
-					res.status(200).send('Email Sent');
+			try {
+				if (!email) {
+					throw new UserInputError('Email not found');
 				}
-			});
 
-			return 'Password reset link sent successfully, Please check your email';
+				// Find the user
+				const user = await User.findOne({ email });
+
+				// Check if user exists
+				if (!user) {
+					throw new UserInputError('User not found');
+				}
+
+				// Create token
+				const token = jwt.sign(
+					{ email: user.email },
+					process.env.JWT_SECRET_KEY,
+					{ expiresIn: '10m' }
+				);
+
+				// Define the email
+				var mailConfigs = {
+					from: process.env.SMTP_MAIL,
+					to: user.email,
+					subject: 'Threads Lite: Password Reset',
+					html: resetPassword({
+						name: user.firstName,
+						link: process.env.CLIENT_URL + '/reset/' + token,
+					}),
+				};
+
+				// Send the email
+				await transporter.sendMail(mailConfigs, (error, info) => {
+					if (error) {
+						console.log(error);
+						res.status(500).send(
+							'Something went wrong with the password reset email.'
+						);
+					} else {
+						console.log(
+							'Password reset email sent successfully: ' +
+								info.response
+						);
+						res.status(200).send('Email Sent');
+					}
+				});
+
+				return 'Password reset link sent successfully, please check your email';
+			} catch (error) {
+				console.error('Error resetting password:', error);
+				throw new ApolloError('Failed to send password reset email');
+			}
 		},
 		setNewPassword: async (_, { token, password }) => {
-			if (!token) throw new Error('Token not found');
-
-			// Verify the token
-			const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-			// Find the user
-			const user = await User.findOne({ email });
-
-			// Check if user exists
-			if (!user) throw new Error('User not found');
-
-			// Hash the password
-			const hashedPassword = await bcrypt.hash(password, 10);
-
-			// Update the user password
-			await User.findOneAndUpdate(
-				{ email },
-				{
-					password: hashedPassword,
+			try {
+				if (!token) {
+					throw new UserInputError('Token not found');
 				}
-			);
 
-			// Return a success message
-			return 'Password updated successfully';
+				// Verify the token
+				const { email } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+				// Find the user
+				const user = await User.findOne({ email });
+
+				// Check if user exists
+				if (!user) {
+					throw new UserInputError('User not found');
+				}
+
+				// Hash the password
+				const hashedPassword = await bcrypt.hash(password, 10);
+
+				// Update the user password
+				await User.findOneAndUpdate(
+					{ email },
+					{
+						password: hashedPassword,
+					}
+				);
+
+				// Optionally, you may return the updated user object or a new token
+				return 'Password updated successfully';
+			} catch (error) {
+				console.error('Error setting new password:', error);
+				throw new ApolloError('Failed to set new password');
+			}
 		},
 		createQuote: async (_, { name }, { userID }) => {
-			if (!userID) throw new Error('You are not authenticated');
+			try {
+				// Check if user is authenticated
+				if (!userID) {
+					throw new AuthenticationError('You are not authenticated');
+				}
 
-			const newQuote = new Quote({
-				name,
-				by: userID,
-				createdAt: new Date().toISOString(),
-				updatedAt: new Date().toISOString(),
-			});
-			await newQuote.save();
+				// Create new quote
+				const newQuote = new Quote({
+					name,
+					by: userID,
+					createdAt: new Date().toISOString(),
+					updatedAt: new Date().toISOString(),
+				});
 
-			return 'Quote created successfully';
+				// Save the new quote
+				await newQuote.save();
+
+				// Return the created quote
+				return 'Quote created successfully';
+			} catch (error) {
+				// Handle specific errors if needed
+				console.error('Error creating quote:', error);
+				throw new ApolloError('Failed to create quote');
+			}
 		},
+
 		updateQuote: async (_, { _id, name }, { userID }) => {
-			if (!userID) throw new Error('You are not authenticated');
+			try {
+				// Check if user is authenticated
+				if (!userID) {
+					throw new AuthenticationError('You are not authenticated');
+				}
 
-			// Find and update the quote
-			const findAndUpdate = await Quote.findByIdAndUpdate(_id, {
-				name,
-				updatedAt: new Date().toISOString(),
-			});
+				// Find and update the quote
+				const updatedQuote = await Quote.findByIdAndUpdate(
+					_id,
+					{
+						name,
+						updatedAt: new Date().toISOString(),
+					},
+					{ new: true } // Return the updated document
+				);
 
-			if (!findAndUpdate) throw new Error('Quote does not exists');
+				// Check if quote exists
+				if (!updatedQuote) {
+					throw new UserInputError('Quote does not exist');
+				}
 
-			// Return success message
-			return 'Quote updated successfully';
+				// Return success message
+				return 'Quote updated successfully';
+			} catch (error) {
+				// Handle specific errors if needed
+				console.error('Error updating quote:', error);
+				throw new ApolloError('Failed to update quote');
+			}
 		},
 		deleteQuote: async (_, { _id }, { userID }) => {
-			// Check if user is authenticated
-			if (!userID) throw new Error('You are not authenticated');
+			try {
+				// Check if user is authenticated
+				if (!userID) {
+					throw new AuthenticationError('You are not authenticated');
+				}
 
-			// Find and delete the quote
-			const findAndDelete = await Quote.findByIdAndDelete(_id);
+				// Find and delete the quote
+				const deletedQuote = await Quote.findByIdAndDelete(_id);
 
-			// Check if quote exists
-			if (!findAndDelete) throw new Error('Quote does not exists');
+				// Check if quote exists
+				if (!deletedQuote) {
+					throw new UserInputError('Quote does not exist');
+				}
 
-			// Return success message
-			return 'Quote deleted successfully';
+				// Return success message
+				return 'Quote deleted successfully';
+			} catch (error) {
+				// Handle specific errors if needed
+				console.error('Error deleting quote:', error);
+				throw new ApolloError('Failed to delete quote');
+			}
 		},
 	},
 };
