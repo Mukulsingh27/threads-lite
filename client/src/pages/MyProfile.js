@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GET_MY_PROFILE } from '../components/gql-operations/queries';
 import Timeline from '../components/profile/Timeline';
 import UserCard from '../components/profile/UserCard';
@@ -12,9 +12,11 @@ const MyProfile = () => {
 	const token = localStorage.getItem('token');
 
 	// If there is no token, redirect to login page.
-	if (!token) {
-		navigate('/login');
-	}
+	useEffect(() => {
+		if (!token) {
+			navigate('/login');
+		}
+	}, [navigate, token]);
 
 	// Get my profile data.
 	const { loading, data } = useQuery(GET_MY_PROFILE, {
@@ -24,26 +26,29 @@ const MyProfile = () => {
 		},
 	});
 
-	// If there is an error, return a message.
+	// If loading, show loader.
 	if (loading) return <Loader />;
+
+	// Destructure data.
+	const { user } = data || {};
 
 	return (
 		<div className="profile-section">
-			{data?.user && (
+			{user && (
 				<>
 					<div className="profile-section__left-side">
 						<UserCard
-							userId={data?.user._id}
-							firstName={data?.user.firstName}
-							lastName={data?.user.lastName}
-							email={data?.user.email}
-							avatar={data?.user.profileImage}
+							userId={user._id}
+							firstName={user.firstName}
+							lastName={user.lastName}
+							email={user.email}
+							avatar={user.profileImage}
 							needLogOutButton={true}
 						/>
 					</div>
 					<div className="profile-section__right-side">
 						<Timeline
-							thread={data.user}
+							thread={user}
 							hideUnnecessaryElements={false}
 						/>
 					</div>

@@ -8,34 +8,35 @@ import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 
 const UserProfile = () => {
+	// Get user id from url.
 	const { id } = useParams();
 
-	// Get user profile query hook.
+	// Get user profile data.
 	const { loading, error, data } = useQuery(GET_USER_PROFILE, {
-		variables: {
-			id,
-		},
-		onError: (error) => {
-			console.log(error);
-		},
+		variables: { id },
+		onError: (error) => console.log(error),
 	});
 
-	// If the data is loading, return a loader.
-	if (loading) return <Loader />;
-
+	// If there is an error, log it and show error message.
 	if (error) {
-		console.log(error);
+		console.error(error);
 		return <p>Error :(</p>;
 	}
+
+	// If loading, show loader.
+	if (loading) return <Loader />;
+
+	// Destructure data.
+	const { firstName, lastName, email, profileImage } = data?.user || {};
 
 	return (
 		<div className="profile-section">
 			<div className="profile-section__left-side">
 				<UserCard
-					firstName={data?.user?.firstName}
-					lastName={data?.user?.lastName}
-					email={data?.user?.email}
-					avatar={data?.user?.profileImage}
+					firstName={firstName}
+					lastName={lastName}
+					email={email}
+					avatar={profileImage}
 					needLogOutButton={false}
 				/>
 			</div>

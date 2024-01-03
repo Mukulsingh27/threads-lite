@@ -12,22 +12,17 @@ const Home = () => {
 	const [threads, setThreads] = useState([]);
 	const [deadEnd, setDeadEnd] = useState(false);
 
-	// Get all threads query hook.
 	const { loading, fetchMore } = useQuery(GET_ALL_QUOTES, {
-		onCompleted: (data) => {
-			setThreads(data.quotes);
+		onCompleted: ({ quotes }) => {
+			setThreads(quotes);
 		},
-		variables: {
-			page,
-			pageSize,
-		},
+		variables: { page, pageSize },
 		onError: (error) => {
 			console.log(error);
 		},
 	});
 
 	const loadMoreThreads = () => {
-		// Fetch the next page of data
 		fetchMore({
 			variables: { page: page + 1, pageSize },
 			updateQuery: (prev, { fetchMoreResult }) => {
@@ -38,56 +33,53 @@ const Home = () => {
 			},
 		});
 
-		// Update the current page
 		setPage(page + 1);
 	};
 
-	// If the data is loading, return a loader.
 	if (loading) return <Loader />;
 
-	// If there are no threads, return a message.
-	if (threads.length === 0)
+	if (threads.length === 0) {
 		return (
 			<div className="home no-thread">
 				<h1>
-					Oops, No Threads found please login to create one, Happy
+					Oops, No Threads found. Please login to create one. Happy
 					Threading...
 				</h1>
 			</div>
 		);
+	}
 
 	return (
 		<div className="home">
 			<ol className="timeline">
-				{threads?.map((quote) => (
+				{threads.map(({ _id, by, createdAt, name }) => (
 					<li
 						className="timeline__timeline-item extra-space"
-						key={quote?._id}
+						key={_id}
 					>
 						<span className="timeline__timeline-item-icon filled-icon-white">
 							<i className="avatar">
-								<img src={quote?.by?.profileImage} alt="" />
+								<img src={by?.profileImage} alt="avatar" />
 							</i>
 						</span>
 						<div className="timeline__timeline-item-wrapper">
 							<div className="timeline__timeline-item-description">
 								<span>
-									<Link to={`/profile/${quote?.by?._id}`}>{`${
-										quote?.by?.firstName
-									} ${
-										quote?.by?.lastName &&
-										quote?.by?.lastName
-									}`}</Link>{' '}
+									<Link to={`/profile/${by?._id}`}>
+										{`${by?.firstName} ${
+											by?.lastName || ''
+										}`}
+									</Link>{' '}
 									threaded{' '}
-									<time dateTime={quote?.createdAt}>
-										{format(quote?.createdAt)}
+									<time dateTime={createdAt}>
+										{format(createdAt)}
 									</time>
 								</span>
 							</div>
 							<div className="timeline__thread">
 								<p
 									dangerouslySetInnerHTML={{
-										__html: MentionRegex(quote?.name),
+										__html: MentionRegex(name),
 									}}
 								/>
 							</div>
@@ -95,7 +87,7 @@ const Home = () => {
 					</li>
 				))}
 			</ol>
-			{deadEnd ? null : (
+			{!deadEnd && (
 				<button className="loadmore-threads" onClick={loadMoreThreads}>
 					Load More
 				</button>

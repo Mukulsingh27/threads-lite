@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { SIGN_IN_USER } from '../gql-operations/mutations';
@@ -7,6 +7,16 @@ import Loader from '../Loader';
 
 const Login = () => {
 	const navigation = useNavigate();
+
+	// Token.
+	const token = localStorage.getItem('token');
+
+	// If token exists, redirect to profile page.
+	useEffect(() => {
+		if (token) {
+			navigation('/profile');
+		}
+	}, [navigation, token]);
 
 	// Local States.
 	const [loginData, setLoginData] = useState({});
@@ -25,9 +35,7 @@ const Login = () => {
 				navigation('/profile');
 			}
 		},
-		onError: (error) => {
-			console.log(error);
-		},
+		onError: (error) => console.log(error),
 		refetchQueries: ['getMyProfile'],
 	});
 

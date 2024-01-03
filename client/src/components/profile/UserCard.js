@@ -51,6 +51,9 @@ const UserCard = ({
 					variables: {
 						id,
 					},
+
+					// Refetch queries.
+					refetchQueries: ['getMyProfile'],
 				});
 			} catch (error) {
 				console.error('Delete error:', error);
