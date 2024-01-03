@@ -18,5 +18,5 @@ const Toast = MySwal.mixin({
 });
 
 // Export the instances
-export const sweetAlert = MySwal;
-export const toastAlert = Toast;
+export const SweetAlert = MySwal;
+export const ToastAlert = Toast;

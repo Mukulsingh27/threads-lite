@@ -180,7 +180,7 @@ const resolvers = {
 			try {
 				// Check if token is present
 				if (!token) {
-					throw new Error('Token not found');
+					throw new Error('Token not found!');
 				}
 
 				// Verify the token
@@ -191,14 +191,14 @@ const resolvers = {
 
 				// Check if user verification exists
 				if (!userVerification) {
-					throw new Error('User not found');
+					throw new Error('User does not exist!');
 				}
 
 				// Check if user is already verified
 				const verified = await User.findOne({ email, verified: true });
 
 				if (verified) {
-					throw new Error('User is already verified');
+					throw new Error('User is already verified!');
 				}
 
 				// Update the user to verified and remove the auto-expiration.
@@ -211,7 +211,7 @@ const resolvers = {
 				);
 
 				// Optionally, you may return the updated user object or a new token
-				return 'User verified successfully';
+				return 'User verified successfully!';
 			} catch (error) {
 				console.error('Failed to verify user');
 				throw new ApolloError(error);
@@ -220,18 +220,18 @@ const resolvers = {
 		resetPassword: async (_, { email }) => {
 			try {
 				if (!email) {
-					throw new Error('Email not found');
+					throw new Error('Email not found!');
 				}
 
 				// Find the user
 				const user = await User.findOne({ email });
 
 				// Check if user exists
-				if (!user) throw new Error('User not found');
+				if (!user) throw new Error('User does not exist!');
 
 				// Don't send the email if the user is not verified
 				if (!user.verified) {
-					throw new Error('User is not verified');
+					throw new Error('User is not verified!');
 				}
 
 				// Create token
@@ -268,7 +268,7 @@ const resolvers = {
 					}
 				});
 
-				return 'Password reset link sent successfully, please check your email';
+				return 'Password reset link sent successfully, please check your email.';
 			} catch (error) {
 				console.error('Failed to reset password');
 				throw new ApolloError(error);
@@ -277,7 +277,7 @@ const resolvers = {
 		setNewPassword: async (_, { token, password }) => {
 			try {
 				if (!token) {
-					throw new Error('Token not found');
+					throw new Error('Token not found!');
 				}
 
 				// Verify the token
@@ -288,7 +288,7 @@ const resolvers = {
 
 				// Check if user exists
 				if (!user) {
-					throw new Error('User not found');
+					throw new Error('User does not exist!');
 				}
 
 				// Hash the password
@@ -302,8 +302,8 @@ const resolvers = {
 					}
 				);
 
-				// Optionally, you may return the updated user object or a new token
-				return 'Password updated successfully';
+				// Return success message.
+				return 'Password updated successfully!';
 			} catch (error) {
 				console.error('Failed to set new password');
 				throw new ApolloError(error);

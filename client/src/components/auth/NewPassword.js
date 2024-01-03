@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SET_NEW_PASSWORD } from '../gql-operations/mutations';
 import { useParams } from 'react-router-dom';
+import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 
 const NewPassword = () => {
@@ -10,6 +11,7 @@ const NewPassword = () => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
+	const navigation = useNavigate();
 	const passwordRegex =
 		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g;
 
@@ -17,17 +19,32 @@ const NewPassword = () => {
 	const { token } = useParams();
 
 	// Set New Password Mutation Hook
-	const [setNewPassword, { loading, error, data }] = useMutation(
-		SET_NEW_PASSWORD,
-		{
-			onCompleted: (data) => {
-				console.log(data);
-			},
-			onError: (error) => {
-				console.log(error);
-			},
-		}
-	);
+	const [setNewPassword, { loading }] = useMutation(SET_NEW_PASSWORD, {
+		onCompleted: (data) => {
+			if (data && data.setNewPassword) {
+				setPassword('');
+				setConfirmPassword('');
+				SweetAlert.fire({
+					title: 'Success!',
+					icon: 'success',
+					text: data.setNewPassword,
+					confirmButtonColor: '#4cbb17',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						navigation('/login');
+					}
+				});
+			}
+		},
+		onError: (error) => {
+			if (error && error.message) {
+				ToastAlert.fire({
+					icon: 'error',
+					title: error.message || 'Something went wrong!',
+				});
+			}
+		},
+	});
 
 	// Handle reset password form submit.
 	const handleFormSubmit = (e) => {
@@ -36,15 +53,21 @@ const NewPassword = () => {
 		// Check if password and confirm password match.
 		if (password !== confirmPassword) {
 			// You can handle the error here, for example, display a message to the user.
-			window.alert('Oops! Passwords do not match.');
+			SweetAlert.fire({
+				icon: 'error',
+				title: 'Passwords do not match!',
+				confirmButtonColor: '#4cbb17',
+			});
 			return;
 		}
 
 		// Check if password meets the requirements.
 		if (!passwordRegex.test(password)) {
-			window.alert(
-				'Password criteria not met. Please check the password requirements.'
-			);
+			SweetAlert.fire({
+				icon: 'error',
+				title: 'Password criteria not met. Please check the password requirements!',
+				confirmButtonColor: '#4cbb17',
+			});
 			return;
 		}
 
@@ -71,35 +94,6 @@ const NewPassword = () => {
 				<div className="heading">
 					<h1 className="text text-large">Set New Password</h1>
 				</div>
-				{data && data.setNewPassword && (
-					<>
-						<div
-							className="success"
-							style={{
-								color: 'green',
-								paddingTop: '5px',
-								fontWeight: '500',
-							}}
-						>
-							{data.setNewPassword}
-						</div>
-						<Link to="/login" className="text text-links">
-							Sign In Here
-						</Link>
-					</>
-				)}
-				{error && (
-					<div
-						className="error"
-						style={{
-							color: 'red',
-							paddingTop: '5px',
-							fontWeight: '500',
-						}}
-					>
-						{error.message}
-					</div>
-				)}
 				<form
 					name="setNewPassword"
 					className="form"

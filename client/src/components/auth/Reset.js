@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { RESET_PASSWORD } from '../gql-operations/mutations';
+import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 
 const Reset = () => {
@@ -9,19 +10,28 @@ const Reset = () => {
 	const [email, setEmail] = useState('');
 
 	// Reset Password Mutation Hook
-	const [resetPassword, { loading, error, data }] = useMutation(
-		RESET_PASSWORD,
-		{
-			onCompleted: (data) => {
-				if (data && data.resetPassword) {
-					setEmail('');
-				}
-			},
-			onError: (error) => {
-				console.error(error);
-			},
-		}
-	);
+	const [resetPassword, { loading }] = useMutation(RESET_PASSWORD, {
+		onCompleted: (data) => {
+			console.log(data);
+			if (data && data.resetPassword) {
+				SweetAlert.fire({
+					title: 'Success!',
+					icon: 'success',
+					text: data.resetPassword,
+					confirmButtonColor: '#4cbb17',
+				});
+				setEmail('');
+			}
+		},
+		onError: (error) => {
+			if (error && error.message) {
+				ToastAlert.fire({
+					icon: 'error',
+					title: error.message || 'Something went wrong!',
+				});
+			}
+		},
+	});
 
 	// Handle reset password form submit.
 	const handleFormSubmit = (e) => {
@@ -50,30 +60,6 @@ const Reset = () => {
 						</span>
 					</p>
 				</div>
-				{data && data.resetPassword && (
-					<div
-						className="success"
-						style={{
-							color: 'green',
-							paddingTop: '5px',
-							fontWeight: '500',
-						}}
-					>
-						{data.resetPassword}
-					</div>
-				)}
-				{error && (
-					<div
-						className="error"
-						style={{
-							color: 'red',
-							paddingTop: '5px',
-							fontWeight: '500',
-						}}
-					>
-						{error.message}
-					</div>
-				)}
 				<form
 					name="resetpassword"
 					className="form"

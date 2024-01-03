@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { SIGN_IN_USER } from '../gql-operations/mutations';
-import { toastAlert } from '../../utility/SweetAlertToast';
+import { ToastAlert } from '../../utility/SweetAlertToast';
 import './auth.scss';
 import Loader from '../Loader';
 
@@ -36,7 +36,7 @@ const Login = () => {
 		},
 		onError: (error) => {
 			if (error && error.message) {
-				toastAlert.fire({
+				ToastAlert.fire({
 					icon: 'error',
 					title: error.message || 'Something went wrong!',
 				});

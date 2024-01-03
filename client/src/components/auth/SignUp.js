@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP_USER } from '../gql-operations/mutations';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 import './auth.scss';
 
@@ -12,22 +11,6 @@ const SignUp = () => {
 
 	// Token.
 	const token = localStorage.getItem('token');
-
-	// SweetAlert2
-	const MySwal = withReactContent(Swal);
-
-	// Toast
-	const Toast = MySwal.mixin({
-		toast: true,
-		position: 'top-end',
-		showConfirmButton: false,
-		timer: 3000,
-		timerProgressBar: true,
-		didOpen: (toast) => {
-			toast.onmouseenter = Swal.stopTimer;
-			toast.onmouseleave = Swal.resumeTimer;
-		},
-	});
 
 	// If token exists, redirect to profile page.
 	useEffect(() => {
@@ -51,7 +34,7 @@ const SignUp = () => {
 	const [signUpUser, { loading }] = useMutation(SIGN_UP_USER, {
 		onCompleted: async (data) => {
 			if (data && data.user) {
-				MySwal.fire({
+				SweetAlert.fire({
 					title: `Welcome ${data.user.firstName}!`,
 					icon: 'success',
 					text: 'Please check your email to verify your account.',
@@ -62,9 +45,9 @@ const SignUp = () => {
 		},
 		onError: (error) => {
 			if (error && error.message) {
-				Toast.fire({
+				ToastAlert.fire({
 					icon: 'error',
-					title: error.message,
+					title: error.message || 'Something went wrong!',
 				});
 			}
 		},
@@ -85,15 +68,21 @@ const SignUp = () => {
 		// Check if required fields are not empty
 		const { firstName, email, password } = signUpData;
 		if (!firstName || !email || !password) {
-			window.alert('Please fill in all required fields');
+			SweetAlert.fire({
+				icon: 'error',
+				title: 'Please fill in all required fields',
+				confirmButtonColor: '#4cbb17',
+			});
 			return;
 		}
 
 		// Check password against regex
 		if (!passwordRegex.test(password)) {
-			window.alert(
-				'Password criteria not met. Please check the password requirements.'
-			);
+			SweetAlert.fire({
+				icon: 'error',
+				title: 'Password criteria not met! Please check the password requirements.',
+				confirmButtonColor: '#4cbb17',
+			});
 			return;
 		}
 
