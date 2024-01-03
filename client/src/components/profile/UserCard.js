@@ -2,8 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { DELETE_USER } from '../gql-operations/mutations';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 
 const UserCard = ({
@@ -17,9 +16,6 @@ const UserCard = ({
 	const token = localStorage.getItem('token');
 	const navigation = useNavigate();
 
-	// SweetAlert2
-	const MySwal = withReactContent(Swal);
-
 	// Delete user
 	const [deleteUser, { loading }] = useMutation(DELETE_USER, {
 		onError: (error) => {
@@ -29,7 +25,7 @@ const UserCard = ({
 
 	// Log out
 	const handleLogOut = () => {
-		MySwal.fire({
+		SweetAlert.fire({
 			title: 'Are you sure?',
 			text: 'You will be logged out.',
 			icon: 'question',
@@ -52,7 +48,7 @@ const UserCard = ({
 	// Delete user
 	const handleDelete = async (id) => {
 		// Show SweetAlert2 confirmation dialog
-		const result = await MySwal.fire({
+		const result = await SweetAlert.fire({
 			title: 'Are you sure?',
 			text: 'This action cannot be undone, and your data will be permanently deleted.',
 			icon: 'warning',

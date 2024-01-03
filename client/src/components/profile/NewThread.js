@@ -3,8 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_QUOTE } from '../gql-operations/mutations';
 import { GET_USER_BY_QUERY } from '../gql-operations/queries';
 import { MentionsInput, Mention } from 'react-mentions';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { ToastAlert } from '../../utility/SweetAlertToast';
 import classNames from './mention.module.css';
 import Loader from '../Loader';
 
@@ -13,22 +12,6 @@ const NewThread = ({ avatar }) => {
 	const [newThread, setNewThread] = useState('');
 	const [emojis, setEmojis] = useState([]);
 	const neverMatchingRegex = /($a)/;
-
-	// SweetAlert2
-	const MySwal = withReactContent(Swal);
-
-	// Toast
-	const Toast = MySwal.mixin({
-		toast: true,
-		position: 'top-end',
-		showConfirmButton: false,
-		timer: 3000,
-		timerProgressBar: true,
-		didOpen: (toast) => {
-			toast.onmouseenter = Swal.stopTimer;
-			toast.onmouseleave = Swal.resumeTimer;
-		},
-	});
 
 	// Fetch emojis.
 	useEffect(() => {
@@ -90,7 +73,7 @@ const NewThread = ({ avatar }) => {
 	const [createQuote, { loading, error, data }] = useMutation(CREATE_QUOTE, {
 		onCompleted: (data) => {
 			if (data && data.createQuote) {
-				Toast.fire({
+				ToastAlert.fire({
 					icon: 'success',
 					title: data.createQuote,
 				});

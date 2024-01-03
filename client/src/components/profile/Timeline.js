@@ -3,8 +3,7 @@ import { DELETE_QUOTE, UPDATE_QUOTE } from '../gql-operations/mutations';
 import Message from '../../assets/svgs/Message';
 import { useMutation } from '@apollo/client';
 import MentionRegex from '../../utility/MentionRegex';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import { format } from 'timeago.js';
 import NewThread from './NewThread';
 import Loader from '../Loader';
@@ -14,27 +13,11 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 	// Local State.
 	const token = localStorage.getItem('token');
 
-	// SweetAlert2
-	const MySwal = withReactContent(Swal);
-
-	// Toast
-	const Toast = MySwal.mixin({
-		toast: true,
-		position: 'top-end',
-		showConfirmButton: false,
-		timer: 3000,
-		timerProgressBar: true,
-		didOpen: (toast) => {
-			toast.onmouseenter = Swal.stopTimer;
-			toast.onmouseleave = Swal.resumeTimer;
-		},
-	});
-
 	// Delete graphql mutation
 	const [deleteQuote, { loading: deleteLoader }] = useMutation(DELETE_QUOTE, {
 		onCompleted: (data) => {
 			if (data && data.deleteQuote) {
-				Toast.fire({
+				ToastAlert.fire({
 					icon: 'success',
 					title: data.deleteQuote,
 				});
@@ -50,7 +33,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 	const [updateQuote, { loading: updateLoader }] = useMutation(UPDATE_QUOTE, {
 		onCompleted: (data) => {
 			if (data && data.updateQuote) {
-				Toast.fire({
+				ToastAlert.fire({
 					icon: 'success',
 					title: data.updateQuote,
 				});
@@ -64,7 +47,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 
 	// Handle edit.
 	const handleEdit = async (id, text) => {
-		await MySwal.fire({
+		await SweetAlert.fire({
 			title: 'Edit your thread',
 			input: 'textarea',
 			inputPlaceholder: 'Edit your thread here...',
@@ -90,16 +73,18 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 					});
 				} catch (error) {
 					console.error('Edit error:', error);
-					Swal.showValidationMessage(`Edit failed: ${error.message}`);
+					SweetAlert.showValidationMessage(
+						`Edit failed: ${error.message}`
+					);
 				}
 			},
-			allowOutsideClick: () => !Swal.isLoading(),
+			allowOutsideClick: () => !SweetAlert.isLoading(),
 		});
 	};
 
 	// Handle delete.
 	const handleDelete = (quoteId) => {
-		MySwal.fire({
+		SweetAlert.fire({
 			title: 'Are you sure?',
 			text: 'You will not be able to recover this thread!',
 			icon: 'warning',
