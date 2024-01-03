@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP_USER } from '../gql-operations/mutations';
 import Loader from '../Loader';
 import './auth.scss';
 
 const SignUp = () => {
+	const navigation = useNavigate();
+
+	// Token.
+	const token = localStorage.getItem('token');
+
+	// If token exists, redirect to profile page.
+	useEffect(() => {
+		if (token) {
+			navigation('/profile');
+		}
+	}, [navigation, token]);
+
 	// Local States.
 	const [signUpData, setSignUpData] = useState({});
 	const [passwordVisible, setPasswordVisible] = useState(false);
+	const passwordRegex =
+		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g;
 
 	// Toggle Password Visibility.
 	const togglePasswordVisibility = () => {
@@ -38,12 +52,17 @@ const SignUp = () => {
 		e.preventDefault();
 
 		// Check if required fields are not empty
-		if (
-			!signUpData.firstName ||
-			!signUpData.email ||
-			!signUpData.password
-		) {
+		const { firstName, email, password } = signUpData;
+		if (!firstName || !email || !password) {
 			window.alert('Please fill in all required fields');
+			return;
+		}
+
+		// Check password against regex
+		if (!passwordRegex.test(password)) {
+			window.alert(
+				'Password criteria not met. Please check the password requirements.'
+			);
 			return;
 		}
 
@@ -181,6 +200,20 @@ const SignUp = () => {
 							{passwordVisible ? 'Hide' : 'Show'}
 						</button>
 					</div>
+					<span
+						className="password-requirements"
+						style={{
+							display: 'block',
+							marginTop: '5px',
+							fontSize: '1rem',
+							marginBottom: '14px',
+							paddingLeft: '1.25rem',
+						}}
+					>
+						Password must be 8 characters or more with at least one
+						uppercase letter, one lowercase letter, one digit, and
+						one special character.
+					</span>
 					<div className="input-control">
 						<input
 							type="submit"

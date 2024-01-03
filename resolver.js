@@ -31,7 +31,7 @@ const resolvers = {
 		},
 		quote: async (_, { by }) => await Quote.find({ by }),
 		myProfile: async (_, __, { userID }) => {
-			if (!userID) throw new Error('You are not authenticated !! !!');
+			if (!userID) throw new Error('You are not authenticated');
 			return await User.findOne({ _id: userID });
 		},
 		fetchUsers: async (_, { query }) => {
