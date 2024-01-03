@@ -3,7 +3,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_QUOTE } from '../gql-operations/mutations';
 import { GET_USER_BY_QUERY } from '../gql-operations/queries';
 import { MentionsInput, Mention } from 'react-mentions';
-// import mentionStyles from './MentionStyles';
 import classNames from './mention.module.css';
 import Loader from '../Loader';
 

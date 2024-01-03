@@ -1,93 +1,130 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DELETE_QUOTE, UPDATE_QUOTE } from '../gql-operations/mutations';
 import Message from '../../assets/svgs/Message';
 import { useMutation } from '@apollo/client';
-import NewThread from './NewThread';
-import { format } from 'timeago.js';
-import Loader from '../Loader';
 import MentionRegex from '../../utility/MentionRegex';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { format } from 'timeago.js';
+import NewThread from './NewThread';
 import './timeline.scss';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
 	// Local State.
-	const [editLoading, setEditLoading] = useState(false);
 	const token = localStorage.getItem('token');
 
+	// SweetAlert2
+	const MySwal = withReactContent(Swal);
+
 	// Delete graphql mutation
-	const [deleteQuote, { loading: deleteLoader }] = useMutation(DELETE_QUOTE, {
+	const [deleteQuote] = useMutation(DELETE_QUOTE, {
 		onCompleted: (data) => {
-			console.log(data);
+			// Check if the deletion was successful
+			if (data && data.deleteQuote) {
+				MySwal.fire({
+					title: 'Deleted!',
+					text: 'Your thread has been deleted.',
+					icon: 'success',
+					confirmButtonColor: '#688afd',
+					showConfirmButton: false,
+					timer: 2000,
+					timerProgressBar: true,
+				});
+			}
 		},
 		onError: (error) => {
-			console.log(error);
+			console.error(error);
 		},
 		refetchQueries: ['getMyProfile', 'getAllQuotes'],
 	});
 
 	// Update graphql mutation
-	const [updateQuote, { loading: updateLoader }] = useMutation(UPDATE_QUOTE, {
-		onCompleted: (data) => {
-			console.log(data);
-		},
+	const [updateQuote] = useMutation(UPDATE_QUOTE, {
 		onError: (error) => {
-			console.log(error);
+			console.error(error);
 		},
 		refetchQueries: ['getMyProfile', 'getAllQuotes'],
 	});
 
 	// Handle edit.
 	const handleEdit = async (id, text) => {
-		setEditLoading(true);
-		const newText = window.prompt('Edit your thread', text);
-
-		if (newText) {
-			try {
-				await updateQuote({
-					variables: {
-						id,
-						name: newText,
-					},
+		await MySwal.fire({
+			title: 'Edit your thread',
+			input: 'textarea',
+			inputPlaceholder: 'Edit your thread here...',
+			inputAttributes: {
+				'aria-label': 'Edit your thread here...',
+			},
+			inputValue: text,
+			showCancelButton: true,
+			confirmButtonText: 'Save',
+			showLoaderOnConfirm: true,
+			confirmButtonColor: '#4cbb17',
+			cancelButtonColor: '#fb4f4f',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+			preConfirm: async (newText) => {
+				try {
+					// Perform your update logic here
+					await updateQuote({
+						variables: {
+							id,
+							name: newText,
+						},
+					});
+				} catch (error) {
+					console.error('Edit error:', error);
+					Swal.showValidationMessage(`Edit failed: ${error.message}`);
+				}
+			},
+			allowOutsideClick: () => !Swal.isLoading(),
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					title: 'Updated!',
+					text: 'Your thread has been updated.',
+					icon: 'success',
+					confirmButtonColor: '#688afd',
+					timer: 2000,
+					timerProgressBar: true,
+					showConfirmButton: false,
 				});
-			} catch (error) {
-				console.error('Edit error:', error);
-			} finally {
-				setEditLoading(false);
 			}
-		} else {
-			setEditLoading(false);
-		}
+		});
 	};
 
 	// Handle delete.
-	const handleDelete = async (quoteId) => {
-		const shouldDelete = window.confirm(
-			'Are you sure you want to delete this thread?'
-		);
-
-		if (shouldDelete) {
-			try {
-				await deleteQuote({
-					variables: {
-						id: quoteId,
-					},
-				});
-			} catch (error) {
-				console.error('Delete error:', error);
+	const handleDelete = (quoteId) => {
+		MySwal.fire({
+			title: 'Are you sure?',
+			text: 'You will not be able to recover this thread!',
+			icon: 'warning',
+			showCancelButton: true,
+			showLoaderOnConfirm: true,
+			confirmButtonColor: '#4cbb17',
+			cancelButtonColor: '#fb4f4f',
+			confirmButtonText: 'Yes, delete it!',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				try {
+					deleteQuote({
+						variables: {
+							id: quoteId,
+						},
+					});
+				} catch (error) {
+					console.error('Delete error:', error);
+				}
 			}
-		}
+		});
 	};
 
 	// Check if thread is edited.
 	const isEdited = (createdAt, updatedAt) => createdAt !== updatedAt;
-
-	// If the data is loading, return a loader.
-	if (updateLoader || editLoading || deleteLoader) {
-		return (
-			<div className="loader">
-				<Loader />
-			</div>
-		);
-	}
 
 	return (
 		<ol className="timeline">

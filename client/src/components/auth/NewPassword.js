@@ -10,6 +10,8 @@ const NewPassword = () => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
+	const passwordRegex =
+		/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g;
 
 	// Get token from url.
 	const { token } = useParams();
@@ -35,6 +37,14 @@ const NewPassword = () => {
 		if (password !== confirmPassword) {
 			// You can handle the error here, for example, display a message to the user.
 			window.alert('Oops! Passwords do not match.');
+			return;
+		}
+
+		// Check if password meets the requirements.
+		if (!passwordRegex.test(password)) {
+			window.alert(
+				'Password criteria not met. Please check the password requirements.'
+			);
 			return;
 		}
 
@@ -143,6 +153,20 @@ const NewPassword = () => {
 							autoComplete="on"
 						/>
 					</div>
+					<span
+						className="password-requirements"
+						style={{
+							display: 'block',
+							marginTop: '5px',
+							fontSize: '1rem',
+							marginBottom: '14px',
+							paddingLeft: '1.2rem',
+						}}
+					>
+						Password must be 8 characters or more with at least one
+						uppercase letter, one lowercase letter, one digit, and
+						one special character.
+					</span>
 					<div className="input-control">
 						<input
 							type="submit"
