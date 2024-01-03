@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { SIGN_IN_USER } from '../gql-operations/mutations';
+import { toastAlert } from '../../utility/SweetAlertToast';
 import './auth.scss';
 import Loader from '../Loader';
 
@@ -28,14 +29,19 @@ const Login = () => {
 	};
 
 	// Sign In Mutation Hook.
-	const [signInUser, { loading, error }] = useMutation(SIGN_IN_USER, {
+	const [signInUser, { loading }] = useMutation(SIGN_IN_USER, {
 		onCompleted: (data) => {
 			localStorage.setItem('token', data?.user?.token);
-			if (!error) {
-				navigation('/profile');
+			navigation('/profile');
+		},
+		onError: (error) => {
+			if (error && error.message) {
+				toastAlert.fire({
+					icon: 'error',
+					title: error.message || 'Something went wrong!',
+				});
 			}
 		},
-		onError: (error) => console.log(error),
 		refetchQueries: ['getMyProfile'],
 	});
 
@@ -83,7 +89,6 @@ const Login = () => {
 						</span>
 					</p>
 				</div>
-				<div className="error">{error && <p>{error.message}</p>}</div>
 				<form
 					name="signin"
 					className="form"

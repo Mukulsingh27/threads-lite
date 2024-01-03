@@ -9,8 +9,19 @@ const Reset = () => {
 	const [email, setEmail] = useState('');
 
 	// Reset Password Mutation Hook
-	const [resetPassword, { loading, error, data }] =
-		useMutation(RESET_PASSWORD);
+	const [resetPassword, { loading, error, data }] = useMutation(
+		RESET_PASSWORD,
+		{
+			onCompleted: (data) => {
+				if (data && data.resetPassword) {
+					setEmail('');
+				}
+			},
+			onError: (error) => {
+				console.error(error);
+			},
+		}
+	);
 
 	// Handle reset password form submit.
 	const handleFormSubmit = (e) => {

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { format } from 'timeago.js';
 import NewThread from './NewThread';
+import Loader from '../Loader';
 import './timeline.scss';
 
 const Timeline = ({ thread, hideUnnecessaryElements }) => {
@@ -16,19 +17,26 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 	// SweetAlert2
 	const MySwal = withReactContent(Swal);
 
+	// Toast
+	const Toast = MySwal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true,
+		didOpen: (toast) => {
+			toast.onmouseenter = Swal.stopTimer;
+			toast.onmouseleave = Swal.resumeTimer;
+		},
+	});
+
 	// Delete graphql mutation
-	const [deleteQuote] = useMutation(DELETE_QUOTE, {
+	const [deleteQuote, { loading: deleteLoader }] = useMutation(DELETE_QUOTE, {
 		onCompleted: (data) => {
-			// Check if the deletion was successful
 			if (data && data.deleteQuote) {
-				MySwal.fire({
-					title: 'Deleted!',
-					text: 'Your thread has been deleted.',
+				Toast.fire({
 					icon: 'success',
-					confirmButtonColor: '#688afd',
-					showConfirmButton: false,
-					timer: 2000,
-					timerProgressBar: true,
+					title: data.deleteQuote,
 				});
 			}
 		},
@@ -39,7 +47,15 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 	});
 
 	// Update graphql mutation
-	const [updateQuote] = useMutation(UPDATE_QUOTE, {
+	const [updateQuote, { loading: updateLoader }] = useMutation(UPDATE_QUOTE, {
+		onCompleted: (data) => {
+			if (data && data.updateQuote) {
+				Toast.fire({
+					icon: 'success',
+					title: data.updateQuote,
+				});
+			}
+		},
 		onError: (error) => {
 			console.error(error);
 		},
@@ -58,7 +74,6 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			inputValue: text,
 			showCancelButton: true,
 			confirmButtonText: 'Save',
-			showLoaderOnConfirm: true,
 			confirmButtonColor: '#4cbb17',
 			cancelButtonColor: '#fb4f4f',
 			backdrop: `
@@ -79,18 +94,6 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 				}
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
-		}).then((result) => {
-			if (result.isConfirmed) {
-				Swal.fire({
-					title: 'Updated!',
-					text: 'Your thread has been updated.',
-					icon: 'success',
-					confirmButtonColor: '#688afd',
-					timer: 2000,
-					timerProgressBar: true,
-					showConfirmButton: false,
-				});
-			}
 		});
 	};
 
@@ -101,7 +104,6 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			text: 'You will not be able to recover this thread!',
 			icon: 'warning',
 			showCancelButton: true,
-			showLoaderOnConfirm: true,
 			confirmButtonColor: '#4cbb17',
 			cancelButtonColor: '#fb4f4f',
 			confirmButtonText: 'Yes, delete it!',
@@ -122,6 +124,9 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			}
 		});
 	};
+
+	// Loader.
+	if (deleteLoader || updateLoader) return <Loader />;
 
 	// Check if thread is edited.
 	const isEdited = (createdAt, updatedAt) => createdAt !== updatedAt;

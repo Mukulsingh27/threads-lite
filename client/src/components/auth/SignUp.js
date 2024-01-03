@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP_USER } from '../gql-operations/mutations';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import Loader from '../Loader';
 import './auth.scss';
 
@@ -10,6 +12,22 @@ const SignUp = () => {
 
 	// Token.
 	const token = localStorage.getItem('token');
+
+	// SweetAlert2
+	const MySwal = withReactContent(Swal);
+
+	// Toast
+	const Toast = MySwal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true,
+		didOpen: (toast) => {
+			toast.onmouseenter = Swal.stopTimer;
+			toast.onmouseleave = Swal.resumeTimer;
+		},
+	});
 
 	// If token exists, redirect to profile page.
 	useEffect(() => {
@@ -30,12 +48,25 @@ const SignUp = () => {
 	};
 
 	// Sign Up Mutation Hook.
-	const [signUpUser, { loading, error, data }] = useMutation(SIGN_UP_USER, {
-		onCompleted: (data) => {
-			console.log(data);
+	const [signUpUser, { loading }] = useMutation(SIGN_UP_USER, {
+		onCompleted: async (data) => {
+			if (data && data.user) {
+				MySwal.fire({
+					title: `Welcome ${data.user.firstName}!`,
+					icon: 'success',
+					text: 'Please check your email to verify your account.',
+					confirmButtonColor: '#4cbb17',
+				});
+				setSignUpData({});
+			}
 		},
 		onError: (error) => {
-			console.log(error);
+			if (error && error.message) {
+				Toast.fire({
+					icon: 'error',
+					title: error.message,
+				});
+			}
 		},
 	});
 
@@ -91,31 +122,6 @@ const SignUp = () => {
 							</Link>
 						</span>
 					</p>
-				</div>
-				<div
-					className="error"
-					style={{
-						color: 'red',
-						paddingTop: '5px',
-						fontWeight: '500',
-					}}
-				>
-					{error && <p>{error.message}</p>}
-				</div>
-				<div className="success">
-					{data && data?.user && (
-						<p
-							style={{
-								color: 'green',
-								paddingTop: '5px',
-								fontWeight: '500',
-							}}
-						>
-							{data.user?.firstName} {data.user?.lastName} has
-							been successfully registered, Please check your
-							email to verify your account.
-						</p>
-					)}
 				</div>
 				<form
 					name="signin"
