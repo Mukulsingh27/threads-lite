@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { DELETE_USER } from '../gql-operations/mutations';
+import { SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 
 const UserCard = ({
@@ -17,41 +18,55 @@ const UserCard = ({
 
 	// Delete user
 	const [deleteUser, { loading }] = useMutation(DELETE_USER, {
-		onCompleted: (data) => {
-			console.log(data);
-		},
 		onError: (error) => {
-			console.log(error);
+			console.error(error);
 		},
 	});
 
 	// Log out
 	const handleLogOut = () => {
-		const confirmLogOut = window.confirm(
-			'Are you sure you want to log out?'
-		);
-
-		if (confirmLogOut) {
-			localStorage.removeItem('token');
-			navigation('/login');
-			window.location.reload();
-		}
+		SweetAlert.fire({
+			title: 'Are you sure?',
+			text: 'You will be logged out.',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#4cbb17',
+			cancelButtonColor: '#fb4f4f',
+			confirmButtonText: 'Yes, log out',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				localStorage.removeItem('token');
+				navigation('/login');
+				window.location.reload();
+			}
+		});
 	};
 
 	// Delete user
 	const handleDelete = async (id) => {
-		// Alter and confirm delete.
-		const confirmDelete = window.confirm(
-			'Are you sure you want to delete your account? This action cannot be undone and data cannot be recovered.'
-		);
+		// Show SweetAlert2 confirmation dialog
+		const result = await SweetAlert.fire({
+			title: 'Are you sure?',
+			text: 'This action cannot be undone, and your data will be permanently deleted.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#fb4f4f',
+			cancelButtonColor: '#4cbb17',
+			confirmButtonText: 'Yes, delete my account',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+		});
 
-		if (confirmDelete) {
+		if (result.isConfirmed) {
 			try {
 				await deleteUser({
 					variables: {
 						id,
 					},
-
 					// Refetch queries.
 					refetchQueries: ['getMyProfile'],
 				});

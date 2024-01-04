@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import confirmation from './templates/confirmation.js';
 import resetPassword from './templates/resetPassword.js';
 import transporter from './nodemailer/transporter.js';
+import { ApolloError } from 'apollo-server-core';
+import e from 'express';
 
 // Read the .env file
 if (process.env.NODE_ENV !== 'production') {
@@ -31,11 +33,11 @@ const resolvers = {
 		},
 		quote: async (_, { by }) => await Quote.find({ by }),
 		myProfile: async (_, __, { userID }) => {
-			if (!userID) throw new Error('You are not authenticated');
+			if (!userID) throw new Error('You are not authenticated !');
 			return await User.findOne({ _id: userID });
 		},
 		fetchUsers: async (_, { query }) => {
-			if (!query) throw new Error('Query not found');
+			if (!query) throw new Error('Query not found !');
 			return await User.find({
 				$or: [
 					{ firstName: { $regex: query, $options: 'i' } },
@@ -50,58 +52,64 @@ const resolvers = {
 	},
 	Mutation: {
 		signUpUser: async (_, { newUser }) => {
-			const user = await User.findOne({ email: newUser.email });
+			try {
+				const user = await User.findOne({ email: newUser.email });
 
-			// Check if user already exists
-			if (user) throw new Error('User already exists');
+				// Check if user already exists
+				if (user) throw new Error('User already exists!');
 
-			// Hash the password
-			const hashedPassword = await bcrypt.hash(newUser?.password, 10);
+				// Hash the password
+				const hashedPassword = await bcrypt.hash(newUser?.password, 10);
 
-			// Create new user
-			const newUSerData = await new User({
-				...newUser,
-				profileImage: `https://robohash.org/${newUser.firstName.toLowerCase()}?size=300x300`,
-				password: hashedPassword,
-			});
+				// Create new user
+				const newUSerData = await new User({
+					...newUser,
+					profileImage: `https://robohash.org/${newUser.firstName.toLowerCase()}?size=300x300`,
+					password: hashedPassword,
+				});
 
-			// Save the user
-			const savedUser = await newUSerData.save();
+				// Save the user
+				const savedUser = await newUSerData.save();
 
-			// Create token
-			const token = jwt.sign(
-				{ email: newUser.email },
-				process.env.JWT_SECRET_KEY,
-				{ expiresIn: '10m' }
-			);
+				// Create token
+				const token = jwt.sign(
+					{ email: newUser.email },
+					process.env.JWT_SECRET_KEY,
+					{ expiresIn: '15m' }
+				);
 
-			// Define the email
-			var mailConfigs = {
-				from: process.env.SMTP_MAIL,
-				to: newUser.email,
-				subject: 'Threads Lite: Email Confirmation',
-				html: confirmation({
-					name: newUser.firstName,
-					link: process.env.CLIENT_URL + '/verify/' + token,
-				}),
-			};
+				// Define the email
+				var mailConfigs = {
+					from: process.env.SMTP_MAIL,
+					to: newUser.email,
+					subject: 'Threads Lite: Email Confirmation',
+					html: confirmation({
+						name: newUser.firstName,
+						link: process.env.CLIENT_URL + '/verify/' + token,
+					}),
+				};
 
-			// Send the email
-			await transporter.sendMail(mailConfigs, (error, info) => {
-				if (error) {
-					console.log(error);
-					res.status(500).send(
-						'Something went wrong with the confirmation email.'
-					);
-				} else {
-					console.log(
-						'Confirmation email sent successfully: ' + info.response
-					);
-					res.status(200).send('Email Sent');
-				}
-			});
+				// Send the email.
+				await transporter.sendMail(mailConfigs, (error, info) => {
+					if (error) {
+						console.log(error);
+						res.status(500).send(
+							'Something went wrong with the confirmation email.'
+						);
+					} else {
+						console.log(
+							'Confirmation email sent successfully: ' +
+								info.response
+						);
+						res.status(200).send('Email Sent');
+					}
+				});
 
-			return savedUser;
+				return savedUser;
+			} catch (error) {
+				console.error('Failed to sign up user');
+				throw new ApolloError(error);
+			}
 		},
 		signInUser: async (_, { userSignIn }) => {
 			try {
@@ -109,8 +117,10 @@ const resolvers = {
 
 				// Check if user exists and is verified
 				if (!user || !user.verified) {
-					throw new AuthenticationError(
-						!user ? 'User does not exist' : 'User is not verified'
+					throw new Error(
+						!user
+							? 'User does not exists!'
+							: 'User is not verified!'
 					);
 				}
 
@@ -122,9 +132,7 @@ const resolvers = {
 
 				// Check if password matches
 				if (!passMatch) {
-					throw new AuthenticationError(
-						'Either email or password is incorrect'
-					);
+					throw new Error('Either email or password is incorrect!');
 				}
 
 				// Create token
@@ -136,16 +144,15 @@ const resolvers = {
 				// Optionally, you may return more information about the user
 				return { token };
 			} catch (error) {
-				console.error('Error signing in user:', error);
-				throw new ApolloError('Failed to sign in user');
+				console.error('Failed to sign in user');
+				throw new ApolloError(error);
 			}
 		},
-
 		deleteUserWithQuotes: async (_, { _id }, { userID }) => {
 			try {
 				// Check if user is authenticated
 				if (!userID) {
-					throw new AuthenticationError('You are not authenticated');
+					throw new Error('You are not authenticated');
 				}
 
 				// Find and delete the user
@@ -153,7 +160,7 @@ const resolvers = {
 
 				// Check if user exists
 				if (!deletedUser) {
-					throw new UserInputError('User does not exist');
+					throw new Error('User does not exist!');
 				}
 
 				// Delete all quotes by the user
@@ -161,19 +168,19 @@ const resolvers = {
 
 				// Optionally, you may return the deleted user object or a success message
 				return {
-					message: 'User deleted successfully',
+					message: 'User deleted successfully!',
 					deletedUser,
 				};
 			} catch (error) {
-				console.error('Error deleting user:', error);
-				throw new ApolloError('Failed to delete user');
+				console.error('Failed to delete user');
+				throw new ApolloError(error);
 			}
 		},
 		verifyUser: async (_, { token }) => {
 			try {
 				// Check if token is present
 				if (!token) {
-					throw new UserInputError('Token not found');
+					throw new Error('Token not found!');
 				}
 
 				// Verify the token
@@ -184,14 +191,14 @@ const resolvers = {
 
 				// Check if user verification exists
 				if (!userVerification) {
-					throw new UserInputError('User not found');
+					throw new Error('User does not exist!');
 				}
 
 				// Check if user is already verified
 				const verified = await User.findOne({ email, verified: true });
 
 				if (verified) {
-					throw new UserInputError('User is already verified');
+					throw new Error('User is already verified!');
 				}
 
 				// Update the user to verified and remove the auto-expiration.
@@ -204,31 +211,34 @@ const resolvers = {
 				);
 
 				// Optionally, you may return the updated user object or a new token
-				return 'User verified successfully';
+				return 'User verified successfully!';
 			} catch (error) {
-				console.error('Error verifying user:', error);
-				throw new ApolloError('Failed to verify user');
+				console.error('Failed to verify user');
+				throw new ApolloError(error);
 			}
 		},
 		resetPassword: async (_, { email }) => {
 			try {
 				if (!email) {
-					throw new UserInputError('Email not found');
+					throw new Error('Email not found!');
 				}
 
 				// Find the user
 				const user = await User.findOne({ email });
 
 				// Check if user exists
-				if (!user) {
-					throw new UserInputError('User not found');
+				if (!user) throw new Error('User does not exist!');
+
+				// Don't send the email if the user is not verified
+				if (!user.verified) {
+					throw new Error('User is not verified!');
 				}
 
 				// Create token
 				const token = jwt.sign(
 					{ email: user.email },
 					process.env.JWT_SECRET_KEY,
-					{ expiresIn: '10m' }
+					{ expiresIn: '15m' }
 				);
 
 				// Define the email
@@ -258,16 +268,16 @@ const resolvers = {
 					}
 				});
 
-				return 'Password reset link sent successfully, please check your email';
+				return 'Password reset link sent successfully, Please check your email.';
 			} catch (error) {
-				console.error('Error resetting password:', error);
-				throw new ApolloError('Failed to send password reset email');
+				console.error('Failed to reset password');
+				throw new ApolloError(error);
 			}
 		},
 		setNewPassword: async (_, { token, password }) => {
 			try {
 				if (!token) {
-					throw new UserInputError('Token not found');
+					throw new Error('Token not found!');
 				}
 
 				// Verify the token
@@ -278,7 +288,7 @@ const resolvers = {
 
 				// Check if user exists
 				if (!user) {
-					throw new UserInputError('User not found');
+					throw new Error('User does not exist!');
 				}
 
 				// Hash the password
@@ -292,18 +302,18 @@ const resolvers = {
 					}
 				);
 
-				// Optionally, you may return the updated user object or a new token
-				return 'Password updated successfully';
+				// Return success message.
+				return 'Password updated successfully!';
 			} catch (error) {
-				console.error('Error setting new password:', error);
-				throw new ApolloError('Failed to set new password');
+				console.error('Failed to set new password');
+				throw new ApolloError(error);
 			}
 		},
 		createQuote: async (_, { name }, { userID }) => {
 			try {
 				// Check if user is authenticated
 				if (!userID) {
-					throw new AuthenticationError('You are not authenticated');
+					throw new Error('You are not authenticated');
 				}
 
 				// Create new quote
@@ -318,19 +328,18 @@ const resolvers = {
 				await newQuote.save();
 
 				// Return the created quote
-				return 'Quote created successfully';
+				return 'Thread Posted Successfully';
 			} catch (error) {
 				// Handle specific errors if needed
-				console.error('Error creating quote:', error);
-				throw new ApolloError('Failed to create quote');
+				console.error('Failed to create quote');
+				throw new ApolloError(error);
 			}
 		},
-
 		updateQuote: async (_, { _id, name }, { userID }) => {
 			try {
 				// Check if user is authenticated
 				if (!userID) {
-					throw new AuthenticationError('You are not authenticated');
+					throw new Error('You are not authenticated');
 				}
 
 				// Find and update the quote
@@ -345,22 +354,22 @@ const resolvers = {
 
 				// Check if quote exists
 				if (!updatedQuote) {
-					throw new UserInputError('Quote does not exist');
+					throw new Error('Quote does not exist');
 				}
 
 				// Return success message
-				return 'Quote updated successfully';
+				return 'Thread updated successfully!';
 			} catch (error) {
 				// Handle specific errors if needed
-				console.error('Error updating quote:', error);
-				throw new ApolloError('Failed to update quote');
+				console.error('Failed to update quote');
+				throw new ApolloError(error);
 			}
 		},
 		deleteQuote: async (_, { _id }, { userID }) => {
 			try {
 				// Check if user is authenticated
 				if (!userID) {
-					throw new AuthenticationError('You are not authenticated');
+					throw new Error('You are not authenticated');
 				}
 
 				// Find and delete the quote
@@ -368,15 +377,15 @@ const resolvers = {
 
 				// Check if quote exists
 				if (!deletedQuote) {
-					throw new UserInputError('Quote does not exist');
+					throw new Error('Quote does not exist');
 				}
 
 				// Return success message
-				return 'Quote deleted successfully';
+				return 'Thread deleted successfully!';
 			} catch (error) {
 				// Handle specific errors if needed
-				console.error('Error deleting quote:', error);
-				throw new ApolloError('Failed to delete quote');
+				console.error('Failed to delete quote');
+				throw new ApolloError(error);
 			}
 		},
 	},

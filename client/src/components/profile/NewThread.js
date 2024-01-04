@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_QUOTE } from '../gql-operations/mutations';
 import { GET_USER_BY_QUERY } from '../gql-operations/queries';
 import { MentionsInput, Mention } from 'react-mentions';
-// import mentionStyles from './MentionStyles';
+import { ToastAlert } from '../../utility/SweetAlertToast';
 import classNames from './mention.module.css';
 import Loader from '../Loader';
 
@@ -33,10 +33,7 @@ const NewThread = ({ avatar }) => {
 		},
 		skip: true,
 		onError: (error) => {
-			console.log(error);
-		},
-		onCompleted: (data) => {
-			console.log(data);
+			console.error(error);
 		},
 	});
 
@@ -75,11 +72,16 @@ const NewThread = ({ avatar }) => {
 	// Create Quote Mutation Hook.
 	const [createQuote, { loading, error, data }] = useMutation(CREATE_QUOTE, {
 		onCompleted: (data) => {
-			console.log(data);
-			setNewThread('');
+			if (data && data.createQuote) {
+				ToastAlert.fire({
+					icon: 'success',
+					title: data.createQuote,
+				});
+				setNewThread('');
+			}
 		},
 		onError: (error) => {
-			console.log(error);
+			console.error(error);
 		},
 		refetchQueries: ['getAllQuotes', 'getMyProfile'],
 	});

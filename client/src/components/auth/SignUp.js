@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP_USER } from '../gql-operations/mutations';
+import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 import './auth.scss';
 
@@ -30,12 +31,28 @@ const SignUp = () => {
 	};
 
 	// Sign Up Mutation Hook.
-	const [signUpUser, { loading, error, data }] = useMutation(SIGN_UP_USER, {
-		onCompleted: (data) => {
-			console.log(data);
+	const [signUpUser, { loading }] = useMutation(SIGN_UP_USER, {
+		onCompleted: async (data) => {
+			if (data && data.user) {
+				SweetAlert.fire({
+					title: `Welcome ${data.user.firstName}!`,
+					icon: 'success',
+					text: 'Please check your email to verify your account.',
+					confirmButtonColor: '#4cbb17',
+					backdrop: `
+						rgba(0,0,0,0.62)
+					`,
+				});
+				setSignUpData({});
+			}
 		},
 		onError: (error) => {
-			console.log(error);
+			if (error && error.message) {
+				ToastAlert.fire({
+					icon: 'error',
+					title: error.message || 'Something went wrong!',
+				});
+			}
 		},
 	});
 
@@ -54,15 +71,24 @@ const SignUp = () => {
 		// Check if required fields are not empty
 		const { firstName, email, password } = signUpData;
 		if (!firstName || !email || !password) {
-			window.alert('Please fill in all required fields');
+			SweetAlert.fire({
+				icon: 'error',
+				title: 'Please fill in all required fields',
+				confirmButtonColor: '#4cbb17',
+			});
 			return;
 		}
 
 		// Check password against regex
 		if (!passwordRegex.test(password)) {
-			window.alert(
-				'Password criteria not met. Please check the password requirements.'
-			);
+			SweetAlert.fire({
+				icon: 'error',
+				title: 'Password criteria not met! Please check the password requirements.',
+				confirmButtonColor: '#4cbb17',
+				backdrop: `
+					rgba(0,0,0,0.62)
+				`,
+			});
 			return;
 		}
 
@@ -91,31 +117,6 @@ const SignUp = () => {
 							</Link>
 						</span>
 					</p>
-				</div>
-				<div
-					className="error"
-					style={{
-						color: 'red',
-						paddingTop: '5px',
-						fontWeight: '500',
-					}}
-				>
-					{error && <p>{error.message}</p>}
-				</div>
-				<div className="success">
-					{data && data?.user && (
-						<p
-							style={{
-								color: 'green',
-								paddingTop: '5px',
-								fontWeight: '500',
-							}}
-						>
-							{data.user?.firstName} {data.user?.lastName} has
-							been successfully registered, Please check your
-							email to verify your account.
-						</p>
-					)}
 				</div>
 				<form
 					name="signin"
