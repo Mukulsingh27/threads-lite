@@ -33,11 +33,11 @@ const resolvers = {
 		},
 		quote: async (_, { by }) => await Quote.find({ by }),
 		myProfile: async (_, __, { userID }) => {
-			if (!userID) throw new Error('You are not authenticated');
+			if (!userID) throw new Error('You are not authenticated !');
 			return await User.findOne({ _id: userID });
 		},
 		fetchUsers: async (_, { query }) => {
-			if (!query) throw new Error('Query not found');
+			if (!query) throw new Error('Query not found !');
 			return await User.find({
 				$or: [
 					{ firstName: { $regex: query, $options: 'i' } },
@@ -75,7 +75,7 @@ const resolvers = {
 				const token = jwt.sign(
 					{ email: newUser.email },
 					process.env.JWT_SECRET_KEY,
-					{ expiresIn: '10m' }
+					{ expiresIn: '15m' }
 				);
 
 				// Define the email
@@ -132,7 +132,7 @@ const resolvers = {
 
 				// Check if password matches
 				if (!passMatch) {
-					throw new Error('Either email or password is incorrect');
+					throw new Error('Either email or password is incorrect!');
 				}
 
 				// Create token
@@ -160,7 +160,7 @@ const resolvers = {
 
 				// Check if user exists
 				if (!deletedUser) {
-					throw new Error('User does not exist');
+					throw new Error('User does not exist!');
 				}
 
 				// Delete all quotes by the user
@@ -168,7 +168,7 @@ const resolvers = {
 
 				// Optionally, you may return the deleted user object or a success message
 				return {
-					message: 'User deleted successfully',
+					message: 'User deleted successfully!',
 					deletedUser,
 				};
 			} catch (error) {
@@ -238,7 +238,7 @@ const resolvers = {
 				const token = jwt.sign(
 					{ email: user.email },
 					process.env.JWT_SECRET_KEY,
-					{ expiresIn: '10m' }
+					{ expiresIn: '15m' }
 				);
 
 				// Define the email
@@ -268,7 +268,7 @@ const resolvers = {
 					}
 				});
 
-				return 'Password reset link sent successfully, please check your email.';
+				return 'Password reset link sent successfully, Please check your email.';
 			} catch (error) {
 				console.error('Failed to reset password');
 				throw new ApolloError(error);

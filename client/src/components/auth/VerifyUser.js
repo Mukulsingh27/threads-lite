@@ -18,18 +18,14 @@ const VerifyUser = () => {
 		onCompleted: (data) => {
 			if (data && data.verifyUser) {
 				SweetAlert.fire({
-					title: 'Success!',
-					icon: 'success',
-					text: data.verifyUser,
-					confirmButtonColor: '#4cbb17',
-				});
-
-				SweetAlert.fire({
 					icon: 'success',
 					title: data.verifyUser,
 					html: 'You will be redirected to the login page in <b></b> milliseconds.',
 					timer: 10000,
 					timerProgressBar: true,
+					backdrop: `
+						rgba(0,0,0,0.62)
+					`,
 					didOpen: () => {
 						SweetAlert.showLoading();
 						const timer = SweetAlert.getPopup().querySelector('b');
@@ -58,6 +54,9 @@ const VerifyUser = () => {
 					icon: 'error',
 					title: error.message || 'Something went wrong!',
 					confirmButtonColor: '#fb4f4f',
+					backdrop: `
+						rgba(0,0,0,0.62)
+					`,
 				}).then((result) => {
 					if (result.dismiss === SweetAlert.DismissReason.backdrop) {
 						navigate('/login');

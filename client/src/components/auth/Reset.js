@@ -19,6 +19,9 @@ const Reset = () => {
 					icon: 'success',
 					text: data.resetPassword,
 					confirmButtonColor: '#4cbb17',
+					backdrop: `
+						rgba(0,0,0,0.62)
+					`,
 				});
 				setEmail('');
 			}

@@ -29,6 +29,9 @@ const NewPassword = () => {
 					icon: 'success',
 					text: data.setNewPassword,
 					confirmButtonColor: '#4cbb17',
+					backdrop: `
+						rgba(0,0,0,0.62)
+					`,
 				}).then((result) => {
 					if (result.isConfirmed) {
 						navigation('/login');
@@ -57,6 +60,9 @@ const NewPassword = () => {
 				icon: 'error',
 				title: 'Passwords do not match!',
 				confirmButtonColor: '#4cbb17',
+				backdrop: `
+					rgba(0,0,0,0.62)
+				`,
 			});
 			return;
 		}

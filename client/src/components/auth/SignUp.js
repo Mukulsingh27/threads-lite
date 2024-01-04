@@ -39,6 +39,9 @@ const SignUp = () => {
 					icon: 'success',
 					text: 'Please check your email to verify your account.',
 					confirmButtonColor: '#4cbb17',
+					backdrop: `
+						rgba(0,0,0,0.62)
+					`,
 				});
 				setSignUpData({});
 			}
@@ -82,6 +85,9 @@ const SignUp = () => {
 				icon: 'error',
 				title: 'Password criteria not met! Please check the password requirements.',
 				confirmButtonColor: '#4cbb17',
+				backdrop: `
+					rgba(0,0,0,0.62)
+				`,
 			});
 			return;
 		}

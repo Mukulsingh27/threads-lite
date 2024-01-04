@@ -56,6 +56,9 @@ const UserCard = ({
 			confirmButtonColor: '#fb4f4f',
 			cancelButtonColor: '#4cbb17',
 			confirmButtonText: 'Yes, delete my account',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
 		});
 
 		if (result.isConfirmed) {
