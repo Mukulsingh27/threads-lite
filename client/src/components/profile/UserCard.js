@@ -19,7 +19,7 @@ const UserCard = ({
 	// Delete user
 	const [deleteUser, { loading }] = useMutation(DELETE_USER, {
 		onError: (error) => {
-			console.error(error);
+			console.error(error); // eslint-disable-line
 		},
 	});
 
@@ -71,7 +71,7 @@ const UserCard = ({
 					refetchQueries: ['getMyProfile'],
 				});
 			} catch (error) {
-				console.error('Delete error:', error);
+				console.error('Delete error:', error); // eslint-disable-line
 			} finally {
 				localStorage.removeItem('token');
 				navigation('/signup');
