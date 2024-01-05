@@ -14,12 +14,11 @@ const UserProfile = () => {
 	// Get user profile data.
 	const { loading, error, data } = useQuery(GET_USER_PROFILE, {
 		variables: { id },
-		onError: (error) => console.log(error),
+		onError: (error) => console.log(error), // eslint-disable-line
 	});
 
 	// If there is an error, log it and show error message.
 	if (error) {
-		console.error(error);
 		return <p>Error :(</p>;
 	}
 

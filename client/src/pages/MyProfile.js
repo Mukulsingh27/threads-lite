@@ -21,7 +21,7 @@ const MyProfile = () => {
 	// Get my profile data.
 	const { loading, data } = useQuery(GET_MY_PROFILE, {
 		onError: (error) => {
-			console.log(error);
+			console.log(error); // eslint-disable-line
 			window.location.reload();
 		},
 	});
