@@ -5,10 +5,10 @@ const Loader = () => {
 	return (
 		<div className="loader">
 			<div className="loader__rings">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
+				<div />
+				<div />
+				<div />
+				<div />
 			</div>
 		</div>
 	);
