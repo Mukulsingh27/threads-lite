@@ -91,10 +91,13 @@ const Home = () => {
 										className="timeline__thread-buttons-button timeline__thread-buttons-button-edit"
 										onClick={() => {
 											CopyClick(
-												window.location.href,
+												window.location.origin,
 												_id
 											);
-											WebShare(window.location.href, _id);
+											WebShare(
+												window.location.origin,
+												_id
+											);
 										}}
 									>
 										Share

@@ -6,6 +6,8 @@ import MentionRegex from '../../utility/MentionRegex';
 import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import { format } from 'timeago.js';
 import NewThread from './NewThread';
+import WebShare from '../../utility/WebShare';
+import CopyClick from '../../utility/CopyClick';
 import Loader from '../Loader';
 import './timeline.scss';
 
@@ -167,6 +169,21 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 										}
 									>
 										Edit
+									</button>
+									<button
+										className="timeline__thread-buttons-button timeline__thread-buttons-button-edit"
+										onClick={() => {
+											CopyClick(
+												window.location.origin,
+												quote?._id
+											);
+											WebShare(
+												window.location.origin,
+												quote?._id
+											);
+										}}
+									>
+										Share
 									</button>
 									<button
 										className="timeline__thread-buttons-button timeline__thread-buttons-button-delete"
