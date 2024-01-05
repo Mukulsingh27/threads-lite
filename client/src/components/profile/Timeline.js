@@ -24,7 +24,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			}
 		},
 		onError: (error) => {
-			console.error(error);
+			console.error(error); // eslint-disable-line
 		},
 		refetchQueries: ['getMyProfile', 'getAllQuotes'],
 	});
@@ -40,7 +40,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			}
 		},
 		onError: (error) => {
-			console.error(error);
+			console.error(error); // eslint-disable-line
 		},
 		refetchQueries: ['getMyProfile', 'getAllQuotes'],
 	});
@@ -72,7 +72,6 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 						},
 					});
 				} catch (error) {
-					console.error('Edit error:', error);
 					SweetAlert.showValidationMessage(
 						`Edit failed: ${error.message}`
 					);
@@ -104,7 +103,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 						},
 					});
 				} catch (error) {
-					console.error('Delete error:', error);
+					console.error('Delete error:', error); // eslint-disable-line
 				}
 			}
 		});
@@ -121,7 +120,7 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 			{token && !hideUnnecessaryElements && (
 				<NewThread avatar={thread?.profileImage} />
 			)}
-			{[...thread?.quotes].reverse().map((quote) => (
+			{[...thread.quotes].reverse().map((quote) => (
 				<li
 					className="timeline__timeline-item extra-space"
 					key={quote?._id}

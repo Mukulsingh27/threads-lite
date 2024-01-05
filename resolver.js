@@ -6,7 +6,6 @@ import confirmation from './templates/confirmation.js';
 import resetPassword from './templates/resetPassword.js';
 import transporter from './nodemailer/transporter.js';
 import { ApolloError } from 'apollo-server-core';
-import e from 'express';
 
 // Read the .env file
 if (process.env.NODE_ENV !== 'production') {
@@ -93,15 +92,11 @@ const resolvers = {
 				await transporter.sendMail(mailConfigs, (error, info) => {
 					if (error) {
 						console.log(error);
-						res.status(500).send(
-							'Something went wrong with the confirmation email.'
-						);
 					} else {
 						console.log(
 							'Confirmation email sent successfully: ' +
 								info.response
 						);
-						res.status(200).send('Email Sent');
 					}
 				});
 
@@ -256,15 +251,11 @@ const resolvers = {
 				await transporter.sendMail(mailConfigs, (error, info) => {
 					if (error) {
 						console.log(error);
-						res.status(500).send(
-							'Something went wrong with the password reset email.'
-						);
 					} else {
 						console.log(
 							'Password reset email sent successfully: ' +
 								info.response
 						);
-						res.status(200).send('Email Sent');
 					}
 				});
 
