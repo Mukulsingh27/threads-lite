@@ -1,0 +1,66 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": ["eslint:recommended", "plugin:react/recommended"],
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"plugins": ["react"],
+	"rules": {
+		"array-callback-return": "error",
+		"block-scoped-var": "error",
+		"complexity": ["error", { "max": 20 }],
+		"indent": ["error", "tab"],
+		"linebreak-style": ["error", "unix"],
+		"quotes": ["error", "single"],
+		"semi": ["error", "always"],
+		"no-constant-binary-expression": "error",
+		"no-extra-bind": "error",
+		"no-extra-label": "error",
+		"no-floating-decimal": "error",
+		"no-implicit-globals": "error",
+		"no-loop-func": "error",
+		"no-multiple-empty-lines": "error",
+		"no-trailing-spaces": "error",
+		"jsdoc/require-param-type": "off",
+		"jsdoc/require-returns-type": "off",
+		"no-restricted-properties": "error",
+		"no-return-assign": "error",
+		"no-return-await": "error",
+		"no-sequences": "error",
+		"no-shadow": "off",
+		"no-template-curly-in-string": "error",
+		"no-throw-literal": "error",
+		"no-unmodified-loop-condition": "error",
+		"no-unused-vars": "off",
+		"no-useless-call": "error",
+		"no-useless-concat": "error",
+		"no-console": "error",
+		"no-duplicate-imports": "error",
+		"no-var": "error",
+		"react/prop-types": "off",
+		"prefer-arrow-callback": [
+			"error",
+			{
+				"allowNamedFunctions": true
+			}
+		],
+		"prefer-const": "error",
+		"prefer-object-spread": "error",
+		"prefer-promise-reject-errors": "error",
+		"prefer-rest-params": "error",
+		"prefer-spread": "error",
+		"radix": ["error", "as-needed"],
+		"require-await": "error",
+		"rest-spread-spacing": ["error", "never"]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"ignorePatterns": ["node_modules/", "build/"]
+}

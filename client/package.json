@@ -9,14 +9,16 @@
 		"react-dom": "^18.2.0",
 		"react-mentions": "^4.4.10",
 		"react-router-dom": "^6.21.0",
-		"react-scripts": "5.0.1",
-		"sweetalert2": "^11.10.2",
+		"react-scripts": "^5.0.1",
+		"sweetalert2": "^11.6.13",
 		"sweetalert2-react-content": "^5.0.7",
 		"timeago.js": "^4.0.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build"
+		"build": "react-scripts build",
+		"lint": "eslint src/**/*.js",
+		"lint:fix": "eslint src/**/*.js --fix"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -36,6 +38,8 @@
 		]
 	},
 	"devDependencies": {
+		"eslint": "^8.56.0",
+		"eslint-plugin-react": "^7.33.2",
 		"sass": "^1.69.5"
 	}
 }

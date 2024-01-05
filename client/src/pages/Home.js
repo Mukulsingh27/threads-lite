@@ -18,7 +18,7 @@ const Home = () => {
 		},
 		variables: { page, pageSize },
 		onError: (error) => {
-			console.log(error);
+			console.log(error); // eslint-disable-line
 		},
 	});
 
