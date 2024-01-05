@@ -5,6 +5,7 @@ import UserCard from '../components/profile/UserCard';
 import { useQuery } from '@apollo/client';
 import { GET_USER_PROFILE } from '../components/gql-operations/queries';
 import { useParams } from 'react-router-dom';
+import { SweetAlert } from '../utility/SweetAlertToast';
 import Loader from '../components/Loader';
 
 const UserProfile = () => {
@@ -19,7 +20,15 @@ const UserProfile = () => {
 
 	// If there is an error, log it and show error message.
 	if (error) {
-		return <p>Error :(</p>;
+		SweetAlert.fire({
+			icon: 'error',
+			title: 'User not found!',
+			confirmButtonColor: '#4cbb17',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+		});
+		return;
 	}
 
 	// If loading, show loader.

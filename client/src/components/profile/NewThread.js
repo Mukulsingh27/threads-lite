@@ -33,7 +33,7 @@ const NewThread = ({ avatar }) => {
 		},
 		skip: true,
 		onError: (error) => {
-			console.error(error);
+			console.error(error); // eslint-disable-line
 		},
 	});
 
@@ -54,7 +54,7 @@ const NewThread = ({ avatar }) => {
 			)
 			.then(callback)
 			.catch((err) => {
-				console.log(err);
+				console.log(err); // eslint-disable-line
 			});
 	};
 
@@ -81,7 +81,7 @@ const NewThread = ({ avatar }) => {
 			}
 		},
 		onError: (error) => {
-			console.error(error);
+			console.error(error); // eslint-disable-line
 		},
 		refetchQueries: ['getAllQuotes', 'getMyProfile'],
 	});
@@ -125,7 +125,7 @@ const NewThread = ({ avatar }) => {
 							classNames={classNames}
 							required
 							placeholder={
-								"Post something, using '@' to mention or ':' to add emojis."
+								"Post something, using '@' to mention or ':' to add emojis." // eslint-disable-line
 							}
 						>
 							<Mention

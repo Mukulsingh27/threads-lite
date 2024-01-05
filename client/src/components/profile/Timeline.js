@@ -147,10 +147,10 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 									quote?.createdAt,
 									quote?.updatedAt
 								) && (
-									<div className="timeline__thread-edited">
-										edited
-									</div>
-								)}
+								<div className="timeline__thread-edited">
+									edited
+								</div>
+							)}
 							<div className="timeline__thread">
 								<p
 									dangerouslySetInnerHTML={{

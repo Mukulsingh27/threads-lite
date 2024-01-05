@@ -4,6 +4,8 @@ import { GET_ALL_QUOTES } from '../components/gql-operations/queries';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
+import WebShare from '../utility/WebShare';
+import CopyClick from '../utility/CopyClick';
 import MentionRegex from '../utility/MentionRegex';
 
 const Home = () => {
@@ -76,12 +78,28 @@ const Home = () => {
 									</time>
 								</span>
 							</div>
-							<div className="timeline__thread">
-								<p
-									dangerouslySetInnerHTML={{
-										__html: MentionRegex(name),
-									}}
-								/>
+							<div className="timeline__thread-wrap">
+								<div className="timeline__thread">
+									<p
+										dangerouslySetInnerHTML={{
+											__html: MentionRegex(name),
+										}}
+									/>
+								</div>
+								<div className="timeline__thread-buttons">
+									<button
+										className="timeline__thread-buttons-button timeline__thread-buttons-button-edit"
+										onClick={() => {
+											CopyClick(
+												window.location.href,
+												_id
+											);
+											WebShare(window.location.href, _id);
+										}}
+									>
+										Share
+									</button>
+								</div>
 							</div>
 						</div>
 					</li>

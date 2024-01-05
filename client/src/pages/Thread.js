@@ -1,28 +1,40 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { GET_QUOTE_BY_ID } from '../components/gql-operations/queries';
-import { format } from 'timeago.js';
-import Loader from '../components/Loader';
 import MentionRegex from '../utility/MentionRegex';
+import { format } from 'timeago.js';
+import { SweetAlert } from '../utility/SweetAlertToast';
+import Loader from '../components/Loader';
 
 const Thread = () => {
 	// Get the thread id from url.
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	// Get the thread data.
-	const { loading, data } = useQuery(GET_QUOTE_BY_ID, {
+	const { loading, data, error } = useQuery(GET_QUOTE_BY_ID, {
 		variables: { id },
 		onError: (error) => console.log(error), // eslint-disable-line
 	});
 
-	console.log(data); // eslint-disable-line
+	if (error) {
+		SweetAlert.fire({
+			icon: 'error',
+			title: 'Thread not found!',
+			confirmButtonColor: '#4cbb17',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+		});
+		return;
+	}
 
 	// If loading, show loader.
 	if (loading) return <Loader />;
 
 	// Destructure data.
-	const { _id, name, by, createdAt } = data?.quote || {};
+	const { name, by, createdAt } = data?.quote || {};
 
 	return (
 		<div className="home">
