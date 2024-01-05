@@ -3,7 +3,7 @@ const WebShare = (host, id) => {
 	if (navigator.share) {
 		navigator
 			.share({
-				url: `${host}thread/${id}`,
+				url: `${host}/thread/${id}`,
 			})
 			.then(() => {
 				console.log('Sharing successfully'); // eslint-disable-line
