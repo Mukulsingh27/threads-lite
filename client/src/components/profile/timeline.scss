@@ -173,16 +173,20 @@ $blue-500: #688afd;
 
 	&__thread-buttons {
 		visibility: hidden;
+		display: flex;
+		justify-content: space-around;
+		width: 100%;
+		position: absolute;
 
 		&-button {
-			position: absolute;
 			background-color: transparent;
 			color: $grey-300;
 			border: none;
 			height: 40px;
-			width: 50%;
+			width: 100%;
 			font-size: 15px;
 			font-weight: 900;
+			text-align: center;
 			cursor: pointer;
 
 			&:hover {

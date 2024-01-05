@@ -1,3 +1,4 @@
+import React from 'react';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import MyProfile from './pages/MyProfile';
@@ -7,6 +8,7 @@ import SignUp from './components/auth/SignUp';
 import VerifyUser from './components/auth/VerifyUser';
 import Reset from './components/auth/Reset';
 import NewPassword from './components/auth/NewPassword';
+import Thread from './pages/Thread';
 
 const routes = [
 	{
@@ -32,6 +34,11 @@ const routes = [
 	{
 		path: '/profile/:id',
 		element: <UserProfile />,
+		exact: true,
+	},
+	{
+		path: 'thread/:id',
+		element: <Thread />,
 		exact: true,
 	},
 	{

@@ -12,7 +12,6 @@ const Reset = () => {
 	// Reset Password Mutation Hook
 	const [resetPassword, { loading }] = useMutation(RESET_PASSWORD, {
 		onCompleted: (data) => {
-			console.log(data);
 			if (data && data.resetPassword) {
 				SweetAlert.fire({
 					title: 'Success!',

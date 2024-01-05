@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SET_NEW_PASSWORD } from '../gql-operations/mutations';
-import { useParams } from 'react-router-dom';
 import { ToastAlert, SweetAlert } from '../../utility/SweetAlertToast';
 import Loader from '../Loader';
 

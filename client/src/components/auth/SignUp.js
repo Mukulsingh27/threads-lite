@@ -32,7 +32,7 @@ const SignUp = () => {
 
 	// Sign Up Mutation Hook.
 	const [signUpUser, { loading }] = useMutation(SIGN_UP_USER, {
-		onCompleted: async (data) => {
+		onCompleted: (data) => {
 			if (data && data.user) {
 				SweetAlert.fire({
 					title: `Welcome ${data.user.firstName}!`,
@@ -75,6 +75,9 @@ const SignUp = () => {
 				icon: 'error',
 				title: 'Please fill in all required fields',
 				confirmButtonColor: '#4cbb17',
+				backdrop: `
+					rgba(0,0,0,0.62)
+				`,
 			});
 			return;
 		}

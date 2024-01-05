@@ -30,7 +30,11 @@ const resolvers = {
 				.populate('by', '_id firstName lastName profileImage');
 			return quotes;
 		},
-		quote: async (_, { by }) => await Quote.find({ by }),
+		quote: async (_, { _id }) =>
+			await Quote.findById(_id).populate(
+				'by',
+				'_id firstName lastName profileImage'
+			),
 		myProfile: async (_, __, { userID }) => {
 			if (!userID) throw new Error('You are not authenticated !');
 			return await User.findOne({ _id: userID });

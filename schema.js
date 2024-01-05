@@ -6,7 +6,7 @@ const typeDefs = gql`
 		users: [User]
 		user(_id: ID!): User
 		quotes(page: Int!, pageSize: Int!): [QuoteWithUser]
-		quote(by: ID!): [Quote]
+		quote(_id: ID!): Quote
 		myProfile: User
 		fetchUsers(query: String!): [User]
 	}
@@ -53,7 +53,7 @@ const typeDefs = gql`
 	type Quote {
 		_id: ID!
 		name: String!
-		by: ID!
+		by: UserDetails!
 		createdAt: String!
 		updatedAt: String!
 	}

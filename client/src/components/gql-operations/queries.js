@@ -16,6 +16,22 @@ export const GET_ALL_QUOTES = gql`
 	}
 `;
 
+export const GET_QUOTE_BY_ID = gql`
+	query getQuote($id: ID!) {
+		quote(_id: $id) {
+			_id
+			name
+			by {
+				_id
+				firstName
+				lastName
+				profileImage
+			}
+			createdAt
+		}
+	}
+`;
+
 export const GET_MY_PROFILE = gql`
 	query getMyProfile {
 		user: myProfile {
