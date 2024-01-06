@@ -51,6 +51,7 @@ const typeDefs = gql`
 		email: String!
 		password: String
 		profileImage: String!
+		bio: String
 		verified: Boolean!
 		quotes: [Quote]
 	}

@@ -10,7 +10,14 @@ import Edit from '../../assets/svgs/Edit';
 import Loader from '../Loader';
 
 const UserCard = ({
-	user: { _id: userId, firstName, lastName, email, profileImage: avatar },
+	user: {
+		_id: userId,
+		firstName,
+		lastName,
+		email,
+		profileImage: avatar,
+		bio,
+	},
 	hideUnnecessaryElements,
 }) => {
 	const token = localStorage.getItem('token');
@@ -115,9 +122,7 @@ const UserCard = ({
 				)}
 			</div>
 			<h3 className="user-card__username">{email}</h3>
-			<p className="user-card__description">
-				Happy to see you here! Welcome to Threads Lite!
-			</p>
+			<p className="user-card__description">{bio}</p>
 			{token && hideUnnecessaryElements && (
 				<div className="user-card__buttons">
 					<button

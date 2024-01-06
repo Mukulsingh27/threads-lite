@@ -40,6 +40,7 @@ export const GET_MY_PROFILE = gql`
 			lastName
 			email
 			profileImage
+			bio
 			quotes {
 				_id
 				name
@@ -58,6 +59,7 @@ export const GET_USER_PROFILE = gql`
 			lastName
 			email
 			profileImage
+			bio
 			quotes {
 				_id
 				name
