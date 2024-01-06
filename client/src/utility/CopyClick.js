@@ -1,7 +1,7 @@
 import { ToastAlert } from './SweetAlertToast';
 
-const CopyClick = async (host, id) => {
-	const text = `${host}/thread/${id}`;
+const CopyClick = async (host, id, route) => {
+	const text = `${host}/${route}/${id}`;
 	try {
 		await navigator.clipboard.writeText(text); // eslint-disable-line
 		ToastAlert.fire({

@@ -92,11 +92,13 @@ const Home = () => {
 										onClick={() => {
 											CopyClick(
 												window.location.origin,
-												_id
+												_id,
+												'thread'
 											);
 											WebShare(
 												window.location.origin,
-												_id
+												_id,
+												'thread'
 											);
 										}}
 									>

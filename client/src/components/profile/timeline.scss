@@ -140,23 +140,27 @@ $blue-500: #688afd;
 		&:hover {
 			.timeline__thread-buttons {
 				visibility: visible;
+				opacity: 1;
 			}
 
 			.timeline__thread-edited {
-				display: block;
+				visibility: visible;
+				opacity: 1;
 			}
 		}
 	}
 
 	&__thread-edited {
-		display: none;
 		position: absolute;
 		top: 0;
 		right: 0;
 		color: $grey-300;
 		font-size: 12px;
 		padding: 3px 6px;
-		font-weight: 600;	
+		font-weight: 600;
+		visibility: hidden;
+		opacity: 0;
+		transition: all 0.3s;
 	}
 
 	&__thread {
@@ -173,10 +177,12 @@ $blue-500: #688afd;
 
 	&__thread-buttons {
 		visibility: hidden;
+		opacity: 0;
 		display: flex;
 		justify-content: space-around;
 		width: 100%;
 		position: absolute;
+		transition: all 0.3s;
 
 		&-button {
 			background-color: transparent;

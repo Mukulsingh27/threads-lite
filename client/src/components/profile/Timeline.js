@@ -175,11 +175,13 @@ const Timeline = ({ thread, hideUnnecessaryElements }) => {
 										onClick={() => {
 											CopyClick(
 												window.location.origin,
-												quote?._id
+												quote?._id,
+												'thread'
 											);
 											WebShare(
 												window.location.origin,
-												quote?._id
+												quote?._id,
+												'thread'
 											);
 										}}
 									>
