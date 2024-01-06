@@ -1,20 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { DELETE_USER } from '../gql-operations/mutations';
-import { SweetAlert } from '../../utility/SweetAlertToast';
+import { DELETE_USER, UPDATE_USER } from '../gql-operations/mutations';
+import { SweetAlert, ToastAlert } from '../../utility/SweetAlertToast';
 import WebShare from '../../utility/WebShare';
 import CopyClick from '../../utility/CopyClick';
 import Share from '../../assets/svgs/Share';
+import Edit from '../../assets/svgs/Edit';
 import Loader from '../Loader';
 
 const UserCard = ({
-	userId,
-	firstName,
-	lastName,
-	email,
-	avatar,
-	needLogOutButton,
+	user: {
+		_id: userId,
+		firstName,
+		lastName,
+		email,
+		profileImage: avatar,
+		bio,
+	},
+	hideUnnecessaryElements,
 }) => {
 	const token = localStorage.getItem('token');
 	const navigation = useNavigate();
@@ -26,7 +30,65 @@ const UserCard = ({
 		},
 	});
 
-	// Log out
+	// Update user
+	const [updateUser] = useMutation(UPDATE_USER, {
+		onCompleted: (data) => {
+			if (data && data.updateUser) {
+				ToastAlert.fire({
+					icon: 'success',
+					title: data.updateUser,
+				});
+			}
+		},
+		onError: (error) => {
+			console.error(error); // eslint-disable-line
+		},
+		refetchQueries: ['getMyProfile'],
+	});
+
+	// Handle Update user
+	const handleUpdateUser = async () => {
+		await SweetAlert.fire({
+			title: 'Edit your details',
+			html: `
+				<form id="update-user-form">
+					<input type="text" id="firstName" class="swal2-input" placeholder="First Name" value="${firstName}" />
+					<input type="text" id="lastName" class="swal2-input" placeholder="Last Name" value="${lastName}" />
+					<input type="text" id="bio" class="swal2-input" placeholder="Bio" value="${bio}" />
+				</form>
+			`,
+			showCancelButton: true,
+			confirmButtonText: 'Update',
+			cancelButtonText: 'Cancel',
+			confirmButtonColor: '#4cbb17',
+			cancelButtonColor: '#fb4f4f',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+			preConfirm: () => {
+				const form = document.getElementById('update-user-form');
+				const firstName = form.firstName.value;
+				const lastName = form.lastName.value;
+				const bio = form.bio.value;
+
+				if (!firstName || !lastName || !bio) {
+					SweetAlert.showValidationMessage(
+						'Please fill in all the fields.'
+					);
+				} else {
+					updateUser({
+						variables: {
+							firstName,
+							lastName,
+							bio,
+						},
+					});
+				}
+			},
+		});
+	};
+
+	// Handle Log out
 	const handleLogOut = () => {
 		SweetAlert.fire({
 			title: 'Are you sure?',
@@ -48,7 +110,7 @@ const UserCard = ({
 		});
 	};
 
-	// Delete user
+	// Handle Delete user
 	const handleDelete = async (id) => {
 		// Show SweetAlert2 confirmation dialog
 		const result = await SweetAlert.fire({
@@ -107,14 +169,22 @@ const UserCard = ({
 					alt="Profile avatar"
 				/>
 			</div>
-			<h2 className="user-card__name">
-				{firstName} {lastName}
-			</h2>
+			<div className="user-card__edit-wrap">
+				<h2 className="user-card__name">
+					{firstName} {lastName}
+				</h2>
+				{token && hideUnnecessaryElements && (
+					<div
+						className="user-card__edit"
+						onClick={() => handleUpdateUser()}
+					>
+						<Edit />
+					</div>
+				)}
+			</div>
 			<h3 className="user-card__username">{email}</h3>
-			<p className="user-card__description">
-				Happy to see you here! Welcome to Threads Lite!
-			</p>
-			{token && needLogOutButton && (
+			<p className="user-card__description">{bio}</p>
+			{token && hideUnnecessaryElements && (
 				<div className="user-card__buttons">
 					<button
 						className="user-card__delete-button"

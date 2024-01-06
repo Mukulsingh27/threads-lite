@@ -37,14 +37,7 @@ const MyProfile = () => {
 			{user && (
 				<>
 					<div className="profile-section__left-side">
-						<UserCard
-							userId={user._id}
-							firstName={user.firstName}
-							lastName={user.lastName}
-							email={user.email}
-							avatar={user.profileImage}
-							needLogOutButton={true}
-						/>
+						<UserCard user={user} hideUnnecessaryElements={true} />
 					</div>
 					<div className="profile-section__right-side">
 						<Timeline

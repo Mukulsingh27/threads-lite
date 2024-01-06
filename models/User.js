@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	bio: {
+		type: String,
+		default: 'Hey there! I am using Threads Lite!',
+	},
 	verified: {
 		type: Boolean,
 		default: false,

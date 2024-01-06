@@ -160,6 +160,7 @@ const SignUp = () => {
 							className="input-field"
 							placeholder="Enter Last Name"
 							onChange={handleSignUpDataChange}
+							required
 						/>
 					</div>
 

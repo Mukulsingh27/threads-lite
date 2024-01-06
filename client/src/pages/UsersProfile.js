@@ -35,25 +35,16 @@ const UserProfile = () => {
 	if (loading) return <Loader />;
 
 	// Destructure data.
-	const { firstName, lastName, email, profileImage } = data?.user || {};
+	const { user } = data || {};
 
 	return (
 		<div className="profile-section">
 			<div className="profile-section__left-side">
-				<UserCard
-					firstName={firstName}
-					lastName={lastName}
-					email={email}
-					avatar={profileImage}
-					needLogOutButton={false}
-				/>
+				<UserCard user={user} hideUnnecessaryElements={false} />
 			</div>
 			<div className="profile-section__right-side">
 				{data?.user && (
-					<Timeline
-						thread={data.user}
-						hideUnnecessaryElements={true}
-					/>
+					<Timeline thread={user} hideUnnecessaryElements={true} />
 				)}
 			</div>
 		</div>

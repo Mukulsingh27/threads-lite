@@ -17,6 +17,16 @@ export const SIGN_IN_USER = gql`
 	}
 `;
 
+export const UPDATE_USER = gql`
+	mutation updateUSer(
+		$firstName: String!
+		$lastName: String!
+		$bio: String!
+	) {
+		updateUser(firstName: $firstName, lastName: $lastName, bio: $bio)
+	}
+`;
+
 export const DELETE_USER = gql`
 	mutation deleteUser($id: ID!) {
 		deleteUserWithQuotes(_id: $id)
