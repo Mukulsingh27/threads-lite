@@ -1,9 +1,9 @@
-const WebShare = (host, id) => {
+const WebShare = (host, id, route) => {
 	// Check if navigator.share is supported by the browser
 	if (navigator.share) {
 		navigator
 			.share({
-				url: `${host}/thread/${id}`,
+				url: `${host}/${route}/${id}`,
 			})
 			.then(() => {
 				console.log('Sharing successfully'); // eslint-disable-line

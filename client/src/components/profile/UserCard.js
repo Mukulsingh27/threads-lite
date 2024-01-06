@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { DELETE_USER } from '../gql-operations/mutations';
 import { SweetAlert } from '../../utility/SweetAlertToast';
+import WebShare from '../../utility/WebShare';
+import CopyClick from '../../utility/CopyClick';
 import Share from '../../assets/svgs/Share';
 import Loader from '../Loader';
 
@@ -86,7 +88,13 @@ const UserCard = ({
 
 	return (
 		<div className="user-card">
-			<div className="user-card__share">
+			<div
+				className="user-card__share"
+				onClick={() => {
+					CopyClick(window.location.origin, userId, 'profile');
+					WebShare(window.location.origin, userId, 'profile');
+				}}
+			>
 				<Share />
 			</div>
 			<div className="user-card__profile-picture">
