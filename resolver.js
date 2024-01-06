@@ -140,10 +140,45 @@ const resolvers = {
 					process.env.JWT_SECRET_KEY
 				);
 
-				// Optionally, you may return more information about the user
+				// Return the token
 				return { token };
 			} catch (error) {
 				console.error('Failed to sign in user');
+				throw new ApolloError(error);
+			}
+		},
+		updateUser: async (_, { firstName, lastName, bio }, { userID }) => {
+			try {
+				// Check if user is authenticated
+				if (!userID) {
+					throw new Error('You are not authenticated');
+				}
+
+				// Check for empty fields
+				if (!firstName || !bio) {
+					throw new Error('Please fill all the fields');
+				}
+
+				// Find and update the user
+				const updatedUser = await User.findByIdAndUpdate(
+					userID,
+					{
+						firstName,
+						lastName,
+						bio,
+					},
+					{ new: true } // Return the updated document
+				);
+
+				// Check if user exists
+				if (!updatedUser) {
+					throw new Error('User does not exist');
+				}
+
+				// Return the updated user
+				return updatedUser;
+			} catch (error) {
+				console.error('Failed to update user');
 				throw new ApolloError(error);
 			}
 		},
