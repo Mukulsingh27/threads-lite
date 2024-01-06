@@ -45,7 +45,7 @@ const UserProfile = () => {
 					lastName={lastName}
 					email={email}
 					avatar={profileImage}
-					needLogOutButton={false}
+					hideUnnecessaryElements={false}
 				/>
 			</div>
 			<div className="profile-section__right-side">

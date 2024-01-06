@@ -6,6 +6,7 @@ import { SweetAlert } from '../../utility/SweetAlertToast';
 import WebShare from '../../utility/WebShare';
 import CopyClick from '../../utility/CopyClick';
 import Share from '../../assets/svgs/Share';
+import Edit from '../../assets/svgs/Edit';
 import Loader from '../Loader';
 
 const UserCard = ({
@@ -14,7 +15,7 @@ const UserCard = ({
 	lastName,
 	email,
 	avatar,
-	needLogOutButton,
+	hideUnnecessaryElements,
 }) => {
 	const token = localStorage.getItem('token');
 	const navigation = useNavigate();
@@ -107,14 +108,21 @@ const UserCard = ({
 					alt="Profile avatar"
 				/>
 			</div>
-			<h2 className="user-card__name">
-				{firstName} {lastName}
-			</h2>
+			<div className="user-card__edit-wrap">
+				<h2 className="user-card__name">
+					{firstName} {lastName}
+				</h2>
+				{token && hideUnnecessaryElements && (
+					<div className="user-card__edit">
+						<Edit />
+					</div>
+				)}
+			</div>
 			<h3 className="user-card__username">{email}</h3>
 			<p className="user-card__description">
 				Happy to see you here! Welcome to Threads Lite!
 			</p>
-			{token && needLogOutButton && (
+			{token && hideUnnecessaryElements && (
 				<div className="user-card__buttons">
 					<button
 						className="user-card__delete-button"
