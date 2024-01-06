@@ -14,7 +14,7 @@ const typeDefs = gql`
 	type Mutation {
 		signUpUser(newUser: newUserInput!): User
 		signInUser(userSignIn: userSignInInput!): Token
-		updateUser(firstName: String!, lastName: String, bio: String!): User
+		updateUser(firstName: String!, lastName: String!, bio: String!): String
 		deleteUserWithQuotes(_id: ID!): String
 		verifyUser(token: String!): String
 		resetPassword(email: String!): String
@@ -30,7 +30,7 @@ const typeDefs = gql`
 
 	input newUserInput {
 		firstName: String!
-		lastName: String
+		lastName: String!
 		email: String!
 		password: String!
 	}
@@ -43,11 +43,11 @@ const typeDefs = gql`
 	type User {
 		_id: ID!
 		firstName: String!
-		lastName: String
+		lastName: String!
 		email: String!
 		password: String
 		profileImage: String!
-		bio: String
+		bio: String!
 		verified: Boolean!
 		quotes: [Quote]
 	}
@@ -71,7 +71,7 @@ const typeDefs = gql`
 	type UserDetails {
 		_id: ID!
 		firstName: String!
-		lastName: String
+		lastName: String!
 		profileImage: String!
 	}
 `;

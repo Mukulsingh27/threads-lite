@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { DELETE_USER } from '../gql-operations/mutations';
-import { SweetAlert } from '../../utility/SweetAlertToast';
+import { DELETE_USER, UPDATE_USER } from '../gql-operations/mutations';
+import { SweetAlert, ToastAlert } from '../../utility/SweetAlertToast';
 import WebShare from '../../utility/WebShare';
 import CopyClick from '../../utility/CopyClick';
 import Share from '../../assets/svgs/Share';
@@ -30,7 +30,65 @@ const UserCard = ({
 		},
 	});
 
-	// Log out
+	// Update user
+	const [updateUser] = useMutation(UPDATE_USER, {
+		onCompleted: (data) => {
+			if (data && data.updateUser) {
+				ToastAlert.fire({
+					icon: 'success',
+					title: data.updateUser,
+				});
+			}
+		},
+		onError: (error) => {
+			console.error(error); // eslint-disable-line
+		},
+		refetchQueries: ['getMyProfile'],
+	});
+
+	// Handle Update user
+	const handleUpdateUser = async () => {
+		await SweetAlert.fire({
+			title: 'Edit your details',
+			html: `
+				<form id="update-user-form">
+					<input type="text" id="firstName" class="swal2-input" placeholder="First Name" value="${firstName}" />
+					<input type="text" id="lastName" class="swal2-input" placeholder="Last Name" value="${lastName}" />
+					<input type="text" id="bio" class="swal2-input" placeholder="Bio" value="${bio}" />
+				</form>
+			`,
+			showCancelButton: true,
+			confirmButtonText: 'Update',
+			cancelButtonText: 'Cancel',
+			confirmButtonColor: '#4cbb17',
+			cancelButtonColor: '#fb4f4f',
+			backdrop: `
+				rgba(0,0,0,0.62)
+			`,
+			preConfirm: () => {
+				const form = document.getElementById('update-user-form');
+				const firstName = form.firstName.value;
+				const lastName = form.lastName.value;
+				const bio = form.bio.value;
+
+				if (!firstName || !lastName || !bio) {
+					SweetAlert.showValidationMessage(
+						'Please fill in all the fields.'
+					);
+				} else {
+					updateUser({
+						variables: {
+							firstName,
+							lastName,
+							bio,
+						},
+					});
+				}
+			},
+		});
+	};
+
+	// Handle Log out
 	const handleLogOut = () => {
 		SweetAlert.fire({
 			title: 'Are you sure?',
@@ -52,7 +110,7 @@ const UserCard = ({
 		});
 	};
 
-	// Delete user
+	// Handle Delete user
 	const handleDelete = async (id) => {
 		// Show SweetAlert2 confirmation dialog
 		const result = await SweetAlert.fire({
@@ -116,7 +174,10 @@ const UserCard = ({
 					{firstName} {lastName}
 				</h2>
 				{token && hideUnnecessaryElements && (
-					<div className="user-card__edit">
+					<div
+						className="user-card__edit"
+						onClick={() => handleUpdateUser()}
+					>
 						<Edit />
 					</div>
 				)}

@@ -18,25 +18,12 @@ export const SIGN_IN_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-	mutation updateUSer($firstName: String, $lastName: String, $bio: String) {
-		user: updateUser(
-			firstName: $firstName
-			lastName: $lastName
-			bio: $bio
-		) {
-			_id
-			firstName
-			lastName
-			email
-			profileImage
-			bio
-			quotes {
-				_id
-				name
-				createdAt
-				updatedAt
-			}
-		}
+	mutation updateUSer(
+		$firstName: String!
+		$lastName: String!
+		$bio: String!
+	) {
+		updateUser(firstName: $firstName, lastName: $lastName, bio: $bio)
 	}
 `;
 

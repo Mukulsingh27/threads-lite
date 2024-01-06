@@ -175,8 +175,8 @@ const resolvers = {
 					throw new Error('User does not exist');
 				}
 
-				// Return the updated user
-				return updatedUser;
+				// Return success message
+				return 'User updated successfully!';
 			} catch (error) {
 				console.error('Failed to update user');
 				throw new ApolloError(error);
