@@ -14,6 +14,11 @@ const typeDefs = gql`
 	type Mutation {
 		signUpUser(newUser: newUserInput!): User
 		signInUser(userSignIn: userSignInInput!): Token
+		updateUser(
+			firstName: String!
+			lastName: String
+			profileImage: String!
+		): User
 		deleteUserWithQuotes(_id: ID!): String
 		verifyUser(token: String!): String
 		resetPassword(email: String!): String

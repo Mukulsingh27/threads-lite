@@ -10,11 +10,7 @@ import Edit from '../../assets/svgs/Edit';
 import Loader from '../Loader';
 
 const UserCard = ({
-	userId,
-	firstName,
-	lastName,
-	email,
-	avatar,
+	user: { _id: userId, firstName, lastName, email, profileImage: avatar },
 	hideUnnecessaryElements,
 }) => {
 	const token = localStorage.getItem('token');
