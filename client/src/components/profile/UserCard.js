@@ -52,8 +52,11 @@ const UserCard = ({
 			title: 'Edit your details',
 			html: `
 				<form id="update-user-form">
+					<label for="firstName">First Name</label>
 					<input type="text" id="firstName" class="swal2-input" placeholder="First Name" value="${firstName}" />
+					<label for="lastName">Last Name</label>
 					<input type="text" id="lastName" class="swal2-input" placeholder="Last Name" value="${lastName}" />
+					<label for="bio">Bio</label>
 					<input type="text" id="bio" class="swal2-input" placeholder="Bio" value="${bio}" />
 				</form>
 			`,

@@ -168,7 +168,17 @@
 	}
 }
 
-.swal2-input {
-	width: -webkit-fill-available;
-	margin: 1em 0em 3px;
+.swal2-html-container {
+	#update-user-form {
+
+		label {
+			display: block;
+			text-align: left;
+		}
+
+		.swal2-input {
+			width: -webkit-fill-available;
+			margin: 0em 0em 1em 0em;
+		}
+	}
 }
